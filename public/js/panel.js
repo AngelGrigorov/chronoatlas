@@ -5,7 +5,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 
 // ——— „Едновременно“: какво има по света в тази година ———
 export function createPanel(root, toggle, { data, onFocus }) {
-  const { events, cultures, cities } = data;
+  const { events, cultures, people } = data;
   let last = '';
   let items = [];
   let pref = null;
@@ -47,6 +47,20 @@ export function createPanel(root, toggle, { data, onFocus }) {
 
     let html = `<h2>Светът около ${esc(fmtYear(year))}</h2><div class="sub">Държави по площ, култури без граници и събития от последните ${Math.round(win)} години</div>`;
     const push = it => { items.push(it); return items.length - 1; };
+
+    // Кой е жив в тази година — първо най-известните, после тези в разцвета си.
+    const alive = people
+      .filter(p => year >= p.b + 15 && year <= p.d)
+      .sort((a, b) => b.i - a.i || Math.abs(year - (a.b + 40)) - Math.abs(year - (b.b + 40)))
+      .slice(0, 6);
+    if (alive.length) {
+      html += '<section><h3>Живи по това време</h3><ul>';
+      for (const p of alive) {
+        const age = Math.round(year - p.b);
+        html += `<li class="person" data-i="${push({ type: 'person', item: p, lon: p.lon, lat: p.lat })}"><span class="sw pe"></span><span class="t">${esc(p.n)}<small>${esc(p.t)}</small></span><span class="y">на ${age} г.</span></li>`;
+      }
+      html += '</ul></section>';
+    }
     for (const [k, title] of REGIONS) {
       const r = by[k];
       const states = r.states.sort((a, b) => b.area - a.area).slice(0, 4);
@@ -106,6 +120,13 @@ export function showCard(hit, { entities, onGo }) {
       go = { y: hit.year, lon: it.lon, lat: it.lat };
       break;
     }
+    case 'person':
+      kind = it.t;
+      title = it.n;
+      when = `${fmtRange(it.b, it.d)} · ${it.d - it.b} години живот`;
+      wiki = { bg: it.w };
+      go = { y: Math.round(it.b + Math.min(40, (it.d - it.b) * 0.6)), lon: it.lon, lat: it.lat };
+      break;
     case 'culture':
       kind = 'Култура';
       title = it.n; when = fmtRange(it.s, it.e); desc = it.d;

@@ -6,7 +6,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 
 // Едно общо търсене по всичко: събития, държави, култури, градове, пътища.
 export function createSearch(input, list, data, onSelect) {
-  const { events, wd, entities, cultures, cities, routes } = data;
+  const { events, wd, entities, cultures, cities, routes, people } = data;
   const index = [];
   const add = (label, extra, item) => index.push({ key: norm(label + (extra ? ' ' + extra : '')), label, ...item });
 
@@ -23,6 +23,7 @@ export function createSearch(input, list, data, onSelect) {
     const names = [...new Set(c.n.map(n => n[1]))];
     names.forEach((n, i) => add(n, names.filter(x => x !== n).join(' '), { kind: 'Град', y: Math.max(c.s, c.n[i]?.[0] ?? c.s), when: fmtRange(c.s, c.e), lon: c.lon, lat: c.lat, w: 4 - c.r * 0.5, hit: { type: 'city', item: c } }));
   }
+  for (const p of people) add(p.n, p.t, { kind: 'Личност', y: Math.round(p.b + Math.min(40, (p.d - p.b) * 0.6)), when: fmtRange(p.b, p.d), lon: p.lon, lat: p.lat, w: 3 + p.i, hit: { type: 'person', item: p } });
   for (const r of routes) {
     const s = r.k === 'trade' ? r.s : r.p[0][2], e = r.k === 'trade' ? r.e : r.p[r.p.length - 1][2];
     const mid = r.p[Math.floor(r.p.length / 2)];

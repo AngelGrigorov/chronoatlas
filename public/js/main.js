@@ -10,7 +10,7 @@ const get = (p, fallback) => fetch(p).then(r => (r.ok ? r.json() : Promise.rejec
 });
 
 const EVENT_FILES = ['1-ancient', '2-late-antiquity', '3-medieval', '4-early-modern', '5-modern'];
-const [snapshots, entities, eventParts, cultures, cities, routes, eras, wdRaw] = await Promise.all([
+const [snapshots, entities, eventParts, cultures, cities, routes, eras, people, wdRaw] = await Promise.all([
   get('data/snapshots.json'),
   get('data/entities.json'),
   Promise.all(EVENT_FILES.map(f => get(`data/content/events-${f}.json`))),
@@ -18,6 +18,7 @@ const [snapshots, entities, eventParts, cultures, cities, routes, eras, wdRaw] =
   get('data/content/cities.json'),
   get('data/content/routes.json'),
   get('data/content/eras.json'),
+  get('data/content/people.json'),
   get('data/wd-events.json', []),
 ]);
 // Wikidata е в компактни редове: [y, lon, lat, вид, езици, заглавие, en, bg уики, en уики, id]
@@ -87,14 +88,14 @@ function onGo(g) {
 // ——— Таймлайнът, панелът, търсенето ———
 const timeline = createTimeline(document.getElementById('timeline'), { eras, events, snapshots, app });
 const panel = createPanel(document.getElementById('side-body'), document.getElementById('side-toggle'), {
-  data: { events, cultures, cities },
+  data: { events, cultures, cities, people },
   onFocus(it) {
     if (it.type === 'event') { map.flyTo(it.item.lon, it.item.lat); showCard({ type: 'event', item: it.item, year: app.year }, { entities, onGo }); }
-    else if (it.type === 'culture') { map.flyTo(it.lon, it.lat); showCard({ type: 'culture', item: it.item, year: app.year }, { entities, onGo }); }
+    else if (it.type === 'culture' || it.type === 'person') { map.flyTo(it.lon, it.lat); showCard({ type: it.type, item: it.item, year: app.year }, { entities, onGo }); }
     else map.flyTo(it.lon, it.lat);
   },
 });
-createSearch(document.getElementById('q'), document.getElementById('results'), { events, wd, entities, cultures, cities, routes }, r => {
+createSearch(document.getElementById('q'), document.getElementById('results'), { events, wd, entities, cultures, cities, routes, people }, r => {
   app.stopPlay();
   app.setYear(r.y);
   map.flyTo(r.lon, r.lat, r.area ? Math.max(2.2, Math.min(5, 7.2 - Math.log10(r.area))) : 4.5);
