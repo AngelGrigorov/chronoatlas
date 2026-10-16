@@ -89,6 +89,7 @@ node tools/build-wd.js          # → public/data/wd-events.json
 ## Проверка
 
 ```
+npm test          # годините, регионите, рязането на пътищата на ±180°
 npm run serve
 npm run smoke     # headless Chrome: колелце, мащаб, влачене, търсене, клик, ▶, телефон
 ```

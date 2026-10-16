@@ -40,3 +40,24 @@ export function regionOf(lon, lat) {
   if (lon > 92 && (lat < 50 || lon > 120)) return 'east';
   return 'asia';
 }
+
+// Пътищата се пишат с непрекъснати дължини (Магелан стига до −383°), за да не
+// скачат през целия свят. Тук се режат на ±180° на парчета, които MapLibre рисува.
+export function wrapLine(coords) {
+  const wrap = x => Math.floor((x + 180) / 360) * 360;
+  const parts = [[]];
+  coords.forEach(([x, y], i) => {
+    const shift = wrap(x);
+    if (i > 0) {
+      const [px, py] = coords[i - 1], pshift = wrap(px);
+      if (pshift !== shift) {
+        const edge = shift > pshift ? pshift + 180 : pshift - 180;
+        const ey = py + (y - py) * (edge - px) / (x - px);
+        parts[parts.length - 1].push([edge - pshift, ey]);
+        parts.push([[edge - shift, ey]]);
+      }
+    }
+    parts[parts.length - 1].push([x - shift, y]);
+  });
+  return parts.filter(p => p.length > 1);
+}

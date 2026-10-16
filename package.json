@@ -5,7 +5,8 @@
   "scripts": {
     "data": "node tools/build-data.js",
     "serve": "python tools/serve.py 8642",
-    "smoke": "node tools/smoke.mjs"
+    "smoke": "node tools/smoke.mjs",
+    "test": "node tools/test-time.mjs"
   },
   "devDependencies": {
     "maplibre-gl": "6.11.2",

@@ -1,5 +1,5 @@
 import * as maplibregl from '../vendor/maplibre/maplibre-gl.mjs';
-import { fmtYear, fmtRange } from './time.js';
+import { fmtYear, fmtRange, wrapLine } from './time.js';
 
 const abs = p => new URL(p, location.href).href;
 const EMPTY = { type: 'FeatureCollection', features: [] };
@@ -94,9 +94,10 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
   const wdMz = e => ({ mz: e.l >= 60 ? 2 : e.l >= 30 ? 3 : e.l >= 15 ? 4 : 5 });
 
   const routeFeatures = [];
+  const line = coords => ({ type: 'MultiLineString', coordinates: wrapLine(coords) });
   routes.forEach((r, rid) => {
     if (r.k === 'trade') {
-      routeFeatures.push({ type: 'Feature', id: routeFeatures.length, geometry: { type: 'LineString', coordinates: r.p.map(p => [p[0], p[1]]) }, properties: { rid, k: 'trade', s: r.s, e: r.e, f: Math.max(40, (r.e - r.s) * 0.08) } });
+      routeFeatures.push({ type: 'Feature', id: routeFeatures.length, geometry: line(r.p), properties: { rid, k: 'trade', s: r.s, e: r.e, f: Math.max(40, (r.e - r.s) * 0.08) } });
       return;
     }
     // Походите се режат на къси отсечки със своя година, за да се „рисуват“ с времето.
@@ -108,7 +109,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const a = j / N, b = (j + 1) / N;
         routeFeatures.push({
           type: 'Feature', id: routeFeatures.length,
-          geometry: { type: 'LineString', coordinates: [[x0 + (x1 - x0) * a, y0 + (y1 - y0) * a], [x0 + (x1 - x0) * b, y0 + (y1 - y0) * b]] },
+          geometry: line([[x0 + (x1 - x0) * a, y0 + (y1 - y0) * a], [x0 + (x1 - x0) * b, y0 + (y1 - y0) * b]]),
           properties: { rid, k: r.k, t0: t0 + (t1 - t0) * a, end },
         });
       }

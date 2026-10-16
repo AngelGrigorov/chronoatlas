@@ -123,7 +123,7 @@ for (const { year, filename } of index) {
     const id = feats.length;
     feats.push({
       type: 'Feature', id,
-      properties: { n: name, e: p.NAME, c: colorFor(sub || p.NAME), p: p.BORDERPRECISION >= 2 ? 1 : 0, s: sub ? (bgName(sub) || sub) : '' },
+      properties: { n: name, e: p.NAME, c: colorFor(sub || p.NAME), p: p.BORDERPRECISION >= 2 ? 1 : 0, s: sub ? (bgName(sub) ?? sub) : '' },
       geometry: f.geometry,
     });
     const [lx, ly] = polylabel(best, 0.05);
