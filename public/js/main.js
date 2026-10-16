@@ -107,12 +107,12 @@ function onGo(g) {
 // ——— Timeline, panel, search ———
 const timeline = createTimeline(document.getElementById('timeline'), { eras, events, snapshots, app });
 const panel = createPanel(document.getElementById('side-list'), document.getElementById('side-toggle'), {
-  data: { events, cultures, cities, people },
+  data: { events, wd, cultures, cities, people },
   kinds: document.getElementById('kinds'),
   onKinds(ks) { map.setKinds(ks); dirty(); },
   onOpen: () => dirty(),
   onFocus(it) {
-    if (it.type === 'event') { map.flyTo(it.item.lon, it.item.lat); showCard({ type: 'event', item: it.item, year: app.year }, { entities, onGo }); }
+    if (it.type === 'event' || it.type === 'wd') { map.flyTo(it.item.lon, it.item.lat); showCard({ type: it.type, item: it.item, year: app.year }, { entities, onGo }); }
     else if (it.type === 'culture' || it.type === 'person') { map.flyTo(it.lon, it.lat); showCard({ type: it.type, item: it.item, year: app.year }, { entities, onGo }); }
     else map.flyTo(it.lon, it.lat);
   },

@@ -25,7 +25,7 @@ const clean = s => s?.replace(/\s*\((\d{1,4}\s*(г\.|BC|AD)?[^)]*)\)\s*$/u, '').
 let dup = 0, skipped = 0;
 const rows = [], en = {}, bg = {}, untranslated = [];
 for (const e of raw) {
-  if (e.y < -3500 || e.y > 2025 || Math.abs(e.lat) > 85) continue;
+  if (e.y < -3500 || e.y > new Date().getFullYear() || Math.abs(e.lat) > 85) continue;
   const enTitle = clean(e.en);
   // Same selection as before: a Bulgarian label, or a well-known event (20+ languages).
   if (!enTitle || /^Q\d+$/.test(enTitle) || !(e.bg || e.links >= 20)) { skipped++; continue; }

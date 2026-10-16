@@ -94,12 +94,16 @@ function extraLabels(poly, mainXY) {
 const entities = {};
 const index = JSON.parse(fs.readFileSync(path.join(HB, 'index.json'), 'utf8')).years;
 
+// The source keeps a few names past the year they changed.
+const RENAMES = { Zaire: [1997, 'Democratic Republic of the Congo'], Byelarus: [1991, 'Belarus'] };
+const renamed = (name, year) => (RENAMES[name] && year >= RENAMES[name][0] ? RENAMES[name][1] : name);
+
 for (const { year, filename } of index) {
   const fc = await simplify(path.join(HB, filename), '35%');
   const feats = [], labels = [];
   for (const f of fc.features) {
     const p = f.properties;
-    const name = p.NAME?.trim();
+    const name = renamed(p.NAME?.trim(), year);
     if (!name || !f.geometry) continue;
     const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
     let best = null, bestA = -1, total = 0;

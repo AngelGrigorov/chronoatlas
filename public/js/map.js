@@ -195,11 +195,11 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         },
       })),
       ...[2, 3, 4, 5].map(mz => ({
-        id: `wdo-${mz}`, type: 'circle', source: 'wdo', minzoom: mz, filter: ['==', ['get', 'mz'], mz],
+        id: `wdo-${mz}`, type: 'circle', source: 'wdo', filter: ['==', ['get', 'mz'], mz],
         paint: { 'circle-radius': 3.5, 'circle-color': kindColor, 'circle-opacity': ['*', 0.85, eventOpacity], 'circle-stroke-color': '#0b0f16', 'circle-stroke-width': 1, 'circle-stroke-opacity': eventOpacity },
       })),
       ...[2, 3, 4, 5].map(mz => ({
-        id: `wdb-${mz}`, type: 'symbol', source: 'wdb', minzoom: mz, filter: ['==', ['get', 'mz'], mz],
+        id: `wdb-${mz}`, type: 'symbol', source: 'wdb', filter: ['==', ['get', 'mz'], mz],
         layout: { 'icon-image': 'swords', 'icon-size': 0.42, 'icon-allow-overlap': true, 'icon-ignore-placement': true },
         paint: { 'icon-opacity': ['*', 0.85, eventOpacity] },
       })),
@@ -627,6 +627,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     api.setYear(state.year, state.win);
   });
 
+  let tiered = false;
   const api = {
     map,
     get snapshot() { return shown; },
@@ -638,6 +639,12 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       map.setGlobalStateProperty('year', year);
       map.setGlobalStateProperty('eyear', Math.round(year));
       map.setGlobalStateProperty('win', win);
+      // A single year has at most a few dozen Wikidata events, so all of them show at any
+      // zoom. While playing, events linger and pile up, so the lesser known need zooming in.
+      if ((win > 0) !== tiered) {
+        tiered = win > 0;
+        for (const mz of [2, 3, 4, 5]) for (const id of [`wdo-${mz}`, `wdb-${mz}`]) map.setLayerZoomRange(id, tiered ? mz : 0, 24);
+      }
       wanted = snapFor(year);
       swap();
       draw();

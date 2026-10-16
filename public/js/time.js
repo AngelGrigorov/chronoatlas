@@ -1,6 +1,6 @@
 // Years are historical: −490 is 490 BC, there is no year zero.
 export const MIN_YEAR = -10000;
-export const MAX_YEAR = 2025;
+export const MAX_YEAR = new Date().getFullYear();
 export const clampYear = y => Math.min(MAX_YEAR, Math.max(MIN_YEAR, y));
 // Whole years from a to b; there is no year zero, so 43 BC → AD 1 is 43 years, not 44.
 export const yearsBetween = (a, b) => b - a - (a < 0 && b > 0 ? 1 : 0);
