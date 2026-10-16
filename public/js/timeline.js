@@ -4,7 +4,6 @@ import { KINDS } from './map.js';
 export const MIN_SPAN = 12;
 export const MAX_SPAN = 13000;
 
-const SERIF = "'Cormorant Garamond', Georgia, serif";
 const SANS = "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
 const STEPS = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 5000];
 
@@ -66,7 +65,7 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
         ctx.fillRect(xa + 0.5, ty, Math.max(1, xb - xa - 1), trackH - 2);
         const avail = xb - xa - 8;
         if (avail > 18) {
-          ctx.font = `${on ? 700 : 600} ${Math.min(12.5, trackH - 3)}px ${SERIF}`;
+          ctx.font = `${on ? 700 : 500} ${Math.min(11, trackH - 3.5)}px ${SANS}`;
           ctx.letterSpacing = '0px';
           ctx.fillStyle = on ? '#fff6e0' : 'rgba(236,228,210,0.78)';
           ctx.textBaseline = 'middle';

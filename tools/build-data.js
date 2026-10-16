@@ -87,7 +87,7 @@ for (const { year, filename } of index) {
     });
     const [lx, ly] = polylabel(best, 0.05);
     // Празен превод значи „без етикет“ — за имена като „?“ в данните.
-    if (bg !== '') labels.push([r2(lx), r2(ly), Math.round(total), name, p.BORDERPRECISION >= 2 ? 1 : 0]);
+    if (bg !== '') labels.push([r2(lx), r2(ly), Math.round(total), name, p.BORDERPRECISION >= 2 ? 1 : 0, colorFor(sub || p.NAME)]);
     const ent = entities[p.NAME] ??= { n: name, at: [] };
     // Една точка на снимка: най-голямата част на името през тази година.
     const row = [year, r2(lx), r2(ly), Math.round(total), p.BORDERPRECISION >= 2 ? 1 : 0];

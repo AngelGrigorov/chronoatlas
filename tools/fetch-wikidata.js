@@ -29,7 +29,7 @@ async function sparql(q) {
     console.warn('WDQS', res.status, 'try', attempt + 1);
     await new Promise(r => setTimeout(r, 5000 * (attempt + 1)));
   }
-  throw new Error('WDQS не отговаря');
+  return null;
 }
 const qid = uri => uri.split('/').pop();
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -37,16 +37,21 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const kindOf = {};
 for (const [kind, { classes, min }] of Object.entries(KINDS)) {
   for (const cls of classes) {
-    const rows = await sparql(`SELECT ?item WHERE { ?item wdt:P31 wd:${cls} ; wikibase:sitelinks ?l . FILTER(?l >= ${min}) }`);
+    const rows = await sparql(`SELECT ?item WHERE { ?item wdt:P31 wd:${cls} ; wikibase:sitelinks ?l . FILTER(?l >= ${min}) }`) || [];
     for (const r of rows) kindOf[qid(r.item.value)] ??= kind;
     console.log(kind, cls, rows.length);
     await sleep(1000);
   }
 }
 
+// Напредъкът се пази, за да може прекъснато теглене да продължи.
+const PARTIAL = path.join(ROOT, '.cache/wikidata.partial.json');
 const ids = Object.keys(kindOf);
-const out = {};
+const out = fs.existsSync(PARTIAL) ? JSON.parse(fs.readFileSync(PARTIAL, 'utf8')) : {};
+const done = new Set(out.__done || []);
+delete out.__done;
 for (let i = 0; i < ids.length; i += 200) {
+  if (done.has(i)) continue;
   const batch = ids.slice(i, i + 200);
   const rows = await sparql(`SELECT ?item ?en ?bg ?date ?coord ?lcoord ?links ?bgwiki ?enwiki WHERE {
   VALUES ?item { ${batch.map(id => 'wd:' + id).join(' ')} }
@@ -60,6 +65,7 @@ for (let i = 0; i < ids.length; i += 200) {
   OPTIONAL { ?bgwiki schema:about ?item ; schema:isPartOf <https://bg.wikipedia.org/> }
   OPTIONAL { ?enwiki schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> }
 }`);
+  if (!rows) { console.warn('пропусната партида', i); continue; }
   for (const r of rows) {
     const id = qid(r.item.value);
     const m = r.date && /^(-?\d+)-/.exec(r.date.value);
@@ -78,6 +84,8 @@ for (let i = 0; i < ids.length; i += 200) {
       enwiki: r.enwiki && decodeURIComponent(r.enwiki.value.split('/wiki/')[1]),
     };
   }
+  done.add(i);
+  fs.writeFileSync(PARTIAL, JSON.stringify({ ...out, __done: [...done] }));
   process.stdout.write(`${Math.min(i + 200, ids.length)}/${ids.length}\r`);
   await sleep(700);
 }

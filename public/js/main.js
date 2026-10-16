@@ -9,10 +9,11 @@ const get = (p, fallback) => fetch(p).then(r => (r.ok ? r.json() : Promise.rejec
   throw err;
 });
 
-const [snapshots, entities, events, cultures, cities, routes, eras, wdRaw] = await Promise.all([
+const EVENT_FILES = ['1-ancient', '2-late-antiquity', '3-medieval', '4-early-modern', '5-modern'];
+const [snapshots, entities, eventParts, cultures, cities, routes, eras, wdRaw] = await Promise.all([
   get('data/snapshots.json'),
   get('data/entities.json'),
-  get('data/content/events.json'),
+  Promise.all(EVENT_FILES.map(f => get(`data/content/events-${f}.json`))),
   get('data/content/cultures.json'),
   get('data/content/cities.json'),
   get('data/content/routes.json'),
@@ -21,7 +22,7 @@ const [snapshots, entities, events, cultures, cities, routes, eras, wdRaw] = awa
 ]);
 // Wikidata е в компактни редове: [y, lon, lat, вид, езици, заглавие, en, bg уики, en уики, id]
 const wd = wdRaw.map(([y, lon, lat, k, l, t, en, wb, we, id]) => ({ y, lon, lat, k, l, t, en, wb, we, id }));
-events.sort((a, b) => a.y - b.y);
+const events = eventParts.flat().sort((a, b) => a.y - b.y);
 
 // ——— Състояние: адресът е източникът при отваряне ———
 const LAYERS = [
@@ -74,6 +75,9 @@ const map = createMap({
   },
   onSnapshot() { panel.refresh(); dirty(); },
 });
+// За проверка от конзолата.
+window.atlas = { app, map: map.map };
+
 function onGo(g) {
   app.stopPlay();
   if (g.y != null && Math.abs(g.y - app.year) > 0.5) app.setYear(g.y);
@@ -142,6 +146,12 @@ document.addEventListener('keydown', e => {
   if (e.key === ' ') { e.preventDefault(); togglePlay(); }
   else if (e.key === 'Escape') hideCard();
   else if (e.key === '/') { e.preventDefault(); document.getElementById('q').focus(); }
+  // Стрелките местят времето, освен ако фокусът не е в картата (там местят изгледа).
+  else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !e.target.closest('#map, #timeline')) {
+    e.preventDefault();
+    app.stopPlay();
+    app.setYear(app.year + (e.key === 'ArrowLeft' ? -1 : 1) * app.span / (e.shiftKey ? 10 : 50), { instant: true });
+  }
 });
 
 // ——— Един кадър: годината тече, всичко се пренарежда ———

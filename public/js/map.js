@@ -49,10 +49,10 @@ const r0 = (km, lat) => km * 512 / (40075 * Math.cos(lat * Math.PI / 180));
 // Стойностите на непрозрачност на слоевете с граници; превключването на снимките
 // ги вдига и сваля с преход, затова не са изрази.
 const BORDER_LAYERS = [
-  ['fuzzy-fill', 'fill', 'fill-opacity', 0.2],
-  ['sharp-fill', 'fill', 'fill-opacity', 0.34],
-  ['fuzzy-edge', 'line', 'line-opacity', 0.32],
-  ['sharp-edge', 'line', 'line-opacity', 0.55],
+  ['fuzzy-fill', 'fill', 'fill-opacity', 0.3],
+  ['sharp-fill', 'fill', 'fill-opacity', 0.46],
+  ['fuzzy-edge', 'line', 'line-opacity', 0.45],
+  ['sharp-edge', 'line', 'line-opacity', 0.7],
   ['sharp-line', 'line', 'line-opacity', 0.75],
 ];
 
@@ -145,7 +145,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     },
     layers: [
       { id: 'bg', type: 'background', paint: { 'background-color': '#142132' } },
-      { id: 'relief', type: 'raster', source: 'relief', paint: { 'raster-saturation': -0.3, 'raster-brightness-max': 0.84, 'raster-contrast': 0.06, 'raster-fade-duration': 0 } },
+      { id: 'relief', type: 'raster', source: 'relief', paint: { 'raster-saturation': -0.45, 'raster-brightness-max': 0.74, 'raster-contrast': 0.04, 'raster-fade-duration': 0 } },
       { id: 'ocean', type: 'fill', source: 'ocean', paint: { 'fill-color': '#142132' } },
       { id: 'lakes', type: 'fill', source: 'lakes', paint: { 'fill-color': '#1b2c42' } },
       { id: 'coast', type: 'line', source: 'land', paint: { 'line-color': '#0c1522', 'line-width': ['interpolate', ['linear'], ['zoom'], 1, 0.6, 6, 1.4], 'line-opacity': 0.9 } },
@@ -393,14 +393,18 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       const la = lat * Math.PI / 180, lo = lon * Math.PI / 180;
       return Math.cos(la) * Math.cos(lo) * cx + Math.cos(la) * Math.sin(lo) * cy + Math.sin(la) * cz > 0.2;
     };
-    const placed = [];
-    const free = (x0, y0, x1, y1) => {
+    // Два слоя етикети, като в атлас: събития, походи и градове („твърди“) не се
+    // застъпват помежду си; държави и култури („меки“) — също само помежду си и
+    // се рисуват отдолу, за да не изяждат градовете при приближение.
+    const hard = [], soft = [], later = [];
+    const freeIn = (placed, x0, y0, x1, y1) => {
       if (x1 < 0 || y1 < 0 || x0 > W || y0 > H) return false;
       // ponytail: O(n²) по поставените етикети; при стотици на екран е под милисекунда.
       for (const r of placed) if (x0 < r[2] && x1 > r[0] && y0 < r[3] && y1 > r[1]) return false;
       placed.push([x0, y0, x1, y1]);
       return true;
     };
+    const free = (...box) => freeIn(hard, ...box);
     const text = (str, x, y, font, fill, spacing = 0, align = 'left', halo = 'rgba(8,10,16,0.82)') => {
       ctx.font = font;
       ctx.letterSpacing = spacing + 'px';
@@ -428,11 +432,12 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const p = map.project([e.lon, e.lat]);
         const font = `italic 600 ${e.i === 3 ? 16 : 14.5}px ${SERIF}`;
         const w = measure(e.t, font, 0);
-        const x = p.x + 11, y = p.y;
-        if (!free(x - 2, y - 9, x + w + 2, y + 9)) continue;
-        ctx.globalAlpha = Math.min(1, 1.6 * (1 - a / (win * 0.55)));
-        text(e.t, x, y, font, '#fff3d6');
-        ctx.globalAlpha = 1;
+        // Вдясно от точката, освен ако не се побира до ръба — тогава вляво.
+        const left = p.x + 11 + w > W - 4;
+        const x0 = left ? p.x - 11 - w : p.x + 11, y = p.y;
+        if (x0 < 4 || !free(x0 - 2, y - 9, x0 + w + 2, y + 9)) continue;
+        const alpha = Math.min(1, 1.6 * (1 - a / (win * 0.55)));
+        later.push(() => { ctx.globalAlpha = alpha; text(e.t, x0, y, font, '#fff3d6'); ctx.globalAlpha = 1; });
       }
     }
 
@@ -450,14 +455,17 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         if (!facing(lon, lat)) return;
         const p = map.project([lon, lat]);
         const color = ROUTE_COLORS[r.k];
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 14);
-        g.addColorStop(0, color); g.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = g;
-        ctx.beginPath(); ctx.arc(p.x, p.y, 14, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill();
         const font = `600 13px ${SERIF}`;
         const w = measure(r.n, font, 0.3);
-        if (free(p.x + 10, p.y - 18, p.x + 14 + w, p.y - 4)) text(r.n, p.x + 12, p.y - 11, font, color, 0.3);
+        const named = free(p.x + 10, p.y - 18, p.x + 14 + w, p.y - 4);
+        later.push(() => {
+          const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 14);
+          g.addColorStop(0, color); g.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = g;
+          ctx.beginPath(); ctx.arc(p.x, p.y, 14, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2); ctx.fill();
+          if (named) text(r.n, p.x + 12, p.y - 11, font, color, 0.3);
+        });
       });
     }
 
@@ -470,8 +478,8 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const p = map.project([c.lon, c.lat]);
         const font = `${c.r === 1 ? 700 : 600} ${c.r === 1 ? 14.5 : 13}px ${SERIF}`;
         const w = measure(name, font, 0);
-        const x = p.x + 7;
-        if (free(x, p.y - 8, x + w, p.y + 8)) text(name, x, p.y, font, '#f4ecd8');
+        const x = p.x + 7 + w > W - 4 ? p.x - 7 - w : p.x + 7;
+        if (free(x, p.y - 8, x + w, p.y + 8)) later.push(() => text(name, x, p.y, font, '#f4ecd8'));
       }
     }
 
@@ -483,7 +491,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const p = map.project([c.lon, c.lat]);
         const font = `italic 600 ${z < 3 ? 15 : 17}px ${SERIF}`;
         const w = measure(c.n, font, 0.5);
-        if (!free(p.x - w / 2, p.y - 10, p.x + w / 2, p.y + 10)) continue;
+        if (!freeIn(soft, p.x - w / 2, p.y - 10, p.x + w / 2, p.y + 10)) continue;
         ctx.globalAlpha = a;
         text(c.n, p.x, p.y, font, '#f6d89a', 0.5, 'center');
         ctx.globalAlpha = 1;
@@ -511,16 +519,21 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const lh = size * 1.05;
         const w = Math.max(...lines.map(l => measure(l, font, spacing)));
         const h = lh * lines.length;
-        if (!free(p.x - w / 2 - 2, p.y - h / 2, p.x + w / 2 + 2, p.y + h / 2)) continue;
+        if (!freeIn(soft, p.x - w / 2 - 2, p.y - h / 2, p.x + w / 2 + 2, p.y + h / 2)) continue;
         lines.forEach((l, k) => text(l, p.x, p.y + (k - (lines.length - 1) / 2) * lh, font, sharp ? 'rgba(250,240,220,0.95)' : 'rgba(236,226,206,0.82)', spacing, 'center', 'rgba(8,10,16,0.7)'));
       }
     }
+
+    // Твърдите етикети отгоре.
+    for (const f of later) f();
   }
 
   // ——— Външният интерфейс ———
   let ready = false;
   map.on('load', () => {
     ready = true;
+    // Компактната атрибуция се отваря сама при зареждане; на телефон закрива картата.
+    container.querySelector('.maplibregl-ctrl-attrib')?.classList.remove('maplibregl-compact-show');
     applyLayerVisibility();
     api.setYear(state.year, state.win);
   });

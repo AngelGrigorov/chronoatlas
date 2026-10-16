@@ -4,11 +4,13 @@
   "type": "module",
   "scripts": {
     "data": "node tools/build-data.js",
-    "serve": "python -m http.server 8642 --directory public"
+    "serve": "python tools/serve.py 8642",
+    "smoke": "node tools/smoke.mjs"
   },
   "devDependencies": {
     "maplibre-gl": "6.11.2",
     "mapshaper": "0.6.113",
-    "polylabel": "2.0.1"
+    "polylabel": "2.0.1",
+    "puppeteer-core": "25.12.0"
   }
 }

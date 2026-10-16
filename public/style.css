@@ -27,7 +27,7 @@ button, select, input { font: inherit; color: inherit; }
 .maplibregl-ctrl-group button .maplibregl-ctrl-icon { filter: invert(0.9) sepia(0.3); }
 
 /* Година горе вляво */
-#hud { position: absolute; left: 20px; top: 16px; pointer-events: none; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8); }
+#hud { position: absolute; left: 6px; top: 4px; padding: 12px 56px 22px 14px; pointer-events: none; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8); background: radial-gradient(75% 85% at 28% 50%, rgba(10, 14, 22, 0.7), rgba(10, 14, 22, 0.4) 55%, rgba(10, 14, 22, 0) 100%); }
 #year { font: 600 52px/1 var(--serif); letter-spacing: 0.01em; color: var(--text); font-variant-numeric: lining-nums; }
 #era { font: italic 500 20px/1.2 var(--serif); color: var(--gold); margin-top: 4px; }
 #snap { font-size: 12px; color: var(--muted); margin-top: 6px; pointer-events: auto; cursor: help; width: max-content; }
@@ -100,7 +100,7 @@ button, select, input { font: inherit; color: inherit; }
 
 @media (max-width: 760px) {
   :root { --time-h: 112px; }
-  #hud { left: 16px; top: 98px; }
+  #hud { left: 2px; top: 86px; }
   #year { font-size: 34px; }
   #era { font-size: 16px; }
   #tools { top: 10px; }

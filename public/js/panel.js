@@ -31,9 +31,9 @@ export function createPanel(root, toggle, { data, onFocus }) {
     items = [];
     const by = Object.fromEntries(REGIONS.map(([k]) => [k, { states: [], other: [], events: [] }]));
 
-    for (const [lon, lat, area, name, sharp] of labels) {
+    for (const [lon, lat, area, name, sharp, color] of labels) {
       const r = by[regionOf(lon, lat)];
-      (sharp ? r.states : r.other).push({ type: 'label', name, lon, lat, area });
+      (sharp ? r.states : r.other).push({ type: 'label', name, lon, lat, area, color });
     }
     for (const c of cultures) {
       const a = spanAlpha(c.s, c.e, Math.max(40, (c.e - c.s) * 0.15), year);
@@ -58,7 +58,7 @@ export function createPanel(root, toggle, { data, onFocus }) {
         html += `<li class="ev" data-i="${push(it)}"><span class="sw ev" style="background:${KINDS[e.k]?.[1]}"></span><span class="t">${esc(e.t)}</span><span class="y">${esc(fmtYear(e.y, true))}</span></li>`;
       }
       for (const it of [...states, ...other]) {
-        const color = it.type === 'culture' ? '#f0c674' : 'rgba(236,226,205,0.4)';
+        const color = it.type === 'culture' ? '#f0c674' : it.color || 'rgba(236,226,205,0.4)';
         html += `<li data-i="${push(it)}"><span class="sw" style="background:${color}"></span><span class="t">${esc(it.name)}</span></li>`;
       }
       html += '</ul></section>';
