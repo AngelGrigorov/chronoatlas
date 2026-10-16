@@ -1,0 +1,14 @@
+{
+  "name": "history-atlas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "data": "node tools/build-data.js",
+    "serve": "python -m http.server 8642 --directory public"
+  },
+  "devDependencies": {
+    "maplibre-gl": "6.11.2",
+    "mapshaper": "0.6.113",
+    "polylabel": "2.0.1"
+  }
+}

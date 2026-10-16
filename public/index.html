@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Атлас на историята</title>
+<meta name="description" content="Карта на света с таймлайн: цивилизации, граници и събития от неолита до днес.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23101724' stroke='%23d9b45a' stroke-width='2'/%3E%3Cpath d='M4 16h24M16 2c-5 4-5 24 0 28M16 2c5 4 5 24 0 28' stroke='%23d9b45a' fill='none' stroke-width='1.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap">
+<link rel="stylesheet" href="vendor/maplibre/maplibre-gl.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="map" aria-label="Карта на света"></div>
+<canvas id="labels" aria-hidden="true"></canvas>
+
+<header id="hud">
+  <div id="year" aria-live="polite">—</div>
+  <div id="era"></div>
+  <div id="snap" title="Границите идват от моментни снимки; между тях картата прескача."></div>
+</header>
+
+<div id="tools">
+  <div class="search">
+    <input id="q" type="search" placeholder="Търси държава, битка, град…" autocomplete="off" spellcheck="false" aria-label="Търсене">
+    <ul id="results" role="listbox" hidden></ul>
+  </div>
+  <div id="layers" role="group" aria-label="Слоеве"></div>
+</div>
+
+<aside id="side" aria-label="Едновременно по света">
+  <button id="side-toggle" aria-expanded="true" title="Едновременно по света">◧</button>
+  <div id="side-body"></div>
+</aside>
+
+<article id="card" hidden></article>
+
+<footer id="time">
+  <div class="controls">
+    <button id="play" title="Пусни историята (интервал)" aria-label="Пусни">▶</button>
+    <select id="speed" title="Скорост" aria-label="Скорост">
+      <option value="5">5 г./с</option>
+      <option value="20">20 г./с</option>
+      <option value="60" selected>60 г./с</option>
+      <option value="200">200 г./с</option>
+    </select>
+  </div>
+  <canvas id="timeline" tabindex="0" aria-label="Времева линия: колелцето мести времето, Ctrl+колелцето мащабира"></canvas>
+</footer>
+
+<div id="loading">Зареждам света…</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
