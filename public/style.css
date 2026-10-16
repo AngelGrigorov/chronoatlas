@@ -31,15 +31,15 @@ button, select, input { font: inherit; color: inherit; }
 #tip span { color: var(--muted); margin-left: 6px; }
 
 /* Year, top left */
-#hud { position: absolute; left: 6px; top: 4px; padding: 12px 56px 22px 14px; pointer-events: none; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8); background: radial-gradient(58% 50% at 42% 50%, rgba(10, 14, 22, 0.72), rgba(10, 14, 22, 0.4) 55%, rgba(10, 14, 22, 0) 100%); }
+#hud { position: absolute; left: 12px; top: 12px; padding: 10px 18px 12px 16px; pointer-events: none; background: rgba(13, 18, 28, 0.8); border: 1px solid var(--line); border-radius: 14px; backdrop-filter: blur(10px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35); }
 #year { font: 600 52px/1 var(--serif); letter-spacing: 0.01em; color: var(--text); font-variant-numeric: lining-nums; }
 #era { font: italic 500 20px/1.2 var(--serif); color: var(--gold); margin-top: 4px; }
 #snap { font-size: 12px; color: var(--muted); margin-top: 6px; pointer-events: auto; cursor: help; width: max-content; }
 #snap b { color: var(--text); font-weight: 600; }
 
 /* Search and layers, top centre */
-#tools { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; width: min(520px, calc(100vw - 32px)); }
-.search { position: relative; width: 100%; }
+#tools { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 7px; width: min(820px, max(440px, calc(100vw - 640px))); }
+.search { position: relative; width: min(520px, 100%); }
 #q { width: 100%; padding: 10px 14px 10px 36px; border-radius: 22px; border: 1px solid var(--line); background: var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a59d8c' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-4-4'/%3E%3C/svg%3E") no-repeat 12px center / 16px; backdrop-filter: blur(8px); outline: none; }
 #q:focus { border-color: var(--gold-dim); }
 #results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; margin: 0; padding: 4px; list-style: none; background: var(--panel-solid); border: 1px solid var(--line); border-radius: 12px; max-height: 50vh; overflow-y: auto; z-index: 5; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); }
@@ -51,12 +51,10 @@ button, select, input { font: inherit; color: inherit; }
 #results .empty { color: var(--muted); cursor: default; }
 
 #layers { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
-#layers button { display: flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 16px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); font-size: 12.5px; cursor: pointer; backdrop-filter: blur(8px); }
+#layers button { display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 16px; border: 1px solid var(--line); background: var(--panel); color: var(--muted); font-size: 12.5px; cursor: pointer; backdrop-filter: blur(8px); }
 #layers button i { width: 9px; height: 9px; border-radius: 50%; background: currentColor; opacity: 0.35; }
 #layers button[aria-pressed="true"] { color: var(--text); border-color: var(--gold-dim); }
 #layers button[aria-pressed="true"] i { background: var(--dot, var(--gold)); opacity: 1; }
-#layers button.lang { color: var(--gold); border-color: var(--gold-dim); font-weight: 600; }
-#layers button.lang i { display: none; }
 #layers button:hover { color: var(--text); }
 
 /* Side panel: around the world */
@@ -64,8 +62,17 @@ button, select, input { font: inherit; color: inherit; }
 #side-toggle { align-self: flex-end; pointer-events: auto; width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); cursor: pointer; color: var(--muted); }
 #side-body { pointer-events: auto; margin-top: 8px; flex: 1; min-height: 0; overflow-y: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 14px 6px; backdrop-filter: blur(10px); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
 #side.closed #side-body { display: none; }
-#kinds { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
-#kinds button { display: flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 12px; border: 1px solid var(--line); background: none; color: var(--muted); font-size: 11.5px; cursor: pointer; }
+/* Event kind filter: a second, smaller row under the layers */
+#kinds { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+#kinds button { display: flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(8px); color: var(--muted); font-size: 11.5px; cursor: pointer; }
+#kinds button:hover { color: var(--text); }
+
+/* Language switch, top right */
+#lang-switch { position: absolute; top: 14px; right: 12px; display: flex; padding: 3px; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); backdrop-filter: blur(8px); }
+#lang-switch button { padding: 6px 12px; border: none; border-radius: 16px; background: none; color: var(--muted); font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; }
+#lang-switch button:hover { color: var(--text); }
+#lang-switch button[aria-pressed="true"] { background: rgba(217, 180, 90, 0.18); color: var(--gold); cursor: default; }
+#lang-switch button:disabled { opacity: 0.6; }
 #kinds button i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.35; }
 #kinds button[aria-pressed="true"] { color: var(--text); border-color: var(--gold-dim); }
 #kinds button[aria-pressed="true"] i { background: var(--dot); opacity: 1; }
@@ -128,15 +135,20 @@ button, select, input { font: inherit; color: inherit; }
 
 @media (max-width: 760px) {
   :root { --time-h: 112px; }
-  #hud { left: 2px; top: 86px; }
-  #year { font-size: 34px; }
-  #era { font-size: 16px; }
-  #tools { top: 10px; }
-  #layers { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; width: 100%; scrollbar-width: none; padding-bottom: 2px; }
-  #layers button { flex: none; padding: 3px 9px; font-size: 11.5px; }
+  #hud { left: 10px; top: 128px; padding: 7px 12px 8px; }
+  #year { font-size: 30px; }
+  #era { font-size: 15px; }
+  #snap { font-size: 11px; }
+  #tools { top: 10px; left: 16px; right: 16px; width: auto; transform: none; align-items: stretch; }
+  .search { width: calc(100% - 96px); }
+  #lang-switch { top: 11px; right: 16px; }
+  #lang-switch button { padding: 6px 10px; }
+  #layers, #kinds { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; width: 100%; scrollbar-width: none; padding-bottom: 2px; }
+  #layers button, #kinds button { flex: none; }
+  #layers button { padding: 3px 9px; font-size: 11.5px; }
   #side { left: 16px; right: 16px; width: auto; top: auto; bottom: calc(var(--time-h) + 10px); max-height: 45vh; }
   #side.closed { pointer-events: none; }
-  #side-toggle { position: fixed; right: 16px; top: 100px; }
+  #side-toggle { position: fixed; right: 16px; top: 128px; }
   #card { left: 16px; right: 16px; width: auto; }
   #time .controls { width: 64px; }
   #play { width: 40px; height: 40px; }

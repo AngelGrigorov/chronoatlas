@@ -165,25 +165,27 @@ globeBtn.onclick = () => {
   writeHash();
 };
 
-// Language: English by default; Bulgarian is downloaded once and kept in the browser.
-const langBtn = chip(t('lang.other'), '#d9b45a');
-langBtn.classList.add('lang');
-langBtn.title = t('lang.otherTitle');
-langBtn.onclick = async () => {
-  const next = lang === 'en' ? 'bg' : 'en';
-  if (next !== 'en') {
-    langBtn.disabled = true;
-    langBtn.lastChild.textContent = t('lang.downloading');
-    if (!(await downloadLanguage(next))) {
-      langBtn.disabled = false;
-      langBtn.lastChild.textContent = t('lang.other');
-      alert(t('lang.failed'));
-      return;
+// Language: English by default; other languages are downloaded once and kept in the browser.
+for (const b of document.querySelectorAll('#lang-switch button')) {
+  const code = b.dataset.lang;
+  b.setAttribute('aria-pressed', String(code === lang));
+  b.onclick = async () => {
+    if (code === lang) return;
+    if (code !== 'en') {
+      const label = b.textContent;
+      b.disabled = true;
+      b.textContent = t('lang.downloading');
+      if (!(await downloadLanguage(code))) {
+        b.disabled = false;
+        b.textContent = label;
+        alert(t('lang.failed'));
+        return;
+      }
     }
-  }
-  setLanguage(next);
-  location.reload();
-};
+    setLanguage(code);
+    location.reload();
+  };
+}
 
 // ——— Play ———
 const playBtn = document.getElementById('play');

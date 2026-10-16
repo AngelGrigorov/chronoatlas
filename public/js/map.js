@@ -454,7 +454,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     const free = (...box) => freeIn(hard, ...box);
     // Space taken by the interface over the map is taken for labels too.
     const cr = container.getBoundingClientRect();
-    for (const sel of ['#hud', '#tools', '#side:not(.closed) #side-body', '#side-toggle', '#card:not([hidden])', '#hint:not([hidden])']) {
+    for (const sel of ['#hud', '#tools .search', '#layers', '#kinds', '#lang-switch', '#side:not(.closed) #side-body', '#side-toggle', '#card:not([hidden])', '#hint:not([hidden])']) {
       const el = document.querySelector(sel);
       if (!el) continue;
       const r = el.getBoundingClientRect();
