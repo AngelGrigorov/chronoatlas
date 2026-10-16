@@ -1,4 +1,5 @@
 import * as maplibregl from '../vendor/maplibre/maplibre-gl.mjs';
+import { fmtYear, fmtRange } from './time.js';
 
 const abs = p => new URL(p, location.href).href;
 const EMPTY = { type: 'FeatureCollection', features: [] };
@@ -321,16 +322,38 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     }
     return null;
   }
+  // Подсказка при посочване — битките от Wikidata нямат етикет на картата.
+  const tip = document.getElementById('tip');
+  const tipText = hit => {
+    const it = hit.item;
+    switch (hit.type) {
+      case 'event': case 'wd': return [it.t, fmtYear(it.y)];
+      case 'city': return [cityName(it, state.year), ''];
+      case 'route': return [it.n, it.k === 'trade' ? fmtRange(it.s, it.e) : ''];
+      case 'culture': return [it.n, fmtRange(it.s, it.e)];
+      default: return [it.n, it.s ? `под ${it.s}` : ''];
+    }
+  };
   map.on('mousemove', e => {
     const hit = hitAt(e.point);
     map.getCanvas().style.cursor = hit ? 'pointer' : '';
+    if (hit) {
+      const [t, sub] = tipText(hit);
+      tip.innerHTML = '';
+      tip.append(Object.assign(document.createElement('b'), { textContent: t }));
+      if (sub) tip.append(Object.assign(document.createElement('span'), { textContent: sub }));
+      const r = container.getBoundingClientRect();
+      tip.style.left = r.left + e.point.x + 'px';
+      tip.style.top = r.top + e.point.y + 'px';
+    }
+    tip.hidden = !hit;
     const f = hit?.type === 'polity' ? { source: active, id: hit.feature.id } : null;
     if (f?.id !== hovered?.id || f?.source !== hovered?.source) {
       clearHover();
       if (f) { map.setFeatureState(f, { hover: true }); hovered = f; }
     }
   });
-  map.on('mouseout', clearHover);
+  map.on('mouseout', () => { clearHover(); tip.hidden = true; });
   map.on('click', e => {
     const hit = hitAt(e.point);
     if (hit) onPick?.(hit, e.lngLat);

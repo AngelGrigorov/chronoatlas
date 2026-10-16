@@ -259,13 +259,23 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
     app.setYear((band[0] + band[1]) / 2);
   });
 
-  // Подсказка с пълното име на епохата.
+  // Подсказка: пълното име на епохата или събитието под курсора.
   canvas.addEventListener('mousemove', e => {
-    const { tracks, top, trackH } = layout();
+    const { tracks, top, trackH, evY, evH } = layout();
     const ti = Math.floor((e.offsetY - top) / trackH);
     const y = yearAt(e.offsetX);
     const band = ti >= 0 && tracks[ti]?.b.find(([s, en]) => y >= s && y < en);
-    canvas.title = band ? `${band[2]} · ${fmtRange(band[0], band[1])}\nДвоен клик — побери епохата` : 'Колелце — време · Ctrl+колелце — мащаб · клик — скок';
+    let ev = null;
+    if (e.offsetY >= evY - 2 && e.offsetY <= evY + evH + 2) {
+      let best = 5;
+      for (const x of events) {
+        const d = Math.abs(xOf(x.y) - e.offsetX) - x.i;
+        if (d < best) { best = d; ev = x; }
+      }
+    }
+    canvas.title = ev ? `${ev.t} · ${fmtYear(ev.y)}\nКлик — скок дотам`
+      : band ? `${band[2]} · ${fmtRange(band[0], band[1])}\nДвоен клик — побери епохата`
+      : 'Колелце — време · Ctrl+колелце — мащаб · клик — скок';
   });
 
   canvas.addEventListener('keydown', e => {
