@@ -1,63 +1,54 @@
 import * as maplibregl from '../vendor/maplibre/maplibre-gl.mjs';
 import { fmtYear, fmtRange, wrapLine } from './time.js';
+import { t, polityName } from './i18n.js';
 
 const abs = p => new URL(p, location.href).href;
 const EMPTY = { type: 'FeatureCollection', features: [] };
 const FADE_MS = 450;
 
-// Вид събитие → име и цвят. Ползва се и от картичката, търсенето и панела.
+// Event kind → colour. Names come from the language pack (kind.<key>).
 export const KINDS = {
-  battle: ['Битка', '#e0574f'],
-  siege: ['Обсада', '#e0574f'],
-  war: ['Война', '#e0574f'],
-  found: ['Основаване', '#e8c46a'],
-  politics: ['Власт', '#e8c46a'],
-  fall: ['Падение', '#a99a86'],
-  treaty: ['Договор', '#7fb7e6'],
-  discovery: ['Открития', '#5fd0c0'],
-  invention: ['Изобретение', '#b49cf0'],
-  culture: ['Култура', '#f0a6c8'],
-  religion: ['Вяра', '#f5e6a8'],
-  disaster: ['Бедствие', '#f08a3c'],
-  eruption: ['Изригване', '#f08a3c'],
-  quake: ['Земетресение', '#f08a3c'],
-  person: ['Личност', '#d8d0c0'],
+  battle: '#e0574f', siege: '#e0574f', war: '#e0574f',
+  found: '#e8c46a', politics: '#e8c46a', fall: '#a99a86', treaty: '#7fb7e6',
+  discovery: '#5fd0c0', invention: '#b49cf0', culture: '#f0a6c8', religion: '#f5e6a8',
+  disaster: '#f08a3c', eruption: '#f08a3c', quake: '#f08a3c', person: '#d8d0c0',
 };
-// Групите за филтъра на събитията.
+export const kindLabel = k => t('kind.' + k);
+// Groups for the event filter (names: group.<key>).
 export const KIND_GROUPS = {
-  war: ['Войни', ['battle', 'siege', 'war']],
-  power: ['Власт', ['politics', 'found', 'fall', 'treaty']],
-  culture: ['Култура и наука', ['culture', 'invention', 'person']],
-  religion: ['Вяра', ['religion']],
-  discovery: ['Открития', ['discovery']],
-  nature: ['Бедствия', ['disaster', 'eruption', 'quake']],
+  war: ['battle', 'siege', 'war'],
+  power: ['politics', 'found', 'fall', 'treaty'],
+  culture: ['culture', 'invention', 'person'],
+  religion: ['religion'],
+  discovery: ['discovery'],
+  nature: ['disaster', 'eruption', 'quake'],
 };
-const kindColor = ['match', ['get', 'k'], ...Object.entries(KINDS).flatMap(([k, [, c]]) => [k, c]), '#d8d0c0'];
+const kindColor = ['match', ['get', 'k'], ...Object.entries(KINDS).flat(), '#d8d0c0'];
 export const isBattle = k => k === 'battle' || k === 'siege';
 
 const Y = ['global-state', 'year'];
 const WIN = ['global-state', 'win'];
 const age = ['-', Y, ['get', 'y']];
-// Събитието светва в годината си и избледнява за „прозореца“ (той зависи от мащаба на таймлайна).
+// An event lights up in its year and fades over the "window", which depends on the timeline zoom.
 const eventOpacity = ['case', ['<', age, 0], 0, ['>', age, WIN], 0, ['-', 1, ['*', 0.72, ['/', age, WIN]]]];
 const rippleT = ['/', age, ['*', WIN, 0.35]];
 const rippleOpacity = ['case', ['<', age, 0], 0, ['>', rippleT, 1], 0, ['*', 0.85, ['-', 1, rippleT]]];
-// Плавно появяване и изчезване между s и e за f години.
+// Fade in after s and out before e, over f years.
 const spanOpacity = ['max', 0, ['min', 1, ['/', ['-', Y, ['get', 's']], ['get', 'f']], ['/', ['-', ['get', 'e'], Y], ['get', 'f']]]];
 
-// JS огледало на израза — за панела, търсенето и кликовете.
+// The same formula in JS — for the panel, labels and clicks.
 export function eventAlpha(y, year, win) {
   const a = year - y;
   return a < 0 || a > win ? 0 : 1 - 0.72 * a / win;
 }
 export const spanAlpha = (s, e, f, year) => Math.max(0, Math.min(1, (year - s) / f, (e - year) / f));
 
-// Кръг в км → пиксели при мащаб 0 (512 px за света); експоненциално по 2 нагоре.
+// A radius in km → pixels at zoom 0 (512 px for the world), doubling per zoom level.
 const kmRadius = ['interpolate', ['exponential', 2], ['zoom'], 0, ['get', 'r0'], 20, ['*', ['get', 'r0'], 2 ** 20]];
 const r0 = (km, lat) => km * 512 / (40075 * Math.cos(lat * Math.PI / 180));
 
-// Стойностите на непрозрачност на слоевете с граници; превключването на снимките
-// ги вдига и сваля с преход, затова не са изрази.
+// Opacity of the border layers. Switching snapshots fades them with a transition,
+// which is why these are constants rather than expressions.
 const BORDER_LAYERS = [
   ['fuzzy-fill', 'fill', 'fill-opacity', 0.3],
   ['sharp-fill', 'fill', 'fill-opacity', 0.46],
@@ -110,7 +101,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       routeFeatures.push({ type: 'Feature', id: routeFeatures.length, geometry: line(r.p), properties: { rid, k: 'trade', s: r.s, e: r.e, f: Math.max(40, (r.e - r.s) * 0.08) } });
       return;
     }
-    // Походите се режат на къси отсечки със своя година, за да се „рисуват“ с времето.
+    // Campaigns are cut into short segments with their own year, so they draw themselves over time.
     const end = r.p[r.p.length - 1][2];
     for (let i = 0; i < r.p.length - 1; i++) {
       const [x0, y0, t0] = r.p[i], [x1, y1, t1] = r.p[i + 1];
@@ -137,12 +128,12 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     },
     transition: { duration: FADE_MS, delay: 0 },
     sources: {
-      relief: { type: 'raster', tiles: [abs('tiles/relief/') + '{z}/{x}/{y}.webp'], tileSize: 256, maxzoom: 5, attribution: 'Релеф: Natural Earth' },
+      relief: { type: 'raster', tiles: [abs('tiles/relief/') + '{z}/{x}/{y}.webp'], tileSize: 256, maxzoom: 5, attribution: 'Relief: Natural Earth' },
       ocean: { type: 'geojson', data: abs('data/base/ocean.json') },
       land: { type: 'geojson', data: abs('data/base/land.json') },
       lakes: { type: 'geojson', data: abs('data/base/lakes.json') },
       rivers: { type: 'geojson', data: abs('data/base/rivers_lake_centerlines.json') },
-      bA: { type: 'geojson', data: EMPTY, attribution: 'Граници: <a href="https://github.com/aourednik/historical-basemaps">historical-basemaps</a> (GPL-3.0)' },
+      bA: { type: 'geojson', data: EMPTY, attribution: 'Borders: <a href="https://github.com/aourednik/historical-basemaps">historical-basemaps</a> (GPL-3.0)' },
       bB: { type: 'geojson', data: EMPTY },
       cultures: {
         type: 'geojson',
@@ -152,7 +143,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       cities: { type: 'geojson', data: { type: 'FeatureCollection', features: cities.map((c, idx) => ({ type: 'Feature', id: idx, geometry: { type: 'Point', coordinates: [c.lon, c.lat] }, properties: { s: c.s, e: c.e ?? 9999, r: c.r } })) } },
       ev: { type: 'geojson', data: ev(curatedNonBattle) },
       bt: { type: 'geojson', data: ev(curatedBattle) },
-      wdb: { type: 'geojson', data: ev(wdBattle, wdMz), attribution: 'Събития: Wikidata' },
+      wdb: { type: 'geojson', data: ev(wdBattle, wdMz), attribution: 'Events: Wikidata' },
       wdo: { type: 'geojson', data: ev(wdOther, wdMz) },
     },
     layers: [
@@ -227,7 +218,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     if (id === 'swords' && !map.hasImage(id)) map.addImage(id, swordsImage(), { pixelRatio: 2 });
   });
 
-  // ——— Слоеве по групи (бутоните горе) ———
+  // ——— Layer groups (the buttons at the top) ———
   const GROUPS = {
     borders: id => /^b[AB]-/.test(id),
     cultures: id => id === 'cultures',
@@ -237,7 +228,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     cities: id => id.startsWith('cities-'),
     rivers: id => id === 'rivers' || id === 'lakes',
   };
-  // Филтърът по вид: на слоевете на MapLibre е израз, на етикетите — kindOk.
+  // The kind filter: an expression on the MapLibre layers, kindOk() for the labels.
   function applyKinds() {
     const f = state.kinds ? ['in', ['get', 'k'], ['literal', state.kinds]] : null;
     for (const id of ['ev', 'ev-ripple', 'bt', 'bt-ripple']) map.setFilter(id, f);
@@ -257,10 +248,20 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     draw();
   }
 
-  // ——— Границите: две копия, едното се пълни, докато другото се вижда ———
+  // ——— Borders: two copies; one is filled while the other is shown ———
   const cache = new Map();
   const load = y => {
-    if (!cache.has(y)) cache.set(y, fetch(abs(`data/borders/${y}.json`)).then(r => r.json()).catch(err => { cache.delete(y); throw err; }));
+    if (!cache.has(y)) {
+      cache.set(y, fetch(abs(`data/borders/${y}.json`)).then(r => r.json()).then(snap => {
+        // Polity names are English keys in the data; show them in the current language.
+        for (const f of snap.fc.features) {
+          f.properties.n = polityName(f.properties.e);
+          if (f.properties.s) f.properties.s = polityName(f.properties.s);
+        }
+        for (const l of snap.labels) l[3] = polityName(l[3]);
+        return snap;
+      }).catch(err => { cache.delete(y); throw err; }));
+    }
     return cache.get(y);
   };
   let active = 'bA', shown = null, wanted = null, busy = false, labels = [];
@@ -298,14 +299,14 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       const i = snapshots.indexOf(target);
       [snapshots[i - 1], snapshots[i + 1]].forEach(y => y != null && load(y).catch(() => {}));
     } catch (err) {
-      console.error('Снимката не се зареди', target, err);
+      console.error('Snapshot failed to load', target, err);
     } finally {
       busy = false;
       if (wanted !== shown) swap();
     }
   }
 
-  // ——— Ховър и кликове ———
+  // ——— Hover and clicks ———
   let hovered = null;
   function clearHover() {
     if (hovered) map.setFeatureState(hovered, { hover: false });
@@ -320,7 +321,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     ...(state.layers.borders ? [`${active}-sharp-fill`, `${active}-fuzzy-fill`] : []),
   ].filter(id => map.getLayer(id));
 
-  // Кое от нещата под курсора наистина се вижда в тази година.
+  // Which of the features under the cursor is actually visible in this year.
   function visibleHit(f) {
     const p = f.properties, y = state.year;
     switch (f.source) {
@@ -344,7 +345,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     }
     return null;
   }
-  // Подсказка при посочване — битките от Wikidata нямат етикет на картата.
+  // Hover tooltip — Wikidata battles have no label on the map.
   const tip = document.getElementById('tip');
   const tipText = hit => {
     const it = hit.item;
@@ -353,7 +354,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       case 'city': return [cityName(it, state.year), ''];
       case 'route': return [it.n, it.k === 'trade' ? fmtRange(it.s, it.e) : ''];
       case 'culture': return [it.n, fmtRange(it.s, it.e)];
-      default: return [it.n, it.s ? `под ${it.s}` : ''];
+      default: return [it.n, it.s ? t('tip.under', { s: it.s }) : ''];
     }
   };
   map.on('mousemove', e => {
@@ -382,7 +383,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     else onPick?.(null);
   });
 
-  // ——— Етикети в отделен канвас: шрифт, разредка и сблъсъци по наш вкус ———
+  // ——— Labels on a separate canvas: our own font, spacing and collisions ———
   const ctx = canvas.getContext('2d');
   const widthCache = new Map();
   let W = 0, H = 0, dpr = 1;
@@ -438,20 +439,20 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       const la = lat * Math.PI / 180, lo = lon * Math.PI / 180;
       return Math.cos(la) * Math.cos(lo) * cx + Math.cos(la) * Math.sin(lo) * cy + Math.sin(la) * cz > 0.2;
     };
-    // Два слоя етикети, като в атлас: събития, походи и градове („твърди“) не се
-    // застъпват помежду си; държави и култури („меки“) — също само помежду си и
-    // се рисуват отдолу, за да не изяждат градовете при приближение.
+    // Two layers of labels, as in a printed atlas: events, campaigns and cities ("hard")
+    // never overlap each other; states and cultures ("soft") only avoid each other and
+    // are drawn underneath, so they don't swallow the cities when zoomed in.
     const hard = [], soft = [], later = [];
     const freeIn = (placed, x0, y0, x1, y1) => {
-      // Цял в екрана или никак — отрязан наполовина надпис е по-лош от липсващ.
+      // Fully on screen or not at all — a half-cut label is worse than none.
       if (x0 < 2 || y0 < 2 || x1 > W - 2 || y1 > H - 2) return false;
-      // ponytail: O(n²) по поставените етикети; при стотици на екран е под милисекунда.
+      // ponytail: O(n²) over placed labels; with hundreds on screen it is under a millisecond.
       for (const r of placed) if (x0 < r[2] && x1 > r[0] && y0 < r[3] && y1 > r[1]) return false;
       placed.push([x0, y0, x1, y1]);
       return true;
     };
     const free = (...box) => freeIn(hard, ...box);
-    // Местата, заети от интерфейса над картата, са заети и за етикетите.
+    // Space taken by the interface over the map is taken for labels too.
     const cr = container.getBoundingClientRect();
     for (const sel of ['#hud', '#tools', '#side:not(.closed) #side-body', '#side-toggle', '#card:not([hidden])', '#hint:not([hidden])']) {
       const el = document.querySelector(sel);
@@ -475,7 +476,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       ctx.fillText(str, x, y);
     };
 
-    // 1. Пресните събития — те са „какво става сега“.
+    // 1. Fresh events — they are "what is happening now".
     if (state.layers.events || state.layers.battles) {
       const minI = z < 2.6 ? 3 : z < 4 ? 2 : 1;
       const fresh = events
@@ -489,7 +490,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const p = map.project([e.lon, e.lat]);
         const font = `italic 600 ${e.i === 3 ? 16 : 14.5}px ${SERIF}`;
         const w = measure(e.t, font, 0);
-        // Вдясно от точката, освен ако не се побира до ръба — тогава вляво.
+        // Right of the dot, unless it would hit the edge — then to the left.
         const left = p.x + 11 + w > W - 4;
         const x0 = left ? p.x - 11 - w : p.x + 11, y = p.y;
         if (x0 < 4 || !free(x0 - 2, y - 9, x0 + w + 2, y + 9)) continue;
@@ -498,7 +499,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       }
     }
 
-    // 2. Походите: светеща точка начело и името на похода.
+    // 2. Campaigns: a glowing head and the campaign's name.
     if (state.layers.routes) {
       routes.forEach(r => {
         if (r.k === 'trade') return;
@@ -526,7 +527,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       });
     }
 
-    // 3. Градовете, с името им за годината.
+    // 3. Cities, with their name for the year.
     if (state.layers.cities) {
       const maxRank = z < 2.6 ? 1 : z < 4 ? 2 : 3;
       for (const c of cities) {
@@ -540,7 +541,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       }
     }
 
-    // 3½. Моретата с имената им за годината — синкав курсив, както в стар атлас.
+    // 3½. Seas with their name for the year — bluish italics, like an old atlas.
     if (state.layers.rivers) {
       const maxRank = z < 2 ? 1 : z < 3.2 ? 2 : 3;
       for (const s of seas) {
@@ -556,7 +557,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       }
     }
 
-    // 4. Културите без граници.
+    // 4. Cultures without borders.
     if (state.layers.cultures) {
       for (const c of cultures) {
         const a = spanAlpha(c.s, c.e, Math.max(40, (c.e - c.s) * 0.15), year);
@@ -571,10 +572,10 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       }
     }
 
-    // 5. Държавите и народите от снимката, по площ.
+    // 5. States and peoples from the snapshot, by area.
     if (state.layers.borders) {
       const kmPerPx0 = 40075 / 512;
-      // Едно и също име не се повтаря по-близо от половин екран.
+      // The same name is not repeated closer than half a screen.
       const seen = new Map();
       const near = Math.max(W, H) * 0.5;
       for (const [lon, lat, area, name, sharp] of labels) {
@@ -602,15 +603,15 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       }
     }
 
-    // Твърдите етикети отгоре.
+    // The hard labels on top.
     for (const f of later) f();
   }
 
-  // ——— Външният интерфейс ———
+  // ——— Public interface ———
   let ready = false;
   map.on('load', () => {
     ready = true;
-    // Компактната атрибуция се отваря сама при зареждане; на телефон закрива картата.
+    // The compact attribution opens itself on load; on a phone it covers the map.
     container.querySelector('.maplibregl-ctrl-attrib')?.classList.remove('maplibregl-compact-show');
     applyLayerVisibility();
     if (state.kinds) applyKinds();

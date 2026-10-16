@@ -1,38 +1,38 @@
 <!doctype html>
-<html lang="bg">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Атлас на историята</title>
-<meta name="description" content="Карта на света с таймлайн: цивилизации, граници и събития от неолита до днес.">
+<title>Chronoatlas — an atlas of history</title>
+<meta name="description" content="A world map with a timeline: civilizations, borders and events from 10,000 BC to today.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23101724' stroke='%23d9b45a' stroke-width='2'/%3E%3Cpath d='M4 16h24M16 2c-5 4-5 24 0 28M16 2c5 4 5 24 0 28' stroke='%23d9b45a' fill='none' stroke-width='1.5'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="vendor/maplibre/maplibre-gl.css">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="map" aria-label="Карта на света"></div>
+<div id="map" data-i18n-attr="aria-label:map.label" aria-label="World map"></div>
 <canvas id="labels" aria-hidden="true"></canvas>
 <div id="tip" hidden></div>
 
 <header id="hud">
   <div id="year" aria-live="polite">—</div>
   <div id="era"></div>
-  <div id="snap" title="Границите идват от моментни снимки; между тях картата прескача."></div>
+  <div id="snap" data-i18n-attr="title:hud.snapTitle"></div>
 </header>
 
 <div id="tools">
   <div class="search">
-    <input id="q" type="search" placeholder="Търси държава, битка, град…" autocomplete="off" spellcheck="false" aria-label="Търсене">
+    <input id="q" type="search" autocomplete="off" spellcheck="false" data-i18n-attr="placeholder:search.placeholder;aria-label:search.label" placeholder="Search a country, battle, city…" aria-label="Search">
     <ul id="results" role="listbox" hidden></ul>
   </div>
-  <div id="layers" role="group" aria-label="Слоеве"></div>
+  <div id="layers" role="group" data-i18n-attr="aria-label:layers.label"></div>
 </div>
 
-<aside id="side" aria-label="Едновременно по света">
-  <button id="side-toggle" aria-expanded="true" title="Едновременно по света">◧</button>
+<aside id="side" data-i18n-attr="aria-label:side.toggle">
+  <button id="side-toggle" aria-expanded="true" data-i18n-attr="title:side.toggle">◧</button>
   <div id="side-body">
-    <div id="kinds" role="group" aria-label="Видове събития"></div>
+    <div id="kinds" role="group" data-i18n-attr="aria-label:kinds.label"></div>
     <div id="side-list"></div>
   </div>
 </aside>
@@ -41,23 +41,23 @@
 
 <footer id="time">
   <div class="controls">
-    <button id="play" title="Пусни историята (интервал)" aria-label="Пусни">▶</button>
-    <select id="speed" title="Скорост" aria-label="Скорост">
-      <option value="5">5 г./с</option>
-      <option value="20">20 г./с</option>
-      <option value="60" selected>60 г./с</option>
-      <option value="200">200 г./с</option>
+    <button id="play" data-i18n-attr="title:play.title;aria-label:play.play">▶</button>
+    <select id="speed" data-i18n-attr="title:speed.title;aria-label:speed.title">
+      <option value="5">5</option>
+      <option value="20">20</option>
+      <option value="60" selected>60</option>
+      <option value="200">200</option>
     </select>
   </div>
-  <canvas id="timeline" tabindex="0" aria-label="Времева линия: колелцето мести времето, Ctrl+колелцето мащабира"></canvas>
+  <canvas id="timeline" tabindex="0" data-i18n-attr="aria-label:timeline.label"></canvas>
 </footer>
 
 <div id="hint" hidden>
-  <span><b>Колелцето</b> върху времевата линия те води напред и назад във времето · <b>Ctrl</b> + колелце мени мащаба · <b>интервал</b> пуска историята</span>
-  <button id="hint-ok">Разбрах</button>
+  <span></span>
+  <button id="hint-ok" data-i18n="hint.ok">Got it</button>
 </div>
 
-<div id="loading">Зареждам света…</div>
+<div id="loading" data-i18n="app.loading">Loading the world…</div>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

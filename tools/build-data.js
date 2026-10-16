@@ -1,8 +1,9 @@
-// Сглобява public/data от суровите набори в .cache:
-//   borders/<year>.json  — опростени граници + точки за етикети
-//   entities.json        — всяко име: български превод, години, къде е било
-//   base/*.json          — суша, океан, реки, езера (Natural Earth)
-// Пуска се с `npm run data`. Изтеглянето е описано в README.
+// Builds public/data from the raw datasets in .cache:
+//   borders/<year>.json  — simplified borders + label points
+//   entities.json        — every polity name: the years and places it appears
+//   base/*.json          — land, ocean, rivers, lakes (Natural Earth)
+// Polity names stay in English (they are the keys); translations live in tools/i18n.
+// Run with `npm run data`.
 import fs from 'node:fs';
 import path from 'node:path';
 import ms from 'mapshaper';
@@ -12,20 +13,12 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const HB = path.join(ROOT, '.cache/hb');
 const NE = path.join(ROOT, '.cache/ne');
 const OUT = path.join(ROOT, 'public/data');
-// Преводите са на партиди в tools/names-bg/*.json; по-късен файл печели.
-const NB_DIR = path.join(ROOT, 'tools/names-bg');
-const nkey = s => s.normalize('NFC').trim();
-const NAMES_BG = {};
-for (const f of fs.readdirSync(NB_DIR).filter(f => f.endsWith('.json')).sort()) {
-  for (const [k, v] of Object.entries(JSON.parse(fs.readFileSync(path.join(NB_DIR, f), 'utf8')))) NAMES_BG[nkey(k)] = v;
-}
-const bgName = n => NAMES_BG[nkey(n)];
 
 fs.mkdirSync(path.join(OUT, 'borders'), { recursive: true });
 fs.mkdirSync(path.join(OUT, 'base'), { recursive: true });
 
-// Приглушени цветове, които стоят добре върху релефа. Индексът е по хеш на името,
-// за да е Рим един и същ цвят във всяка снимка.
+// Muted colours that sit well on the relief. Picked by a hash of the name,
+// so Rome has the same colour in every snapshot.
 const PALETTE = [
   '#c0504d', '#d4884a', '#c9a640', '#8fa64a', '#4f9a6e', '#3f8f99', '#4a76b0',
   '#6b62b5', '#9a5aa8', '#b8577f', '#a0704f', '#7d8a5a', '#5c7d8f', '#b07a3a',
@@ -37,7 +30,7 @@ function hash(s) {
 }
 const colorFor = key => PALETTE[hash(key) % PALETTE.length];
 
-// Площ в km² по сферичния ексцес — достатъчно точно, за да се подредят етикетите.
+// Area in km² from the spherical excess — good enough to rank labels.
 function ringArea(ring) {
   const R = 6371;
   let a = 0;
@@ -58,7 +51,7 @@ async function simplify(file, pct, extra = '') {
 
 const r2 = n => Math.round(n * 100) / 100;
 
-// Sutherland–Hodgman: пръстенът, отрязан до правоъгълник.
+// Sutherland–Hodgman: the ring clipped to a rectangle.
 function clipRing(ring, [x0, y0, x1, y1]) {
   const edges = [
     [p => p[0] >= x0, (a, b) => [x0, a[1] + (b[1] - a[1]) * (x0 - a[0]) / (b[0] - a[0])]],
@@ -80,8 +73,8 @@ function clipRing(ring, [x0, y0, x1, y1]) {
   return [...out, out[0]];
 }
 
-// Огромна държава (Русия, Монголската империя) има етикет и в другите си краища,
-// иначе при приближение в Европа етикетът ѝ е някъде в Сибир.
+// A huge polity (Russia, the Mongol Empire) gets labels in its other parts too,
+// otherwise when zoomed into Europe its only label is somewhere in Siberia.
 function extraLabels(poly, mainXY) {
   const xs = poly[0].map(p => p[0]), ys = poly[0].map(p => p[1]);
   const out = [];
@@ -98,7 +91,6 @@ function extraLabels(poly, mainXY) {
   }
   return out;
 }
-const missing = new Map();
 const entities = {};
 const index = JSON.parse(fs.readFileSync(path.join(HB, 'index.json'), 'utf8')).years;
 
@@ -107,7 +99,8 @@ for (const { year, filename } of index) {
   const feats = [], labels = [];
   for (const f of fc.features) {
     const p = f.properties;
-    if (!p.NAME?.trim() || !f.geometry) continue;
+    const name = p.NAME?.trim();
+    if (!name || !f.geometry) continue;
     const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
     let best = null, bestA = -1, total = 0;
     for (const poly of polys) {
@@ -116,26 +109,23 @@ for (const { year, filename } of index) {
       if (a > bestA) { bestA = a; best = poly; }
     }
     if (!best) continue;
-    const bg = bgName(p.NAME);
-    if (bg == null) missing.set(p.NAME, (missing.get(p.NAME) || 0) + total);
-    const name = bg || p.NAME;
-    const sub = p.SUBJECTO && p.SUBJECTO !== p.NAME ? p.SUBJECTO : null;
+    const sub = p.SUBJECTO && p.SUBJECTO !== p.NAME ? p.SUBJECTO.trim() : null;
     const id = feats.length;
     feats.push({
       type: 'Feature', id,
-      properties: { n: name, e: p.NAME, c: colorFor(sub || p.NAME), p: p.BORDERPRECISION >= 2 ? 1 : 0, s: sub ? (bgName(sub) ?? sub) : '' },
+      properties: { e: name, c: colorFor(sub || p.NAME), p: p.BORDERPRECISION >= 2 ? 1 : 0, s: sub || '' },
       geometry: f.geometry,
     });
     const [lx, ly] = polylabel(best, 0.05);
-    // Празен превод значи „без етикет“ — за имена като „?“ в данните.
-    if (bg !== '') {
+    // Names like "?" in the source data get no label.
+    if (/\p{L}/u.test(name)) {
       const sharp = p.BORDERPRECISION >= 2 ? 1 : 0, color = colorFor(sub || p.NAME);
       labels.push([r2(lx), r2(ly), Math.round(total), name, sharp, color]);
-      // Седмото поле 1 значи „допълнителен етикет“ — панелът го прескача.
+      // A 7th field of 1 marks an extra label — the side panel skips it.
       if (bestA > 2500000) for (const [ex, ey, ea] of extraLabels(best, [lx, ly])) labels.push([ex, ey, ea, name, sharp, color, 1]);
     }
-    const ent = entities[p.NAME] ??= { n: name, at: [] };
-    // Една точка на снимка: най-голямата част на името през тази година.
+    const ent = entities[name] ??= { at: [] };
+    // One point per snapshot: the largest part under this name in that year.
     const row = [year, r2(lx), r2(ly), Math.round(total), p.BORDERPRECISION >= 2 ? 1 : 0];
     const prev = ent.at.find(a => a[0] === year);
     if (!prev) ent.at.push(row);
@@ -150,7 +140,7 @@ for (const { year, filename } of index) {
 fs.writeFileSync(path.join(OUT, 'snapshots.json'), JSON.stringify(index.map(y => y.year)));
 fs.writeFileSync(path.join(OUT, 'entities.json'), JSON.stringify(entities));
 
-// Основа: Natural Earth 1:50m.
+// Base map: Natural Earth 1:50m.
 const shp = n => path.join(NE, n, `${n}.shp`);
 async function base(name, pct, fields) {
   const out = await ms.applyCommands(
@@ -162,6 +152,4 @@ await base('ne_50m_ocean', '60%');
 await base('ne_50m_lakes', '60%', 'name,scalerank');
 await base('ne_50m_rivers_lake_centerlines', '60%', 'name,scalerank,featurecla');
 
-const miss = [...missing].sort((a, b) => b[1] - a[1]);
-fs.writeFileSync(path.join(ROOT, '.cache/missing-names.txt'), miss.map(([n, a]) => `${n}\t${a}`).join('\n'));
-console.log(`без превод: ${miss.length} имена (списъкът е в .cache/missing-names.txt)`);
+console.log('done — run `npm run i18n` to rebuild the language packs');

@@ -1,6 +1,6 @@
-"""Локален сървър за public/ без кеширане, за да се вижда всяка промяна веднага.
+"""A local server for public/ without caching, so every change shows up at once.
 
-python tools/serve.py [порт]
+python tools/serve.py [port]
 """
 import functools
 import http.server
@@ -23,9 +23,9 @@ class NoCache(http.server.SimpleHTTPRequestHandler):
 
 
 class Loopback(http.server.ThreadingHTTPServer):
-    # Браузърът търси localhost първо на ::1; само IPv4 кара module worker-а да виси.
+    # Browsers try localhost on ::1 first; IPv4 only makes the module worker hang.
     address_family = socket.AF_INET6
-    # По подразбиране опашката е 5 връзки; картата иска десетки плочки наведнъж.
+    # The default backlog is 5 connections; the map asks for dozens of tiles at once.
     request_queue_size = 128
 
 

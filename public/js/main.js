@@ -1,3 +1,4 @@
+import { loadLanguage, downloadLanguage, setLanguage, applyStatic, texts, polityName, t, lang } from './i18n.js';
 import { createMap } from './map.js';
 import { createTimeline, MIN_SPAN, MAX_SPAN } from './timeline.js';
 import { clampYear, fmtYear, MAX_YEAR } from './time.js';
@@ -9,11 +10,12 @@ const get = (p, fallback) => fetch(p).then(r => (r.ok ? r.json() : Promise.rejec
   throw err;
 });
 
-const EVENT_FILES = ['1-ancient', '2-late-antiquity', '3-medieval', '4-early-modern', '5-modern', '6-world'];
-const [snapshots, entities, eventParts, cultures, cities, routes, eras, people, seas, wdRaw] = await Promise.all([
+// The language goes first: every text on screen comes from its pack.
+const [, snapshots, entities, events, cultures, cities, routes, eras, people, seas, wdRaw] = await Promise.all([
+  loadLanguage(),
   get('data/snapshots.json'),
   get('data/entities.json'),
-  Promise.all(EVENT_FILES.map(f => get(`data/content/events-${f}.json`))),
+  get('data/content/events.json'),
   get('data/content/cultures.json'),
   get('data/content/cities.json'),
   get('data/content/routes.json'),
@@ -22,19 +24,33 @@ const [snapshots, entities, eventParts, cultures, cities, routes, eras, people, 
   get('data/content/seas.json'),
   get('data/wd-events.json', []),
 ]);
-// Wikidata е в компактни редове: [y, lon, lat, вид, езици, заглавие, en, bg уики, en уики, id]
-const wd = wdRaw.map(([y, lon, lat, k, l, t, en, wb, we, id]) => ({ y, lon, lat, k, l, t, en, wb, we, id }));
-const events = eventParts.flat().sort((a, b) => a.y - b.y);
+applyStatic();
 
-// ——— Състояние: адресът е източникът при отваряне ———
+// The data files hold no text, only ids; texts are attached from the language pack.
+const T = texts();
+for (const e of events) Object.assign(e, T.events[e.id]);
+for (const c of cultures) Object.assign(c, T.cultures[c.id]);
+for (const r of routes) Object.assign(r, T.routes[r.id]);
+for (const p of people) Object.assign(p, T.people[p.id]);
+for (const c of cities) Object.assign(c, T.cities[c.id]);
+for (const s of seas) s.n = T.seas[s.id];
+for (const tr of eras.tracks) {
+  tr.n = T.eras[tr.id].n;
+  tr.b.forEach((b, i) => { b[2] = T.eras[tr.id].b[i]; });
+}
+for (const [name, ent] of Object.entries(entities)) ent.n = polityName(name);
+// Wikidata rows: [year, lon, lat, kind, sitelinks, qid]
+const wd = wdRaw.map(([y, lon, lat, k, l, id]) => ({ y, lon, lat, k, l, id, t: T.wd[id]?.[0] ?? id, w: T.wd[id]?.[1] }));
+
+// ——— State: the URL is the source of truth on load ———
 const LAYERS = [
-  ['borders', 'Граници', '#d9b45a'],
-  ['cultures', 'Култури', '#f0c674'],
-  ['events', 'Събития', '#e8c46a'],
-  ['battles', 'Битки', '#e0574f'],
-  ['routes', 'Пътища и походи', '#ff7a5c'],
-  ['cities', 'Градове', '#f4ecd8'],
-  ['rivers', 'Реки и морета', '#4b7298'],
+  ['borders', '#d9b45a'],
+  ['cultures', '#f0c674'],
+  ['events', '#e8c46a'],
+  ['battles', '#e0574f'],
+  ['routes', '#ff7a5c'],
+  ['cities', '#f4ecd8'],
+  ['rivers', '#4b7298'],
 ];
 const hash = new URLSearchParams(location.hash.slice(1));
 const num = (v, d) => (v != null && v !== '' && Number.isFinite(+v) ? +v : d);
@@ -60,7 +76,7 @@ const app = {
 };
 const win = () => Math.min(400, Math.max(6, app.span * 0.06));
 
-// ——— Картата ———
+// ——— The map ———
 const mapEl = document.getElementById('map');
 const map = createMap({
   container: mapEl,
@@ -77,7 +93,7 @@ const map = createMap({
   },
   onSnapshot() { panel.refresh(); dirty(); },
 });
-// За проверка от конзолата.
+// For poking around from the console.
 window.atlas = { app, map: map.map };
 
 function onGo(g) {
@@ -86,7 +102,7 @@ function onGo(g) {
   map.flyTo(g.lon, g.lat);
 }
 
-// ——— Таймлайнът, панелът, търсенето ———
+// ——— Timeline, panel, search ———
 const timeline = createTimeline(document.getElementById('timeline'), { eras, events, snapshots, app });
 const panel = createPanel(document.getElementById('side-list'), document.getElementById('side-toggle'), {
   data: { events, cultures, cities, people },
@@ -108,55 +124,77 @@ createSearch(document.getElementById('q'), document.getElementById('results'), {
 
 map.setKinds(panel.kinds());
 
-// Подсказка при първо отваряне; изчезва при първото завъртане на времето.
+// First-visit hint; it goes away the first time time is turned.
 const hint = document.getElementById('hint');
 let hinted = false;
 try { hinted = !!localStorage.getItem('hint'); } catch {}
 const hideHint = () => { hint.hidden = true; try { localStorage.setItem('hint', '1'); } catch {} };
 if (!hinted) {
-  if (matchMedia('(pointer: coarse)').matches) hint.querySelector('span').innerHTML = '<b>Плъзни</b> времевата линия, за да пътуваш във времето · <b>щипни</b> я за мащаб · <b>▶</b> пуска историята';
+  hint.querySelector('span').innerHTML = t(matchMedia('(pointer: coarse)').matches ? 'hint.touch' : 'hint.desktop');
   hint.hidden = false;
   document.getElementById('hint-ok').onclick = hideHint;
   document.getElementById('timeline').addEventListener('pointerdown', hideHint, { once: true });
   document.getElementById('timeline').addEventListener('wheel', hideHint, { once: true, passive: true });
 }
 
-// ——— Слоевете ———
+// ——— Layer buttons ———
 const layersEl = document.getElementById('layers');
-for (const [k, label, color] of LAYERS) {
+const chip = (label, color, pressed) => {
   const b = document.createElement('button');
-  b.innerHTML = `<i></i>${label}`;
+  b.innerHTML = '<i></i>';
+  b.append(label);
   b.style.setProperty('--dot', color);
-  b.setAttribute('aria-pressed', String(app.layers[k]));
+  if (pressed != null) b.setAttribute('aria-pressed', String(pressed));
+  layersEl.append(b);
+  return b;
+};
+for (const [k, color] of LAYERS) {
+  const b = chip(t('layer.' + k), color, app.layers[k]);
   b.onclick = () => {
     app.layers[k] = !app.layers[k];
     b.setAttribute('aria-pressed', String(app.layers[k]));
     map.setLayer(k, app.layers[k]);
     try { localStorage.setItem('layers', JSON.stringify(app.layers)); } catch {}
   };
-  layersEl.append(b);
 }
-const globeBtn = document.createElement('button');
-globeBtn.innerHTML = '<i></i>Глобус';
-globeBtn.style.setProperty('--dot', '#7fb7e6');
-globeBtn.setAttribute('aria-pressed', String(!app.flat));
+const globeBtn = chip(t('layer.globe'), '#7fb7e6', !app.flat);
 globeBtn.onclick = () => {
   app.flat = !app.flat;
   globeBtn.setAttribute('aria-pressed', String(!app.flat));
   map.setProjection(app.flat ? 'mercator' : 'globe');
   writeHash();
 };
-layersEl.append(globeBtn);
 
-// ——— ▶ ———
+// Language: English by default; Bulgarian is downloaded once and kept in the browser.
+const langBtn = chip(t('lang.other'), '#d9b45a');
+langBtn.classList.add('lang');
+langBtn.title = t('lang.otherTitle');
+langBtn.onclick = async () => {
+  const next = lang === 'en' ? 'bg' : 'en';
+  if (next !== 'en') {
+    langBtn.disabled = true;
+    langBtn.lastChild.textContent = t('lang.downloading');
+    if (!(await downloadLanguage(next))) {
+      langBtn.disabled = false;
+      langBtn.lastChild.textContent = t('lang.other');
+      alert(t('lang.failed'));
+      return;
+    }
+  }
+  setLanguage(next);
+  location.reload();
+};
+
+// ——— Play ———
 const playBtn = document.getElementById('play');
 const speedSel = document.getElementById('speed');
+for (const o of speedSel.options) o.textContent = t('speed.unit', { n: o.value });
 let lastFrame = 0;
 function togglePlay(on = !app.playing) {
   app.playing = on;
   if (on && app.year >= MAX_YEAR - 1) app.setYear(-3000, { instant: true });
   playBtn.textContent = on ? '❚❚' : '▶';
-  playBtn.setAttribute('aria-label', on ? 'Пауза' : 'Пусни');
+  playBtn.setAttribute('aria-label', t(on ? 'play.pause' : 'play.play'));
   lastFrame = performance.now();
   dirty();
 }
@@ -166,7 +204,7 @@ document.addEventListener('keydown', e => {
   if (e.key === ' ') { e.preventDefault(); togglePlay(); }
   else if (e.key === 'Escape') hideCard();
   else if (e.key === '/') { e.preventDefault(); document.getElementById('q').focus(); }
-  // Стрелките местят времето, освен ако фокусът не е в картата (там местят изгледа).
+  // Arrows move time, unless the map has focus (there they pan the view).
   else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !e.target.closest('#map, #timeline')) {
     e.preventDefault();
     app.stopPlay();
@@ -174,17 +212,17 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// ——— Един кадър: годината тече, всичко се пренарежда ———
+// ——— One frame: time moves on, everything is redrawn ———
 const yearEl = document.getElementById('year'), eraEl = document.getElementById('era'), snapEl = document.getElementById('snap');
 let raf = 0, lastHash = 0, lastPanel = 0, panelTimer = 0;
 function dirty() { if (!raf) raf = requestAnimationFrame(frame); }
 function frame(now) {
   raf = 0;
   if (app.tween) {
-    const t = Math.min(1, (now - app.tween.t0) / app.tween.dur);
-    const k = t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
+    const k0 = Math.min(1, (now - app.tween.t0) / app.tween.dur);
+    const k = k0 < 0.5 ? 4 * k0 * k0 * k0 : 1 - (-2 * k0 + 2) ** 3 / 2;
     app.year = app.tween.from + (app.tween.to - app.tween.from) * k;
-    if (t >= 1) app.tween = null;
+    if (k0 >= 1) app.tween = null;
   }
   if (app.playing) {
     app.year = clampYear(app.year + (+speedSel.value) * (now - lastFrame) / 1000);
@@ -198,8 +236,8 @@ function frame(now) {
   const band = eras.tracks[0].b.find(([s, e]) => app.year >= s && app.year < e);
   eraEl.textContent = band ? band[2] : '';
   const snap = map.snapshot;
-  snapEl.innerHTML = snap == null ? '' : `Граници към <b>${fmtYear(snap)}</b>${Math.abs(snap - app.year) >= 1 ? ' · най-близката карта назад' : ''}`;
-  // Панелът се пренарежда най-много 5–6 пъти в секунда; пропуснатото се догонва след малко.
+  snapEl.innerHTML = snap == null ? '' : t('hud.snap', { year: fmtYear(snap) }) + (Math.abs(snap - app.year) >= 1 ? t('hud.snapBack') : '');
+  // The panel is rebuilt at most 5–6 times a second; whatever was skipped catches up shortly.
   if (now - lastPanel > 180) { lastPanel = now; panel.update(app.year, win(), map.labels, snap); }
   else if (!panelTimer) panelTimer = setTimeout(() => { panelTimer = 0; dirty(); }, 200);
   if (now - lastHash > 500) { lastHash = now; writeHash(); }

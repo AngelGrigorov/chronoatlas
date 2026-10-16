@@ -1,14 +1,14 @@
-// Тегли събития с място и дата от Wikidata в .cache/wikidata.json.
+// Fetches events with a place and a date from Wikidata into .cache/wikidata.json.
 // node tools/fetch-wikidata.js
-// Две стъпки, защото една голяма заявка удря таймаута на WDQS:
-// първо id-тата по клас, после подробностите на партиди.
+// Two steps, because one big query hits the WDQS timeout:
+// first the ids per class, then the details in batches.
 import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const UA = 'chronoatlas/0.1 (personal, non-commercial)';
 
-// Вид събитие → класове в Wikidata и праг за брой езици (мярка за значимост).
+// Event kind → Wikidata classes and a minimum number of sitelinks (a measure of notability).
 const KINDS = {
   battle: { classes: ['Q178561', 'Q1261499', 'Q2001676', 'Q1072326'], min: 6 },
   siege: { classes: ['Q188055'], min: 6 },
@@ -44,7 +44,7 @@ for (const [kind, { classes, min }] of Object.entries(KINDS)) {
   }
 }
 
-// Напредъкът се пази, за да може прекъснато теглене да продължи.
+// Progress is saved, so an interrupted run can resume.
 const PARTIAL = path.join(ROOT, '.cache/wikidata.partial.json');
 const ids = Object.keys(kindOf);
 const out = fs.existsSync(PARTIAL) ? JSON.parse(fs.readFileSync(PARTIAL, 'utf8')) : {};
@@ -65,14 +65,14 @@ for (let i = 0; i < ids.length; i += 200) {
   OPTIONAL { ?bgwiki schema:about ?item ; schema:isPartOf <https://bg.wikipedia.org/> }
   OPTIONAL { ?enwiki schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> }
 }`);
-  if (!rows) { console.warn('пропусната партида', i); continue; }
+  if (!rows) { console.warn('skipped batch', i); continue; }
   for (const r of rows) {
     const id = qid(r.item.value);
     const m = r.date && /^(-?\d+)-/.exec(r.date.value);
     const cv = r.coord?.value || r.lcoord?.value;
     const c = cv && /Point\(([-\d.eE]+) ([-\d.eE]+)\)/.exec(cv);
     if (!m || !c) continue;
-    // WDQS дава астрономическа година (0 = 1 г. пр.Хр.); тук годините са исторически.
+    // WDQS returns astronomical years (0 = 1 BC); this project uses historical years.
     let y = +m[1];
     if (y <= 0) y -= 1;
     const prev = out[id];
@@ -91,4 +91,4 @@ for (let i = 0; i < ids.length; i += 200) {
 }
 const list = Object.values(out);
 fs.writeFileSync(path.join(ROOT, '.cache/wikidata.json'), JSON.stringify(list));
-console.log('\nобщо', list.length, 'с български етикет', list.filter(e => e.bg).length);
+console.log('\ntotal', list.length, 'with a Bulgarian label', list.filter(e => e.bg).length);

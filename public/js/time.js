@@ -1,35 +1,53 @@
-// Годините са исторически: −490 е 490 г. пр.Хр., нулева година няма.
+// Years are historical: −490 is 490 BC, there is no year zero.
 export const MIN_YEAR = -10000;
 export const MAX_YEAR = 2025;
 export const clampYear = y => Math.min(MAX_YEAR, Math.max(MIN_YEAR, y));
 
-const num = n => n >= 10000 ? n.toLocaleString('bg-BG') : String(n);
+// Year formatting per language. English: "490 BC", "AD 117", "1453".
+const FORMATS = {
+  en: {
+    locale: 'en-US',
+    bc: n => `${n} BC`,
+    ad: (n, r) => (r < 1000 ? `AD ${n}` : n),
+    rangeBc: (a, b) => `${a}–${b} BC`,
+    rangeAd: (a, b, s) => (s < 1000 ? `AD ${a}–${b}` : `${a}–${b}`),
+    since: y => `since ${y}`,
+    sep: ' – ',
+  },
+  bg: {
+    locale: 'bg-BG',
+    bc: (n, r, short) => (short ? `${n} пр.Хр.` : `${n} г. пр.Хр.`),
+    ad: (n, r, short) => (short ? n : `${n} г.`),
+    rangeBc: (a, b) => `${a} – ${b} г. пр.Хр.`,
+    rangeAd: (a, b) => `${a} – ${b} г.`,
+    since: y => `от ${y}`,
+    sep: ' – ',
+  },
+};
+let F = FORMATS.en;
+export const setTimeLang = lang => { F = FORMATS[lang] || FORMATS.en; };
+
+const num = n => (n >= 10000 ? n.toLocaleString(F.locale) : String(n));
 
 export function fmtYear(y, short = false) {
   const r = Math.round(y);
-  if (r < 0) return short ? `${num(-r)} пр.Хр.` : `${num(-r)} г. пр.Хр.`;
-  return short ? num(Math.max(1, r)) : `${num(Math.max(1, r))} г.`;
+  if (r < 0) return F.bc(num(-r), r, short);
+  const n = Math.max(1, r);
+  return F.ad(num(n), n, short);
 }
 
 export function fmtRange(s, e) {
-  if (e == null) return `от ${fmtYear(s)}`;
-  if (Math.round(s) === Math.round(e)) return fmtYear(s);
-  if (s < 0 && e < 0) return `${num(-Math.round(s))} – ${num(-Math.round(e))} г. пр.Хр.`;
-  if (s >= 0) return `${num(Math.round(s))} – ${num(Math.round(e))} г.`;
-  return `${fmtYear(s)} – ${fmtYear(e)}`;
+  if (e == null) return F.since(fmtYear(s));
+  const a = Math.round(s), b = Math.round(e);
+  if (a === b) return fmtYear(s);
+  if (a < 0 && b < 0) return F.rangeBc(num(-a), num(-b));
+  if (a >= 0) return F.rangeAd(num(Math.max(1, a)), num(b), a);
+  return fmtYear(s) + F.sep + fmtYear(e);
 }
 
-// Широки области за панела „Едновременно“. Груби кутии — стигат, за да
-// се подреди светът в колони, а не за да се чертаят граници.
-export const REGIONS = [
-  ['europe', 'Европа'],
-  ['mena', 'Близкият изток и Северна Африка'],
-  ['africa', 'Африка на юг от Сахара'],
-  ['asia', 'Централна и Южна Азия'],
-  ['east', 'Източна и Югоизточна Азия'],
-  ['americas', 'Америките'],
-  ['oceania', 'Океания'],
-];
+// Broad regions for the side panel. Rough boxes — enough to sort the world into
+// columns, not to draw borders. Names come from the language pack (region.<key>).
+export const REGIONS = ['europe', 'mena', 'africa', 'asia', 'east', 'americas', 'oceania'];
 export function regionOf(lon, lat) {
   if (lon < -25) return 'americas';
   if (lon > 150 || (lon > 112 && lat < -10)) return 'oceania';
@@ -41,8 +59,8 @@ export function regionOf(lon, lat) {
   return 'asia';
 }
 
-// Пътищата се пишат с непрекъснати дължини (Магелан стига до −383°), за да не
-// скачат през целия свят. Тук се режат на ±180° на парчета, които MapLibre рисува.
+// Routes are written with continuous longitudes (Magellan reaches −383°) so they don't
+// jump across the whole world. Here they are cut at ±180° into pieces MapLibre can draw.
 export function wrapLine(coords) {
   const wrap = x => Math.floor((x + 180) / 360) * 360;
   const parts = [[]];

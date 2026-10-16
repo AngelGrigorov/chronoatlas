@@ -1,20 +1,35 @@
-# chronoatlas — атлас на историята
+# chronoatlas — an atlas of history
 
-Карта на света с таймлайн отдолу. Колелцето върху таймлайна мести времето,
-а картата показва кой къде е бил, какво се е случило и накъде са вървели
-походите — от 10 000 г. пр.Хр. до днес. Интерфейсът е на български.
+A world map with a timeline underneath. Scroll the timeline and the map shows
+who was where, what happened and where the armies and ships were heading — from
+10,000 BC to today. Runs in the browser, works offline, English and Bulgarian.
 
-- граници на държави и народи за 53 момента от историята, с размити
-  граници там, където са приблизителни
-- култури без ясни граници като светещи петна — Шумер, Харапа, траките, викингите
-- над 2000 събития: подбрани на ръка и битки, договори и земетресения от Wikidata
-- търговски пътища и походи, които се рисуват с времето
-- градове с имената им през вековете
-- епохи в осем пътечки, панел „Едновременно по света“, търсене, ▶ и линк до всяка година
+![The ancient world in 330 BC: Alexander's campaign, cultures and the side panel](docs/screenshots/ancient-world.jpg)
 
-## Инсталация
+- **Borders** of states and peoples for 53 moments in history; approximate borders
+  are drawn blurred, precise ones sharp
+- **Cultures without clear borders** as glowing areas — Sumer, the Indus Valley,
+  the Thracians, the Vikings
+- **Over 2,000 events**: 470 hand-picked ones plus battles, treaties and earthquakes
+  from Wikidata
+- **Trade routes and campaigns** that draw themselves as time moves
+- **Cities with their names through the ages** (Byzantium → Constantinople → Istanbul)
+  and **seas with their old names** (Pontus Euxinus, Propontis, Mare Nostrum)
+- **Around the world at the same time** — a side panel with what existed in the
+  chosen year, by region, and who was alive
+- **Eras in eight tracks** (world, Europe, Near East, Egypt, China, India, the Americas,
+  Bulgaria), **search**, **▶ play**, and a link to every moment (`#y=-490`)
 
-Трябват Node.js 20+ и Python 3.
+| | |
+|---|---|
+| ![Europe in 1815](docs/screenshots/europe-1815.jpg) | ![The Ottoman Empire card with its area over time](docs/screenshots/ottoman-card.jpg) |
+| ![Magellan's expedition crossing the Pacific](docs/screenshots/magellan-pacific.jpg) | ![The Bulgarian interface](docs/screenshots/bulgarian.jpg) |
+
+<p align="center"><img src="docs/screenshots/phone.jpg" alt="On a phone" width="300"></p>
+
+## Install
+
+You need Node.js 20+ and Python 3.
 
 ```
 git clone https://github.com/AngelGrigorov/chronoatlas.git
@@ -23,28 +38,37 @@ npm install
 npm run serve
 ```
 
-Отвори http://localhost:8642. Папката `public/` е готовият сайт и може да се
-сервира от всеки статичен сървър. Работи и без интернет; само резюметата от
-Уикипедия в картичките искат мрежа.
+Open http://localhost:8642. The `public/` folder is the whole site and can be served
+by any static web server. It works offline; only the Wikipedia summaries in the
+cards need a connection.
 
-## Управление
+## Controls
 
 | | |
 |---|---|
-| колелце върху таймлайна | време напред/назад |
-| Ctrl + колелце, щипка | мащаб на таймлайна |
-| влачене на таймлайна | време |
-| двоен клик върху епоха | побира епохата |
-| ← → | време |
-| интервал | ▶ / пауза |
-| `/` | търсене |
+| mouse wheel over the timeline | move through time |
+| Ctrl + wheel, pinch | zoom the timeline |
+| drag the timeline | move through time |
+| double-click an era | fit the era |
+| ← → | move through time |
+| space | play / pause |
+| `/` | search |
 
-## Данни и лиценз
+## Languages
 
-- Граници: [historical-basemaps](https://github.com/aourednik/historical-basemaps), A. Ourednik — GPL-3.0
-- Релеф, суша, реки: [Natural Earth](https://www.naturalearthdata.com/) — обществено достояние
-- Събития: [Wikidata](https://www.wikidata.org/) — CC0
-- Карта: [MapLibre GL JS](https://maplibre.org/) — BSD-3
-- Шрифт: Cormorant Garamond — SIL OFL 1.1
+English is the default. The **БГ** button downloads the Bulgarian language pack once
+and keeps it in the browser (localStorage), so it works offline afterwards.
 
-Кодът е под GPL-3.0 (`LICENSE`).
+All texts live in `tools/i18n/<lang>/` — interface strings, the texts of every event,
+culture, route, person, city, sea and era (by id), Wikidata titles and polity names.
+`npm run i18n` builds the packs in `public/data/i18n/` and fails if any id lacks a text.
+
+## Data and licence
+
+- Borders: [historical-basemaps](https://github.com/aourednik/historical-basemaps) by A. Ourednik — GPL-3.0
+- Relief, land, rivers: [Natural Earth](https://www.naturalearthdata.com/) — public domain
+- Events: [Wikidata](https://www.wikidata.org/) — CC0
+- Map: [MapLibre GL JS](https://maplibre.org/) — BSD-3
+- Font: Cormorant Garamond — SIL OFL 1.1
+
+The code is licensed under GPL-3.0 (`LICENSE`).

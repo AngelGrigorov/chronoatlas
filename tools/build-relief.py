@@ -1,5 +1,5 @@
-"""Нарязва релефа на Natural Earth (NE2_50M_SR_W, равнопромежутъчна проекция)
-на плочки 256px в Web Mercator за мащаб 0..5 -> public/tiles/relief/{z}/{x}/{y}.webp.
+"""Cuts the Natural Earth relief (NE2_50M_SR_W, equirectangular) into 256px
+Web Mercator tiles for zoom 0..5 -> public/tiles/relief/{z}/{x}/{y}.webp.
 
 python tools/build-relief.py
 """
@@ -23,8 +23,8 @@ print('source', src.size)
 for z in range(MAX_Z + 1):
     n = 2 ** z
     W = T * n
-    # Хоризонтално мащабът е линеен; вертикално всеки ред на плочката
-    # се взима от реда в изходника с неговата географска ширина.
+    # Horizontally the scale is linear; vertically every tile row is taken
+    # from the source row at its latitude.
     level = np.asarray(src.resize((W, W // 2), Image.LANCZOS))
     H = level.shape[0]
     py = np.arange(W) + 0.5

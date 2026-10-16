@@ -1,33 +1,35 @@
-import { KINDS } from './map.js';
+import { kindLabel } from './map.js';
+import { t } from './i18n.js';
 import { fmtYear, fmtRange } from './time.js';
 
 const norm = s => s.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/ё/g, 'е');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-// Едно общо търсене по всичко: събития, държави, култури, градове, пътища.
+// One search over everything: events, states, cultures, cities, people, routes.
 export function createSearch(input, list, data, onSelect) {
   const { events, wd, entities, cultures, cities, routes, people } = data;
   const index = [];
   const add = (label, extra, item) => index.push({ key: norm(label + (extra ? ' ' + extra : '')), label, ...item });
 
-  for (const e of events) add(e.t, '', { kind: KINDS[e.k]?.[0], y: e.y, when: fmtYear(e.y), lon: e.lon, lat: e.lat, w: 3 + e.i, hit: { type: 'event', item: e } });
-  for (const e of wd) add(e.t, e.en, { kind: KINDS[e.k]?.[0], y: e.y, when: fmtYear(e.y), lon: e.lon, lat: e.lat, w: 1, hit: { type: 'wd', item: e } });
+  for (const e of events) add(e.t, '', { kind: kindLabel(e.k), y: e.y, when: fmtYear(e.y), lon: e.lon, lat: e.lat, w: 3 + e.i, hit: { type: 'event', item: e } });
+  for (const e of wd) add(e.t, '', { kind: kindLabel(e.k), y: e.y, when: fmtYear(e.y), lon: e.lon, lat: e.lat, w: 1, hit: { type: 'wd', item: e } });
   for (const [en, ent] of Object.entries(entities)) {
-    // Към картата се отива в снимката, където е най-голяма.
+    // Search jumps to the snapshot where it was largest.
     const best = ent.at.reduce((a, b) => (b[3] > a[3] ? b : a));
     const ys = ent.at.map(a => a[0]);
-    add(ent.n, en !== ent.n ? en : '', { kind: 'Държава', y: best[0], when: fmtRange(Math.min(...ys), Math.max(...ys)), lon: best[1], lat: best[2], area: best[3], w: 2 + Math.min(3, Math.log10(best[3] + 1) / 2), hit: { type: 'polity', item: { n: ent.n, e: en, p: best[4] ?? 1, s: '' } } });
+    // The English name is the key, so it stays searchable in every language.
+    add(ent.n, en !== ent.n ? en : '', { kind: t('search.state'), y: best[0], when: fmtRange(Math.min(...ys), Math.max(...ys)), lon: best[1], lat: best[2], area: best[3], w: 2 + Math.min(3, Math.log10(best[3] + 1) / 2), hit: { type: 'polity', item: { n: ent.n, e: en, p: best[4] ?? 1, s: '' } } });
   }
-  for (const c of cultures) add(c.n, '', { kind: 'Култура', y: Math.round((c.s + c.e) / 2), when: fmtRange(c.s, c.e), lon: c.lon, lat: c.lat, w: 4, hit: { type: 'culture', item: c } });
+  for (const c of cultures) add(c.n, '', { kind: t('search.culture'), y: Math.round((c.s + c.e) / 2), when: fmtRange(c.s, c.e), lon: c.lon, lat: c.lat, w: 4, hit: { type: 'culture', item: c } });
   for (const c of cities) {
     const names = [...new Set(c.n.map(n => n[1]))];
-    names.forEach((n, i) => add(n, names.filter(x => x !== n).join(' '), { kind: 'Град', y: Math.max(c.s, c.n[i]?.[0] ?? c.s), when: fmtRange(c.s, c.e), lon: c.lon, lat: c.lat, w: 4 - c.r * 0.5, hit: { type: 'city', item: c } }));
+    names.forEach((n, i) => add(n, names.filter(x => x !== n).join(' '), { kind: t('search.city'), y: Math.max(c.s, c.n[i]?.[0] ?? c.s), when: fmtRange(c.s, c.e), lon: c.lon, lat: c.lat, w: 4 - c.r * 0.5, hit: { type: 'city', item: c } }));
   }
-  for (const p of people) add(p.n, p.t, { kind: 'Личност', y: Math.round(p.b + Math.min(40, (p.d - p.b) * 0.6)), when: fmtRange(p.b, p.d), lon: p.lon, lat: p.lat, w: 3 + p.i, hit: { type: 'person', item: p } });
+  for (const p of people) add(p.n, p.t, { kind: t('search.person'), y: Math.round(p.b + Math.min(40, (p.d - p.b) * 0.6)), when: fmtRange(p.b, p.d), lon: p.lon, lat: p.lat, w: 3 + p.i, hit: { type: 'person', item: p } });
   for (const r of routes) {
     const s = r.k === 'trade' ? r.s : r.p[0][2], e = r.k === 'trade' ? r.e : r.p[r.p.length - 1][2];
     const mid = r.p[Math.floor(r.p.length / 2)];
-    add(r.n, '', { kind: r.k === 'trade' ? 'Път' : 'Поход', y: r.k === 'trade' ? Math.round((s + e) / 2) : s, when: fmtRange(s, e), lon: mid[0], lat: mid[1], w: 4, hit: { type: 'route', item: r } });
+    add(r.n, '', { kind: r.k === 'trade' ? t('search.route') : t('search.campaign'), y: r.k === 'trade' ? Math.round((s + e) / 2) : s, when: fmtRange(s, e), lon: mid[0], lat: mid[1], w: 4, hit: { type: 'route', item: r } });
   }
 
   let results = [], sel = -1;
@@ -49,7 +51,7 @@ export function createSearch(input, list, data, onSelect) {
     sel = results.length ? 0 : -1;
     list.innerHTML = results.length
       ? results.map((r, i) => `<li role="option" data-i="${i}" aria-selected="${i === sel}"><span class="k">${esc(r.kind || '')}</span><span class="t">${esc(r.label)}</span><span class="y">${esc(r.when)}</span></li>`).join('')
-      : '<li class="empty">Нищо не намерих</li>';
+      : `<li class="empty">${esc(t('search.none'))}</li>`;
     list.hidden = false;
   }
   function pick(i) {

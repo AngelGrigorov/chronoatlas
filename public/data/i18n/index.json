@@ -1,0 +1,15 @@
+{
+  "default": "en",
+  "langs": {
+    "en": {
+      "name": "English",
+      "v": "eee4b54604",
+      "kb": 204
+    },
+    "bg": {
+      "name": "Български",
+      "v": "52b1ba3dd8",
+      "kb": 394
+    }
+  }
+}

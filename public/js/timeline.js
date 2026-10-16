@@ -1,5 +1,6 @@
 import { MIN_YEAR, MAX_YEAR, clampYear, fmtYear, fmtRange } from './time.js';
 import { KINDS } from './map.js';
+import { t } from './i18n.js';
 
 export const MIN_SPAN = 12;
 export const MAX_SPAN = 13000;
@@ -7,7 +8,7 @@ export const MAX_SPAN = 13000;
 const SANS = "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
 const STEPS = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 5000];
 
-// Таймлайн с фиксиран курсор в средата: светът се плъзга под него.
+// A timeline with a fixed cursor in the middle: the world slides underneath it.
 // app: { year, span, setYear(y, opts), setSpan(s), stopPlay() }
 export function createTimeline(canvas, { eras, events, snapshots, app }) {
   const ctx = canvas.getContext('2d');
@@ -46,12 +47,12 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
     const { tracks, axisH, top, trackH, evY } = layout();
     const y0 = yearAt(0), y1 = yearAt(W);
 
-    // Извън обхвата — тъмно.
+    // Outside the range — dark.
     ctx.fillStyle = 'rgba(0,0,0,0.35)';
     if (xOf(MIN_YEAR) > 0) ctx.fillRect(0, 0, xOf(MIN_YEAR), H);
     if (xOf(MAX_YEAR) < W) ctx.fillRect(xOf(MAX_YEAR), 0, W - xOf(MAX_YEAR), H);
 
-    // Епохите по пътечки.
+    // Eras, one track per region.
     tracks.forEach((tr, ti) => {
       const ty = top + ti * trackH;
       ctx.fillStyle = 'rgba(255,255,255,0.025)';
@@ -73,7 +74,7 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
           let label = name;
           while (label.length > 1 && ctx.measureText(label).width > avail) label = label.slice(0, -2) + '…';
           if (label.length > 1) {
-            // Етикетът се лепи за левия ръб, докато лентата е на екрана.
+            // The label sticks to the left edge while the band is on screen.
             const lw = ctx.measureText(label).width;
             const lx = Math.min(Math.max(xa + 4, 4), xb - lw - 4);
             ctx.fillText(label, lx, ty + (trackH - 2) / 2 + 0.5);
@@ -92,16 +93,16 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
       ctx.fillText(tr.n.toUpperCase(), W - 5, ty + (trackH - 2) / 2 + 0.5);
     });
 
-    // Събитията като точки — гъстотата на историята.
+    // Events as ticks — the density of history.
     for (const e of events) {
       if (e.y < y0 || e.y > y1) continue;
-      ctx.fillStyle = KINDS[e.k]?.[1] || '#ccc';
+      ctx.fillStyle = KINDS[e.k] || '#ccc';
       ctx.globalAlpha = e.i === 3 ? 0.95 : e.i === 2 ? 0.7 : 0.45;
       ctx.fillRect(Math.round(xOf(e.y)) - 1, evY + (3 - e.i) * 2, 2, 2 + e.i * 2);
     }
     ctx.globalAlpha = 1;
 
-    // Оста.
+    // The axis.
     const ay = H - axisH;
     ctx.strokeStyle = 'rgba(236,226,205,0.25)';
     ctx.lineWidth = 1;
@@ -126,10 +127,10 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
       ctx.strokeStyle = 'rgba(236,226,205,0.45)';
       ctx.beginPath(); ctx.moveTo(x, ay); ctx.lineTo(x, ay + 8); ctx.stroke();
       ctx.fillStyle = 'rgba(214,206,190,0.8)';
-      ctx.fillText(y === 0 ? 'Хр.' : fmtYear(y, true), x, ay + 10);
+      ctx.fillText(y === 0 ? t('timeline.zero') : fmtYear(y, true), x, ay + 10);
     }
 
-    // Снимките на границите — златни ромбчета върху оста.
+    // Border snapshots — gold diamonds on the axis.
     for (const s of snapshots) {
       if (s < y0 || s > y1) continue;
       const x = xOf(s);
@@ -137,7 +138,7 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
       ctx.beginPath(); ctx.moveTo(x, ay - 4); ctx.lineTo(x + 3.5, ay); ctx.lineTo(x, ay + 4); ctx.lineTo(x - 3.5, ay); ctx.closePath(); ctx.fill();
     }
 
-    // Курсорът.
+    // The cursor.
     const cx = Math.round(W / 2) + 0.5;
     const grad = ctx.createLinearGradient(0, 0, 0, H);
     grad.addColorStop(0, 'rgba(217,180,90,0.95)'); grad.addColorStop(1, 'rgba(217,180,90,0.55)');
@@ -161,7 +162,7 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
     }
   }
 
-  // ——— Ход и мащаб ———
+  // ——— Moving and zooming ———
   function stopMomentum() { if (momentum) cancelAnimationFrame(momentum.raf); momentum = null; }
 
   canvas.addEventListener('wheel', e => {
@@ -171,7 +172,7 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
     if (e.ctrlKey || e.metaKey) {
       const anchor = yearAt(e.offsetX);
       const span = Math.min(MAX_SPAN, Math.max(MIN_SPAN, app.span * Math.exp(e.deltaY * 0.0022)));
-      // Годината под курсора остава на мястото си.
+      // The year under the mouse stays where it is.
       app.setSpan(span);
       app.setYear(anchor - (e.offsetX - W / 2) * span / W, { instant: true });
     } else {
@@ -181,7 +182,7 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
     }
   }, { passive: false });
 
-  // Влачене с един пръст/мишка, щипка с два пръста.
+  // Drag with one finger or the mouse, pinch with two fingers.
   const pointers = new Map();
   let drag = null;
   canvas.addEventListener('pointerdown', e => {
@@ -228,7 +229,7 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
       app.setYear(yearAt(e.clientX - r.left));
       return;
     }
-    // Инерция: последните движения дават скорост, после тя затихва.
+    // Inertia: the last moves give a velocity, which then dies down.
     const s = d.samples || [];
     if (s.length < 2) return;
     const [t0, y0] = s[0], [t1, y1] = s[s.length - 1];
@@ -248,7 +249,7 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
   canvas.addEventListener('pointercancel', end);
   canvas.addEventListener('pointerleave', () => { hoverX = null; draw(); });
 
-  // Двоен клик върху епоха — побира я в таймлайна.
+  // Double-click an era to fit it into the timeline.
   canvas.addEventListener('dblclick', e => {
     const { tracks, top, trackH } = layout();
     const ti = Math.floor((e.offsetY - top) / trackH);
@@ -259,7 +260,7 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
     app.setYear((band[0] + band[1]) / 2);
   });
 
-  // Подсказка: пълното име на епохата или събитието под курсора.
+  // Tooltip: the full name of the era or event under the cursor.
   canvas.addEventListener('mousemove', e => {
     const { tracks, top, trackH, evY, evH } = layout();
     const ti = Math.floor((e.offsetY - top) / trackH);
@@ -273,9 +274,9 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
         if (d < best) { best = d; ev = x; }
       }
     }
-    canvas.title = ev ? `${ev.t} · ${fmtYear(ev.y)}\nКлик — скок дотам`
-      : band ? `${band[2]} · ${fmtRange(band[0], band[1])}\nДвоен клик — побери епохата`
-      : 'Колелце — време · Ctrl+колелце — мащаб · клик — скок';
+    canvas.title = ev ? t('timeline.event', { t: ev.t, year: fmtYear(ev.y) })
+      : band ? t('timeline.band', { name: band[2], range: fmtRange(band[0], band[1]) })
+      : t('timeline.help');
   });
 
   canvas.addEventListener('keydown', e => {

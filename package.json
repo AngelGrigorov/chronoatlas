@@ -4,8 +4,10 @@
   "type": "module",
   "scripts": {
     "data": "node tools/build-data.js",
+    "i18n": "node tools/build-i18n.js",
     "serve": "python tools/serve.py 8642",
     "smoke": "node tools/smoke.mjs",
+    "screenshots": "node tools/screenshots.mjs",
     "test": "node tools/test-time.mjs"
   },
   "devDependencies": {

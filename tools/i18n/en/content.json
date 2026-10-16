@@ -1,0 +1,5764 @@
+{
+  "events": {
+    "gobekli-tepe": {
+      "t": "Göbekli Tepe",
+      "d": "Hunter-gatherers raise carved stone pillars — the oldest known sanctuary.",
+      "w": "Göbekli Tepe"
+    },
+    "first-farming": {
+      "t": "The first farming in the Fertile Crescent",
+      "d": "Einkorn, barley and lentils are domesticated; the Neolithic Revolution begins.",
+      "w": "Neolithic Revolution"
+    },
+    "walls-of-jericho": {
+      "t": "The walls of Jericho",
+      "d": "A stone wall and tower around one of the first permanent settlements.",
+      "w": "Jericho"
+    },
+    "catalhoyuk": {
+      "t": "Çatalhöyük",
+      "d": "A large Neolithic town of houses without streets — you entered through the roof.",
+      "w": "Çatalhöyük"
+    },
+    "rice-domesticated": {
+      "t": "Rice is domesticated on the Yangtze",
+      "d": "The beginning of rice farming in East Asia.",
+      "w": "Rice"
+    },
+    "mehrgarh": {
+      "t": "Mehrgarh",
+      "d": "An early farming village at the foot of the Baluchistan mountains.",
+      "w": "Mehrgarh"
+    },
+    "farming-reaches-balkans": {
+      "t": "Farming reaches the Balkans",
+      "d": "Neolithic villages such as Karanovo and Slatina — the first farmers in Europe.",
+      "w": "Karanovo culture"
+    },
+    "provadia-salt": {
+      "t": "The salt town of Provadia",
+      "d": "Salt production at Solnitsata — by the excavators' account the oldest known town in Europe.",
+      "w": "Solnitsata"
+    },
+    "copper-smelting-balkans": {
+      "t": "Copper smelting in the Balkans",
+      "d": "The Ai Bunar mine near Stara Zagora is among the oldest copper mines in the world.",
+      "w": "Ai Bunar"
+    },
+    "maize-mexico": {
+      "t": "Maize in Mexico",
+      "d": "Teosinte slowly becomes maize — the staple of every Mesoamerican civilization.",
+      "w": "Maize"
+    },
+    "varna-gold": {
+      "t": "The Varna gold hoard",
+      "d": "The oldest worked gold in the world, found in the necropolis near Varna.",
+      "w": "Varna Necropolis"
+    },
+    "the-wheel": {
+      "t": "The wheel",
+      "d": "The first wheels appear almost at once in Mesopotamia, the North Pontic steppe and Central Europe.",
+      "w": "Wheel"
+    },
+    "horse-domesticated": {
+      "t": "The horse is domesticated",
+      "d": "The Botai culture of the Kazakh steppe — the earliest traces of tamed horses.",
+      "w": "Botai culture"
+    },
+    "cuneiform": {
+      "t": "Cuneiform at Uruk",
+      "d": "Accounting marks on clay turn into the first writing.",
+      "w": "Cuneiform"
+    },
+    "otzi": {
+      "t": "Ötzi the Iceman",
+      "d": "Killed in the Alps; his mummy was found in 1991 with a bow, an axe and a copper blade.",
+      "w": "Ötzi"
+    },
+    "narmer": {
+      "t": "Narmer unifies Egypt",
+      "d": "Upper and Lower Egypt become one kingdom — the dynasties begin.",
+      "w": "Narmer"
+    },
+    "stonehenge": {
+      "t": "Stonehenge",
+      "d": "Building starts on the circle that will be reshaped for a thousand years.",
+      "w": "Stonehenge"
+    },
+    "harappa-mohenjo-daro": {
+      "t": "Harappa and Mohenjo-daro",
+      "d": "Planned cities with drains in the Indus valley.",
+      "w": "Mohenjo-daro"
+    },
+    "gilgamesh": {
+      "t": "The Epic of Gilgamesh",
+      "d": "The king of Uruk becomes the hero of the first great work of literature.",
+      "w": "Epic of Gilgamesh"
+    },
+    "great-pyramid": {
+      "t": "The Great Pyramid of Giza",
+      "d": "Khufu's tomb — the tallest building in the world for nearly 4,000 years.",
+      "w": "Great Pyramid of Giza"
+    },
+    "caral": {
+      "t": "Caral in Peru",
+      "d": "Pyramids and plazas of Norte Chico — the oldest city in the Americas.",
+      "w": "Caral"
+    },
+    "sargon-of-akkad": {
+      "t": "Sargon of Akkad",
+      "d": "Founds the first empire to unite Mesopotamia.",
+      "w": "Sargon of Akkad"
+    },
+    "ziggurat-of-ur": {
+      "t": "The Ziggurat of Ur",
+      "d": "Ur-Nammu raises a stepped temple to the moon god Nanna.",
+      "w": "Ziggurat of Ur"
+    },
+    "minoan-palaces": {
+      "t": "The Minoan palaces of Crete",
+      "d": "Knossos becomes the centre of Europe's first palace civilization.",
+      "w": "Knossos"
+    },
+    "code-of-hammurabi": {
+      "t": "The Code of Hammurabi",
+      "d": "282 laws carved on a basalt stele in Babylon.",
+      "w": "Code of Hammurabi"
+    },
+    "thera-eruption": {
+      "t": "The eruption of Thera",
+      "d": "One of the most powerful eruptions in history buries Akrotiri.",
+      "w": "Minoan eruption"
+    },
+    "oracle-bones": {
+      "t": "Shang oracle bones",
+      "d": "The earliest Chinese writing — inscriptions on bones and shells.",
+      "w": "Oracle bone script"
+    },
+    "hittites-sack-babylon": {
+      "t": "The Hittites sack Babylon",
+      "d": "Mursili I destroys the city and ends Hammurabi's dynasty.",
+      "w": "Mursili I"
+    },
+    "battle-of-megiddo-1457": {
+      "t": "The Battle of Megiddo",
+      "d": "Thutmose III defeats the Canaanite kings — the first battle described in detail.",
+      "w": "Battle of Megiddo (15th century BC)"
+    },
+    "akhenaten-aten": {
+      "t": "Akhenaten and the cult of Aten",
+      "d": "The pharaoh imposes the worship of the sun disc and moves the capital to Amarna.",
+      "w": "Akhenaten"
+    },
+    "tutankhamun": {
+      "t": "Tutankhamun is buried",
+      "d": "His short reign is famous for the tomb found intact in 1922.",
+      "w": "Tutankhamun"
+    },
+    "battle-of-kadesh": {
+      "t": "The Battle of Kadesh",
+      "d": "Ramesses II against the Hittites — the largest chariot battle in history.",
+      "w": "Battle of Kadesh"
+    },
+    "first-peace-treaty": {
+      "t": "The first peace treaty",
+      "d": "Egypt and the Hittite kingdom sign a treaty whose text survives on both sides.",
+      "w": "Egyptian–Hittite peace treaty"
+    },
+    "bronze-age-collapse": {
+      "t": "The Bronze Age collapse",
+      "d": "Sea Peoples, famine and earthquakes; the Hittites, Mycenae and Ugarit fall.",
+      "w": "Late Bronze Age collapse"
+    },
+    "fall-of-troy": {
+      "t": "The fall of Troy",
+      "d": "By tradition the Achaeans take the city after a ten-year siege.",
+      "w": "Trojan War"
+    },
+    "phoenician-alphabet": {
+      "t": "The Phoenician alphabet",
+      "d": "22 letters for consonants — the ancestor of Greek, Latin and Cyrillic.",
+      "w": "Phoenician alphabet"
+    },
+    "zhou-overthrows-shang": {
+      "t": "Zhou overthrows Shang",
+      "d": "At the Battle of Muye the Zhou win and claim the Mandate of Heaven.",
+      "w": "Battle of Muye"
+    },
+    "king-david": {
+      "t": "King David in Jerusalem",
+      "d": "According to the Bible, David makes Jerusalem the capital of a united kingdom.",
+      "w": "David"
+    },
+    "chavin-de-huantar": {
+      "t": "Chavín de Huántar",
+      "d": "A religious centre in the Andes whose style spreads across Peru.",
+      "w": "Chavín de Huántar"
+    },
+    "founding-of-carthage": {
+      "t": "The founding of Carthage",
+      "d": "Phoenicians from Tyre found a colony that will become a sea power.",
+      "w": "Ancient Carthage"
+    },
+    "first-olympics": {
+      "t": "The first Olympic Games",
+      "d": "A footrace at Olympia — the Greeks count their years from it.",
+      "w": "Ancient Olympic Games"
+    },
+    "founding-of-rome": {
+      "t": "The founding of Rome",
+      "d": "By legend Romulus founds the city on the Palatine Hill.",
+      "w": "Founding of Rome"
+    },
+    "homer": {
+      "t": "Homer",
+      "d": "The Iliad and the Odyssey are written down — the start of European literature.",
+      "w": "Homer"
+    },
+    "assyria-takes-israel": {
+      "t": "Assyria conquers Israel",
+      "d": "Sargon II deports the ten northern tribes.",
+      "w": "Kingdom of Israel (Samaria)"
+    },
+    "library-of-ashurbanipal": {
+      "t": "The Library of Ashurbanipal",
+      "d": "Thousands of clay tablets gathered in Nineveh — it is how we know Gilgamesh.",
+      "w": "Library of Ashurbanipal"
+    },
+    "emperor-jimmu": {
+      "t": "Emperor Jimmu",
+      "d": "In Japanese tradition the first emperor founds the dynasty.",
+      "w": "Emperor Jimmu"
+    },
+    "fall-of-nineveh": {
+      "t": "The fall of Nineveh",
+      "d": "Medes and Babylonians destroy the Assyrian capital.",
+      "w": "Battle of Nineveh (612 BC)"
+    },
+    "lydian-coins": {
+      "t": "The first coins in Lydia",
+      "d": "Electrum coins struck at Sardis — money takes a new shape.",
+      "w": "Lydia"
+    },
+    "babylonian-captivity": {
+      "t": "The Babylonian captivity",
+      "d": "Nebuchadnezzar II destroys Jerusalem and the First Temple.",
+      "w": "Babylonian captivity"
+    },
+    "buddha": {
+      "t": "The Buddha",
+      "d": "Siddhartha Gautama is born at Lumbini; his teaching will travel across Asia.",
+      "w": "The Buddha"
+    },
+    "confucius": {
+      "t": "Confucius",
+      "d": "Born in Lu; his ethics will shape China for two and a half thousand years.",
+      "w": "Confucius"
+    },
+    "cyrus-enters-babylon": {
+      "t": "Cyrus the Great enters Babylon",
+      "d": "Persia swallows Babylonia; the Jews return to Judea.",
+      "w": "Cyrus the Great"
+    },
+    "roman-republic": {
+      "t": "The Roman Republic",
+      "d": "The Romans expel their last king, Tarquin the Proud.",
+      "w": "Roman Republic"
+    },
+    "athenian-democracy": {
+      "t": "Democracy in Athens",
+      "d": "The reforms of Cleisthenes give power to the popular assembly.",
+      "w": "Cleisthenes"
+    },
+    "art-of-war": {
+      "t": "The Art of War",
+      "d": "Attributed to Sun Tzu — a treatise still read today.",
+      "w": "The Art of War"
+    },
+    "battle-of-marathon": {
+      "t": "The Battle of Marathon",
+      "d": "The Athenians stop the first Persian invasion of Greece.",
+      "w": "Battle of Marathon"
+    },
+    "thermopylae": {
+      "t": "Thermopylae",
+      "d": "Leonidas and the three hundred Spartans hold Xerxes' army in the pass.",
+      "w": "Battle of Thermopylae"
+    },
+    "salamis": {
+      "t": "Salamis",
+      "d": "Themistocles' Greek fleet crushes the Persians in the narrow strait.",
+      "w": "Battle of Salamis"
+    },
+    "odrysian-kingdom": {
+      "t": "The Odrysian kingdom",
+      "d": "Teres I unites the Thracian tribes into the first Thracian state.",
+      "w": "Odrysian kingdom"
+    },
+    "parthenon": {
+      "t": "The Parthenon",
+      "d": "Pericles begins the temple of Athena on the Acropolis.",
+      "w": "Parthenon"
+    },
+    "peloponnesian-war": {
+      "t": "The Peloponnesian War",
+      "d": "Athens against Sparta — 27 years of war, told by Thucydides.",
+      "w": "Peloponnesian War"
+    },
+    "trial-of-socrates": {
+      "t": "The trial of Socrates",
+      "d": "The Athenians sentence the philosopher to death by hemlock.",
+      "w": "Trial of Socrates"
+    },
+    "platos-academy": {
+      "t": "Plato's Academy",
+      "d": "Europe's first school of higher learning — it runs for nearly 900 years.",
+      "w": "Platonic Academy"
+    },
+    "chaeronea": {
+      "t": "Chaeronea",
+      "d": "Philip II of Macedon defeats Athens and Thebes and subdues Greece.",
+      "w": "Battle of Chaeronea (338 BC)"
+    },
+    "battle-of-issus": {
+      "t": "The Battle of Issus",
+      "d": "Alexander puts Darius III to flight.",
+      "w": "Battle of Issus"
+    },
+    "gaugamela": {
+      "t": "Gaugamela",
+      "d": "Alexander destroys the Persian Empire for good.",
+      "w": "Battle of Gaugamela"
+    },
+    "founding-of-alexandria": {
+      "t": "The founding of Alexandria",
+      "d": "A city on the Nile delta that will become the capital of learning.",
+      "w": "Alexandria"
+    },
+    "death-of-alexander": {
+      "t": "The death of Alexander",
+      "d": "He dies in Babylon at 32; his empire splits among his generals.",
+      "w": "Alexander the Great"
+    },
+    "chandragupta-maurya": {
+      "t": "Chandragupta Maurya",
+      "d": "Founds the first empire to cover almost all of India.",
+      "w": "Chandragupta Maurya"
+    },
+    "euclid": {
+      "t": "Euclid",
+      "d": "The Elements — the geometry textbook used until the 20th century.",
+      "w": "Euclid"
+    },
+    "lighthouse-of-alexandria": {
+      "t": "The Lighthouse of Alexandria",
+      "d": "About 100 metres tall — one of the Seven Wonders of the World.",
+      "w": "Lighthouse of Alexandria"
+    },
+    "ashoka-after-kalinga": {
+      "t": "Ashoka after Kalinga",
+      "d": "Horrified by the bloodshed, the emperor embraces Buddhism and sends it across the world.",
+      "w": "Ashoka"
+    },
+    "first-punic-war": {
+      "t": "The First Punic War",
+      "d": "Rome and Carthage clash over Sicily.",
+      "w": "First Punic War"
+    },
+    "hannibal-crosses-alps": {
+      "t": "Hannibal crosses the Alps",
+      "d": "With an army and elephants the Carthaginian invades Italy.",
+      "w": "Hannibal"
+    },
+    "cannae": {
+      "t": "Cannae",
+      "d": "Hannibal encircles and destroys a Roman army — a classic of tactics.",
+      "w": "Battle of Cannae"
+    },
+    "great-wall": {
+      "t": "The Great Wall of China",
+      "d": "Qin Shi Huang joins the separate walls against the Xiongnu.",
+      "w": "Great Wall of China"
+    },
+    "qin-unifies-china": {
+      "t": "Qin Shi Huang unifies China",
+      "d": "The first emperor imposes one script, one set of measures and one law.",
+      "w": "Qin Shi Huang"
+    },
+    "terracotta-army": {
+      "t": "The Terracotta Army",
+      "d": "Thousands of clay soldiers guard the first emperor's tomb.",
+      "w": "Terracotta Army"
+    },
+    "han-dynasty": {
+      "t": "The Han dynasty",
+      "d": "Liu Bang founds the dynasty after which the Chinese still call themselves Han.",
+      "w": "Han dynasty"
+    },
+    "zama": {
+      "t": "Zama",
+      "d": "Scipio Africanus defeats Hannibal in Africa.",
+      "w": "Battle of Zama"
+    },
+    "rosetta-stone": {
+      "t": "The Rosetta Stone",
+      "d": "One decree in three scripts — the key Champollion used to read hieroglyphs.",
+      "w": "Rosetta Stone"
+    },
+    "destruction-of-carthage": {
+      "t": "The destruction of Carthage",
+      "d": "Rome razes the city; Corinth falls the same year.",
+      "w": "Third Punic War"
+    },
+    "zhang-qian": {
+      "t": "Zhang Qian travels west",
+      "d": "The Han envoy reaches Bactria — the beginning of the Silk Road.",
+      "w": "Zhang Qian"
+    },
+    "spartacus": {
+      "t": "Spartacus",
+      "d": "The Thracian gladiator leads the largest slave revolt against Rome.",
+      "w": "Spartacus"
+    },
+    "carrhae": {
+      "t": "Carrhae",
+      "d": "The Parthians destroy Crassus's legions in the desert.",
+      "w": "Battle of Carrhae"
+    },
+    "alesia": {
+      "t": "Alesia",
+      "d": "Caesar besieges Vercingetorix and completes the conquest of Gaul.",
+      "w": "Battle of Alesia"
+    },
+    "caesar-crosses-rubicon": {
+      "t": "Caesar crosses the Rubicon",
+      "d": "\"The die is cast\" — the civil war begins.",
+      "w": "Crossing the Rubicon"
+    },
+    "ides-of-march": {
+      "t": "The Ides of March",
+      "d": "Senators murder Julius Caesar in Rome.",
+      "w": "Assassination of Julius Caesar"
+    },
+    "actium": {
+      "t": "Actium",
+      "d": "Octavian defeats Antony and Cleopatra; Egypt becomes Roman.",
+      "w": "Battle of Actium"
+    },
+    "augustus": {
+      "t": "Augustus — the first emperor",
+      "d": "The Senate grants Octavian the title Augustus; the Republic ends.",
+      "w": "Augustus"
+    },
+    "teutoburg-forest": {
+      "t": "The Teutoburg Forest",
+      "d": "Arminius's Germans destroy three legions; Rome stops at the Rhine.",
+      "w": "Battle of the Teutoburg Forest"
+    },
+    "crucifixion-of-jesus": {
+      "t": "The crucifixion of Jesus",
+      "d": "In Jerusalem under Pontius Pilate; his disciples spread the new faith.",
+      "w": "Crucifixion of Jesus"
+    },
+    "thrace-roman-province": {
+      "t": "Thrace becomes a Roman province",
+      "d": "Emperor Claudius ends the last Thracian kingdom.",
+      "w": "Thracia"
+    },
+    "vesuvius-pompeii": {
+      "t": "Vesuvius buries Pompeii",
+      "d": "The eruption buries Pompeii and Herculaneum in ash.",
+      "w": "Eruption of Mount Vesuvius in 79 AD"
+    },
+    "colosseum": {
+      "t": "The Colosseum",
+      "d": "The Flavian Amphitheatre opens with a hundred days of games.",
+      "w": "Colosseum"
+    },
+    "destruction-of-second-temple": {
+      "t": "The destruction of the Second Temple",
+      "d": "Titus takes Jerusalem after the Jewish revolt.",
+      "w": "Siege of Jerusalem (70 CE)"
+    },
+    "cai-lun-paper": {
+      "t": "Cai Lun's paper",
+      "d": "A court official perfects paper made from bark and rags.",
+      "w": "Cai Lun"
+    },
+    "trajan-conquers-dacia": {
+      "t": "Trajan conquers Dacia",
+      "d": "Rome reaches beyond the Danube; Dacian gold fills the treasury.",
+      "w": "Trajan's Dacian Wars"
+    },
+    "roman-empire-greatest-extent": {
+      "t": "The Roman Empire at its greatest extent",
+      "d": "When Trajan dies the empire stretches from Britain to Mesopotamia.",
+      "w": "Trajan"
+    },
+    "hadrians-wall": {
+      "t": "Hadrian's Wall",
+      "d": "A wall across Britain marking Rome's northern frontier.",
+      "w": "Hadrian's Wall"
+    },
+    "ptolemy-almagest": {
+      "t": "Ptolemy and the Almagest",
+      "d": "The astronomy and geography of antiquity, gathered in Alexandria.",
+      "w": "Ptolemy"
+    },
+    "yellow-turban-rebellion": {
+      "t": "The Yellow Turban Rebellion",
+      "d": "A peasant uprising that shakes the Han dynasty.",
+      "w": "Yellow Turban Rebellion"
+    },
+    "red-cliffs": {
+      "t": "Red Cliffs",
+      "d": "Liu Bei and Sun Quan stop Cao Cao — the Three Kingdoms begin.",
+      "w": "Battle of Red Cliffs"
+    },
+    "sasanians": {
+      "t": "The Sasanians",
+      "d": "Ardashir I overthrows the Parthians and founds a new Persian empire.",
+      "w": "Sasanian Empire"
+    },
+    "teotihuacan-height": {
+      "t": "Teotihuacan at its height",
+      "d": "Over a hundred thousand people live around the Pyramid of the Sun.",
+      "w": "Teotihuacan"
+    },
+    "battle-of-abritus": {
+      "t": "The Battle of Abritus",
+      "d": "Goths kill Emperor Decius near modern Razgrad — the first emperor to fall to barbarians.",
+      "w": "Battle of Abritus"
+    },
+    "edict-of-milan": {
+      "t": "The Edict of Milan",
+      "d": "Constantine and Licinius legalise Christianity.",
+      "w": "Edict of Milan"
+    },
+    "gupta-empire": {
+      "t": "The Gupta Empire",
+      "d": "Chandragupta I opens India's golden age — zero, chess, Kalidasa.",
+      "w": "Gupta Empire"
+    },
+    "council-of-nicaea": {
+      "t": "The Council of Nicaea",
+      "d": "The first ecumenical council adopts the Creed.",
+      "w": "First Council of Nicaea"
+    },
+    "constantinople": {
+      "t": "Constantinople",
+      "d": "Constantine moves the capital to Byzantium — the New Rome.",
+      "w": "Constantinople"
+    },
+    "council-of-serdica": {
+      "t": "The Council of Serdica",
+      "d": "A church council in today's Sofia — \"Serdica is my Rome\", says Constantine.",
+      "w": "Council of Serdica"
+    },
+    "aksum-christianity": {
+      "t": "Aksum becomes Christian",
+      "d": "King Ezana makes Ethiopia one of the first Christian states.",
+      "w": "Kingdom of Aksum"
+    },
+    "huns-arrive": {
+      "t": "The Huns reach Europe",
+      "d": "They crush the Ostrogoths — the Migration Period begins.",
+      "w": "Huns"
+    },
+    "adrianople-378": {
+      "t": "Adrianople",
+      "d": "Goths kill Emperor Valens — Rome's worst defeat since Cannae.",
+      "w": "Battle of Adrianople"
+    },
+    "empire-divided": {
+      "t": "The empire divides",
+      "d": "Theodosius's sons split Rome into West and East for good.",
+      "w": "Theodosius I"
+    },
+    "sack-of-rome-410": {
+      "t": "Alaric sacks Rome",
+      "d": "For the first time in 800 years Rome falls to an enemy.",
+      "w": "Sack of Rome (410)"
+    },
+    "theodosian-walls": {
+      "t": "The Theodosian Walls",
+      "d": "A double wall that guards Constantinople for a thousand years.",
+      "w": "Walls of Constantinople"
+    },
+    "catalaunian-plains": {
+      "t": "The Catalaunian Plains",
+      "d": "Aetius and the Visigoths stop Attila in Gaul.",
+      "w": "Battle of the Catalaunian Plains"
+    },
+    "fall-of-western-rome": {
+      "t": "The end of the Western Roman Empire",
+      "d": "Odoacer deposes the last emperor, Romulus Augustulus.",
+      "w": "Fall of the Western Roman Empire"
+    },
+    "clovis-baptism": {
+      "t": "Clovis is baptised",
+      "d": "The Frankish king accepts Catholicism — the foundation of future France.",
+      "w": "Clovis I"
+    },
+    "hagia-sophia": {
+      "t": "Hagia Sophia",
+      "d": "Justinian opens the largest church in the world for nearly a thousand years.",
+      "w": "Hagia Sophia"
+    },
+    "code-of-justinian": {
+      "t": "The Code of Justinian",
+      "d": "Roman law is compiled — the basis of European law.",
+      "w": "Corpus Juris Civilis"
+    },
+    "plague-of-justinian": {
+      "t": "The Plague of Justinian",
+      "d": "The first great plague pandemic ravages the Mediterranean.",
+      "w": "Plague of Justinian"
+    },
+    "buddhism-reaches-japan": {
+      "t": "Buddhism reaches Japan",
+      "d": "The Korean kingdom of Baekje sends a statue of the Buddha and sutras.",
+      "w": "Buddhism in Japan"
+    },
+    "muhammad": {
+      "t": "Muhammad",
+      "d": "The Prophet of Islam is born in Mecca.",
+      "w": "Muhammad"
+    },
+    "grand-canal": {
+      "t": "The Grand Canal",
+      "d": "The Sui dynasty links the Yellow River with the Yangtze.",
+      "w": "Grand Canal (China)"
+    },
+    "hijra": {
+      "t": "The Hijra",
+      "d": "Muhammad moves from Mecca to Medina — year one of the Islamic calendar.",
+      "w": "Hijrah"
+    },
+    "old-great-bulgaria": {
+      "t": "Kubrat and Old Great Bulgaria",
+      "d": "Khan Kubrat unites the Bulgars on the steppe north of the Black Sea.",
+      "w": "Old Great Bulgaria"
+    },
+    "yarmuk": {
+      "t": "Yarmuk",
+      "d": "The Arabs defeat the Byzantines and Syria passes to the Caliphate.",
+      "w": "Battle of the Yarmuk"
+    },
+    "qadisiyyah": {
+      "t": "Qadisiyyah",
+      "d": "The Arabs break the Sasanians; Persia will soon be Muslim.",
+      "w": "Battle of al-Qadisiyyah"
+    },
+    "battle-of-ongal": {
+      "t": "The Battle of Ongal",
+      "d": "Asparuh defeats Constantine IV's Byzantine army at the Danube delta.",
+      "w": "Battle of Ongal"
+    },
+    "founding-of-danube-bulgaria": {
+      "t": "The founding of Danube Bulgaria",
+      "d": "Byzantium recognises Asparuh's state — Bulgaria is on the map.",
+      "w": "First Bulgarian Empire"
+    },
+    "arabs-in-spain": {
+      "t": "The Arabs in Spain",
+      "d": "Tariq ibn Ziyad crosses Gibraltar and defeats the Visigoths.",
+      "w": "Umayyad conquest of Hispania"
+    },
+    "tervel-saves-constantinople": {
+      "t": "Tervel saves Constantinople",
+      "d": "The Bulgars rout the Arabs beneath the city walls.",
+      "w": "Siege of Constantinople (717–718)"
+    },
+    "poitiers-732": {
+      "t": "Poitiers",
+      "d": "Charles Martel halts the Arab advance into France.",
+      "w": "Battle of Tours"
+    },
+    "talas": {
+      "t": "Talas",
+      "d": "The Abbasids defeat the Tang; captured Chinese teach the Arabs to make paper.",
+      "w": "Battle of Talas"
+    },
+    "founding-of-baghdad": {
+      "t": "The founding of Baghdad",
+      "d": "Caliph al-Mansur's Round City — centre of the Islamic Golden Age.",
+      "w": "Baghdad"
+    },
+    "lindisfarne": {
+      "t": "Vikings at Lindisfarne",
+      "d": "The raid on the monastery marks the start of the Viking Age.",
+      "w": "Lindisfarne"
+    },
+    "charlemagne-crowned": {
+      "t": "Charlemagne is crowned",
+      "d": "The Pope crowns him emperor in Rome on Christmas Day.",
+      "w": "Charlemagne"
+    },
+    "angkor-founded": {
+      "t": "Angkor",
+      "d": "Jayavarman II founds the Khmer Empire.",
+      "w": "Khmer Empire"
+    },
+    "battle-of-varbitsa": {
+      "t": "The Battle of the Varbitsa Pass",
+      "d": "Khan Krum destroys Nikephoros I's army and makes a cup of the emperor's skull.",
+      "w": "Battle of Pliska"
+    },
+    "house-of-wisdom": {
+      "t": "The House of Wisdom",
+      "d": "Baghdad translates Greek science; al-Khwarizmi writes the algebra.",
+      "w": "House of Wisdom"
+    },
+    "glagolitic": {
+      "t": "The Glagolitic alphabet",
+      "d": "Cyril and Methodius create an alphabet for the Slavic language.",
+      "w": "Glagolitic script"
+    },
+    "christianization-of-bulgaria": {
+      "t": "Bulgaria becomes Christian",
+      "d": "Prince Boris I accepts Christianity from Byzantium.",
+      "w": "Christianization of Bulgaria"
+    },
+    "diamond-sutra": {
+      "t": "The Diamond Sutra",
+      "d": "The oldest dated printed book — printed from wooden blocks.",
+      "w": "Diamond Sutra"
+    },
+    "disciples-in-bulgaria": {
+      "t": "Cyril and Methodius's disciples in Bulgaria",
+      "d": "Clement, Naum and Angelarius find refuge — the Preslav and Ohrid schools.",
+      "w": "Ohrid Literary School"
+    },
+    "simeon-golden-age": {
+      "t": "Tsar Simeon and the Golden Age",
+      "d": "The capital moves to Preslav; the Cyrillic script is created.",
+      "w": "Simeon I of Bulgaria"
+    },
+    "classic-maya-collapse": {
+      "t": "The Classic Maya collapse",
+      "d": "The lowland cities are abandoned; Tikal falls silent.",
+      "w": "Classic Maya collapse"
+    },
+    "battle-of-achelous": {
+      "t": "The Battle of Achelous",
+      "d": "Simeon routs the Byzantines — one of the largest battles of the Middle Ages.",
+      "w": "Battle of Achelous (917)"
+    },
+    "first-bulgarian-patriarchate": {
+      "t": "The first Bulgarian Patriarchate",
+      "d": "Byzantium recognises the royal title and the patriarchate.",
+      "w": "Bulgarian Orthodox Church"
+    },
+    "song-dynasty": {
+      "t": "The Song dynasty",
+      "d": "Zhao Kuangyin reunites China; the age of gunpowder and printing begins.",
+      "w": "Song dynasty"
+    },
+    "holy-roman-empire": {
+      "t": "The Holy Roman Empire",
+      "d": "Otto I is crowned by the Pope — an empire that will last until 1806.",
+      "w": "Otto the Great"
+    },
+    "cairo": {
+      "t": "Cairo",
+      "d": "The Fatimids found their new capital next to Fustat.",
+      "w": "Cairo"
+    },
+    "christianization-of-rus": {
+      "t": "The Christianization of Kievan Rus'",
+      "d": "Prince Vladimir accepts Orthodoxy.",
+      "w": "Christianization of Kievan Rus'"
+    },
+    "leif-erikson-vinland": {
+      "t": "Leif Erikson in Vinland",
+      "d": "The Vikings reach North America five centuries before Columbus.",
+      "w": "Leif Erikson"
+    },
+    "kleidion": {
+      "t": "Kleidion",
+      "d": "Basil II destroys Tsar Samuel's army and blinds the prisoners.",
+      "w": "Battle of Kleidion"
+    },
+    "end-of-first-bulgarian-empire": {
+      "t": "The end of the First Bulgarian Empire",
+      "d": "Byzantium conquers the last Bulgarian lands.",
+      "w": "First Bulgarian Empire"
+    },
+    "tale-of-genji": {
+      "t": "The Tale of Genji",
+      "d": "Murasaki Shikibu writes at the Heian court — often called the first novel.",
+      "w": "The Tale of Genji"
+    },
+    "canon-of-medicine": {
+      "t": "The Canon of Medicine",
+      "d": "Avicenna gathers medical knowledge — a textbook in Europe until the 17th century.",
+      "w": "The Canon of Medicine"
+    },
+    "bi-sheng-movable-type": {
+      "t": "Bi Sheng's movable type",
+      "d": "Printing with separate clay characters — four centuries before Gutenberg.",
+      "w": "Bi Sheng"
+    },
+    "great-schism": {
+      "t": "The Great Schism",
+      "d": "Rome and Constantinople excommunicate each other — the Church splits.",
+      "w": "East–West Schism"
+    },
+    "hastings": {
+      "t": "Hastings",
+      "d": "William the Conqueror defeats Harold — the Normans rule England.",
+      "w": "Battle of Hastings"
+    },
+    "manzikert": {
+      "t": "Manzikert",
+      "d": "The Seljuks capture Emperor Romanos IV and open Anatolia.",
+      "w": "Battle of Manzikert"
+    },
+    "university-of-bologna": {
+      "t": "The University of Bologna",
+      "d": "The oldest university in Europe still operating today.",
+      "w": "University of Bologna"
+    },
+    "first-crusade": {
+      "t": "The First Crusade",
+      "d": "Knights from all over Western Europe set out for the Holy Land.",
+      "w": "First Crusade"
+    },
+    "siege-of-jerusalem-1099": {
+      "t": "The Crusaders take Jerusalem",
+      "d": "A bloody siege, after which the Kingdom of Jerusalem is founded.",
+      "w": "Siege of Jerusalem (1099)"
+    },
+    "angkor-wat": {
+      "t": "Angkor Wat",
+      "d": "Suryavarman II begins the largest religious complex in the world.",
+      "w": "Angkor Wat"
+    },
+    "cahokia-1150": {
+      "t": "Cahokia",
+      "d": "A Mississippian city of over 10,000 people and giant mounds.",
+      "w": "Cahokia"
+    },
+    "uprising-of-asen-and-peter": {
+      "t": "The uprising of Asen and Peter",
+      "d": "Nobles from Tarnovo rise up — the Second Bulgarian Empire begins.",
+      "w": "Uprising of Asen and Peter"
+    },
+    "hattin": {
+      "t": "Hattin",
+      "d": "Saladin destroys the Crusader army and retakes Jerusalem.",
+      "w": "Battle of Hattin"
+    },
+    "kamakura-shogunate": {
+      "t": "The Kamakura shogunate",
+      "d": "Minamoto no Yoritomo takes real power — the samurai rule Japan.",
+      "w": "Kamakura shogunate"
+    },
+    "sack-of-constantinople-1204": {
+      "t": "The Crusaders sack Constantinople",
+      "d": "The Fourth Crusade turns on the Christian city.",
+      "w": "Sack of Constantinople"
+    },
+    "adrianople-1205": {
+      "t": "The Battle of Adrianople",
+      "d": "Tsar Kaloyan routs the knights and captures the Latin emperor Baldwin.",
+      "w": "Battle of Adrianople (1205)"
+    },
+    "genghis-khan": {
+      "t": "Genghis Khan",
+      "d": "The kurultai proclaims Temujin ruler of all the Mongols.",
+      "w": "Genghis Khan"
+    },
+    "magna-carta": {
+      "t": "Magna Carta",
+      "d": "England's barons force King John to accept that he too is under the law.",
+      "w": "Magna Carta"
+    },
+    "klokotnitsa": {
+      "t": "Klokotnitsa",
+      "d": "Ivan Asen II defeats Theodore Komnenos — Bulgaria reaches three seas.",
+      "w": "Battle of Klokotnitsa"
+    },
+    "mali-empire": {
+      "t": "The Mali Empire",
+      "d": "Sundiata Keita wins at Kirina and founds Mali.",
+      "w": "Sundiata Keita"
+    },
+    "legnica-and-mohi": {
+      "t": "Legnica and Mohi",
+      "d": "At Legnica and Mohi the Mongols rout the Poles and the Hungarians.",
+      "w": "Battle of Mohi"
+    },
+    "siege-of-baghdad-1258": {
+      "t": "The Mongols destroy Baghdad",
+      "d": "Hulagu ends the Abbasid Caliphate; the House of Wisdom burns.",
+      "w": "Siege of Baghdad (1258)"
+    },
+    "ain-jalut": {
+      "t": "Ain Jalut",
+      "d": "Egypt's Mamluks stop the Mongols in Palestine.",
+      "w": "Battle of Ain Jalut"
+    },
+    "marco-polo-sets-out": {
+      "t": "Marco Polo sets out for China",
+      "d": "He will spend 17 years at the court of Kublai Khan.",
+      "w": "Marco Polo"
+    },
+    "kamikaze-1274": {
+      "t": "The kamikaze saves Japan",
+      "d": "A typhoon scatters the first Mongol fleet.",
+      "w": "Mongol invasions of Japan"
+    },
+    "yuan-conquers-song": {
+      "t": "Yuan conquers Song",
+      "d": "Kublai Khan rules all of China — the first foreign dynasty.",
+      "w": "Yuan dynasty"
+    },
+    "osman-i": {
+      "t": "Osman I",
+      "d": "Osman's beylik in Anatolia — the seed of the Ottoman Empire.",
+      "w": "Osman I"
+    },
+    "divine-comedy": {
+      "t": "The Divine Comedy",
+      "d": "Dante finishes his poem — in Italian, not Latin.",
+      "w": "Divine Comedy"
+    },
+    "mansa-musa-hajj": {
+      "t": "Mansa Musa's pilgrimage",
+      "d": "Mali's ruler gives away so much gold in Cairo that its price falls.",
+      "w": "Mansa Musa"
+    },
+    "tenochtitlan-founded": {
+      "t": "Tenochtitlan",
+      "d": "The Aztecs found their capital on an island in Lake Texcoco.",
+      "w": "Tenochtitlan"
+    },
+    "velbazhd": {
+      "t": "Velbazhd",
+      "d": "The Serbs defeat Tsar Mihail Shishman near Kyustendil.",
+      "w": "Battle of Velbazhd"
+    },
+    "hundred-years-war": {
+      "t": "The Hundred Years' War",
+      "d": "England and France begin a war that will last 116 years.",
+      "w": "Hundred Years' War"
+    },
+    "black-death": {
+      "t": "The Black Death",
+      "d": "Plague reaches Europe on ships from Caffa and kills a third of the people.",
+      "w": "Black Death"
+    },
+    "ming-dynasty": {
+      "t": "The Ming dynasty",
+      "d": "Zhu Yuanzhang drives the Mongols out of China.",
+      "w": "Ming dynasty"
+    },
+    "maritsa": {
+      "t": "The Battle of the Maritsa",
+      "d": "The Ottomans rout the Serbian lords — the road into the Balkans is open.",
+      "w": "Battle of Maritsa"
+    },
+    "kosovo-1389": {
+      "t": "Kosovo Field",
+      "d": "Serbs and allies against Murad I — both rulers fall.",
+      "w": "Battle of Kosovo"
+    },
+    "fall-of-tarnovo": {
+      "t": "Tarnovo falls",
+      "d": "The Ottomans take the capital of the Second Bulgarian Empire.",
+      "w": "Siege of Tarnovo"
+    },
+    "nicopolis": {
+      "t": "Nicopolis",
+      "d": "Sigismund's crusaders are crushed; the Tsardom of Vidin falls.",
+      "w": "Battle of Nicopolis"
+    },
+    "ankara-1402": {
+      "t": "Ankara",
+      "d": "Timur captures Sultan Bayezid I — the Ottoman state barely survives.",
+      "w": "Battle of Ankara"
+    },
+    "zheng-he-voyages": {
+      "t": "The fleets of Zheng He",
+      "d": "Hundreds of Ming ships sail to India, Arabia and Africa.",
+      "w": "Zheng He"
+    },
+    "grunwald": {
+      "t": "Grunwald",
+      "d": "Poles and Lithuanians break the Teutonic Order.",
+      "w": "Battle of Grunwald"
+    },
+    "agincourt": {
+      "t": "Agincourt",
+      "d": "English longbowmen cut down the French cavalry.",
+      "w": "Battle of Agincourt"
+    },
+    "forbidden-city": {
+      "t": "The Forbidden City",
+      "d": "The Ming emperor moves into the new palace in Beijing.",
+      "w": "Forbidden City"
+    },
+    "joan-of-arc-orleans": {
+      "t": "Joan of Arc at Orléans",
+      "d": "The peasant girl lifts the siege and turns the Hundred Years' War.",
+      "w": "Joan of Arc"
+    },
+    "gutenberg-press": {
+      "t": "Gutenberg's printing press",
+      "d": "Movable metal type in Mainz — books become a hundred times cheaper.",
+      "w": "Johannes Gutenberg"
+    },
+    "battle-of-varna": {
+      "t": "Varna",
+      "d": "Władysław III dies in the last great crusade against the Ottomans.",
+      "w": "Battle of Varna"
+    },
+    "machu-picchu-built": {
+      "t": "Machu Picchu",
+      "d": "Pachacuti builds an estate high in the Andes.",
+      "w": "Machu Picchu"
+    },
+    "fall-of-constantinople": {
+      "t": "The fall of Constantinople",
+      "d": "Mehmed II takes the city — the end of Byzantium after a thousand years.",
+      "w": "Fall of Constantinople"
+    },
+    "medici-florence": {
+      "t": "Medici Florence",
+      "d": "Lorenzo the Magnificent — Botticelli, Leonardo and the young Michelangelo.",
+      "w": "Lorenzo de' Medici"
+    },
+    "end-of-tatar-yoke": {
+      "t": "The end of the Tatar yoke",
+      "d": "The Great Stand on the Ugra — Moscow stops paying tribute to the Horde.",
+      "w": "Great Stand on the Ugra River"
+    },
+    "cape-of-good-hope": {
+      "t": "The Cape of Good Hope",
+      "d": "Bartolomeu Dias rounds Africa.",
+      "w": "Bartolomeu Dias"
+    },
+    "fall-of-granada": {
+      "t": "The fall of Granada",
+      "d": "The Catholic Monarchs complete the Reconquista.",
+      "w": "Granada War"
+    },
+    "columbus-reaches-america": {
+      "t": "Columbus reaches America",
+      "d": "Three ships land in the Bahamas — the world is never the same again.",
+      "w": "Christopher Columbus"
+    },
+    "vasco-da-gama-india": {
+      "t": "Vasco da Gama in India",
+      "d": "The sea route around Africa to Calicut is opened.",
+      "w": "Vasco da Gama"
+    },
+    "mona-lisa": {
+      "t": "The Mona Lisa",
+      "d": "Leonardo da Vinci begins the portrait in Florence.",
+      "w": "Mona Lisa"
+    },
+    "sistine-chapel": {
+      "t": "The Sistine Chapel",
+      "d": "Michelangelo spends four years painting the ceiling.",
+      "w": "Sistine Chapel ceiling"
+    },
+    "luthers-theses": {
+      "t": "Luther's theses",
+      "d": "95 theses against indulgences in Wittenberg — the Reformation begins.",
+      "w": "Ninety-five Theses"
+    },
+    "ottomans-conquer-egypt": {
+      "t": "The Ottomans conquer Egypt",
+      "d": "Selim I ends the Mamluks and takes the caliphate.",
+      "w": "Ottoman–Mamluk War (1516–1517)"
+    },
+    "magellan-sets-out": {
+      "t": "Magellan sails around the world",
+      "d": "Of five ships, one comes back — the first circumnavigation.",
+      "w": "Ferdinand Magellan"
+    },
+    "fall-of-tenochtitlan": {
+      "t": "Tenochtitlan falls",
+      "d": "Cortés and the Tlaxcalans take the Aztec capital.",
+      "w": "Fall of Tenochtitlan"
+    },
+    "mohacs": {
+      "t": "Mohács",
+      "d": "Suleiman the Magnificent crushes the Hungarians; King Louis II dies.",
+      "w": "Battle of Mohács"
+    },
+    "panipat-1526": {
+      "t": "Panipat and the Mughals",
+      "d": "Babur defeats the Delhi Sultanate and founds the Mughal Empire.",
+      "w": "First Battle of Panipat"
+    },
+    "first-siege-of-vienna": {
+      "t": "The first siege of Vienna",
+      "d": "Suleiman reaches the walls, but winter turns him back.",
+      "w": "Siege of Vienna (1529)"
+    },
+    "pizarro-atahualpa": {
+      "t": "Pizarro captures Atahualpa",
+      "d": "At Cajamarca, 168 Spaniards seize the Inca ruler.",
+      "w": "Battle of Cajamarca"
+    },
+    "copernicus": {
+      "t": "Copernicus",
+      "d": "On the Revolutions of the Heavenly Spheres — the Sun at the centre.",
+      "w": "Nicolaus Copernicus"
+    },
+    "potosi": {
+      "t": "The silver mountain of Potosí",
+      "d": "Bolivian silver will flood Europe and China.",
+      "w": "Potosí"
+    },
+    "lepanto": {
+      "t": "Lepanto",
+      "d": "The Holy League destroys the Ottoman fleet — the last great battle of galleys.",
+      "w": "Battle of Lepanto"
+    },
+    "spanish-armada": {
+      "t": "The Spanish Armada",
+      "d": "The Spanish fleet is broken by the English and by storms.",
+      "w": "Spanish Armada"
+    },
+    "imjin-war": {
+      "t": "The Imjin War",
+      "d": "Hideyoshi invades Korea; Admiral Yi Sun-sin stops him with turtle ships.",
+      "w": "Imjin War"
+    },
+    "first-tarnovo-uprising": {
+      "t": "The First Tarnovo Uprising",
+      "d": "An attempt at liberation with help from Wallachia and the Habsburgs.",
+      "w": "First Tarnovo Uprising"
+    },
+    "sekigahara": {
+      "t": "Sekigahara",
+      "d": "Tokugawa Ieyasu wins and unites Japan for 250 years.",
+      "w": "Battle of Sekigahara"
+    },
+    "dutch-east-india-company": {
+      "t": "The Dutch East India Company",
+      "d": "The first joint-stock company with shares traded on an exchange.",
+      "w": "Dutch East India Company"
+    },
+    "jamestown": {
+      "t": "Jamestown",
+      "d": "The first permanent English colony in America.",
+      "w": "Jamestown, Virginia"
+    },
+    "galileo-telescope": {
+      "t": "Galileo and the telescope",
+      "d": "He sees the moons of Jupiter and the phases of Venus.",
+      "w": "Galileo Galilei"
+    },
+    "thirty-years-war": {
+      "t": "The Thirty Years' War",
+      "d": "The Defenestration of Prague ignites Europe's bloodiest war so far.",
+      "w": "Thirty Years' War"
+    },
+    "mayflower": {
+      "t": "The Mayflower",
+      "d": "The Pilgrims land at Plymouth, Massachusetts.",
+      "w": "Mayflower"
+    },
+    "taj-mahal": {
+      "t": "The Taj Mahal",
+      "d": "Shah Jahan builds a mausoleum for his wife Mumtaz Mahal.",
+      "w": "Taj Mahal"
+    },
+    "manchus-take-beijing": {
+      "t": "The Manchus enter Beijing",
+      "d": "The Ming fall; the Qing will rule until 1912.",
+      "w": "Qing dynasty"
+    },
+    "peace-of-westphalia": {
+      "t": "The Peace of Westphalia",
+      "d": "The peace from which the idea of the sovereign state comes.",
+      "w": "Peace of Westphalia"
+    },
+    "execution-of-charles-i": {
+      "t": "The execution of Charles I",
+      "d": "Parliament condemns the king; England is a republic for 11 years.",
+      "w": "Execution of Charles I"
+    },
+    "second-siege-of-vienna": {
+      "t": "The second siege of Vienna",
+      "d": "Jan Sobieski strikes the Ottomans — the start of their retreat from Europe.",
+      "w": "Battle of Vienna"
+    },
+    "newtons-principia": {
+      "t": "Newton's Principia",
+      "d": "The laws of motion and of gravity.",
+      "w": "Philosophiæ Naturalis Principia Mathematica"
+    },
+    "chiprovtsi-uprising": {
+      "t": "The Chiprovtsi Uprising",
+      "d": "The Catholics of north-western Bulgaria rise up; Chiprovtsi is burned.",
+      "w": "Chiprovtsi uprising"
+    },
+    "saint-petersburg": {
+      "t": "Saint Petersburg",
+      "d": "Peter I founds a new capital on the marshes of the Neva.",
+      "w": "Saint Petersburg"
+    },
+    "poltava": {
+      "t": "Poltava",
+      "d": "Peter I defeats Charles XII — Russia becomes a great power.",
+      "w": "Battle of Poltava"
+    },
+    "newcomen-engine": {
+      "t": "Newcomen's steam engine",
+      "d": "A pump for water in the mines — the first working steam engine.",
+      "w": "Newcomen atmospheric engine"
+    },
+    "plassey": {
+      "t": "Plassey",
+      "d": "Robert Clive defeats the Nawab of Bengal — Britain takes India.",
+      "w": "Battle of Plassey"
+    },
+    "slavo-bulgarian-history": {
+      "t": "The Slavonic-Bulgarian History",
+      "d": "Paisius of Hilendar writes his history on Mount Athos — the Bulgarian National Revival begins.",
+      "w": "Istoriya Slavyanobolgarskaya"
+    },
+    "watt-engine": {
+      "t": "Watt's steam engine",
+      "d": "The separate condenser makes it powerful enough for factories.",
+      "w": "James Watt"
+    },
+    "cook-in-australia": {
+      "t": "Cook in Australia",
+      "d": "James Cook maps the east coast and anchors in Botany Bay.",
+      "w": "James Cook"
+    },
+    "declaration-of-independence": {
+      "t": "The Declaration of Independence",
+      "d": "Thirteen American colonies break away from Britain.",
+      "w": "United States Declaration of Independence"
+    },
+    "yorktown": {
+      "t": "Yorktown",
+      "d": "The British surrender — American independence is a fact.",
+      "w": "Siege of Yorktown"
+    },
+    "storming-of-the-bastille": {
+      "t": "The storming of the Bastille",
+      "d": "Parisians storm the prison — the French Revolution breaks out.",
+      "w": "Storming of the Bastille"
+    },
+    "haitian-revolution": {
+      "t": "The Haitian Revolution",
+      "d": "The enslaved rise up; Haiti will be the first state founded by former slaves.",
+      "w": "Haitian Revolution"
+    },
+    "napoleon-in-egypt": {
+      "t": "Napoleon in Egypt",
+      "d": "The Battle of the Pyramids — and the scholars who find the Rosetta Stone.",
+      "w": "French invasion of Egypt and Syria"
+    },
+    "napoleon-emperor": {
+      "t": "Napoleon becomes emperor",
+      "d": "He places the crown on his own head in Notre-Dame.",
+      "w": "Coronation of Napoleon"
+    },
+    "trafalgar": {
+      "t": "Trafalgar",
+      "d": "Nelson destroys the Franco-Spanish fleet and is killed.",
+      "w": "Battle of Trafalgar"
+    },
+    "austerlitz": {
+      "t": "Austerlitz",
+      "d": "The Battle of the Three Emperors — Napoleon's masterpiece.",
+      "w": "Battle of Austerlitz"
+    },
+    "napoleon-in-moscow": {
+      "t": "Napoleon in Moscow",
+      "d": "Borodino, Moscow in flames and a ruinous retreat.",
+      "w": "French invasion of Russia"
+    },
+    "waterloo": {
+      "t": "Waterloo",
+      "d": "Napoleon's last battle.",
+      "w": "Battle of Waterloo"
+    },
+    "tambora": {
+      "t": "Tambora",
+      "d": "The most powerful eruption in recorded history — then the \"year without a summer\".",
+      "w": "1815 eruption of Mount Tambora"
+    },
+    "greek-war-of-independence": {
+      "t": "The Greek War of Independence",
+      "d": "Greece rises against the Ottoman Empire.",
+      "w": "Greek War of Independence"
+    },
+    "ayacucho": {
+      "t": "Ayacucho",
+      "d": "Sucre defeats the Spanish — South America is free.",
+      "w": "Battle of Ayacucho"
+    },
+    "first-railway": {
+      "t": "The first railway",
+      "d": "Stockton–Darlington: Stephenson's locomotive pulls passengers.",
+      "w": "Stockton and Darlington Railway"
+    },
+    "aprilov-high-school": {
+      "t": "The Aprilov High School",
+      "d": "The first secular Bulgarian school, in Gabrovo.",
+      "w": "Aprilov National High School"
+    },
+    "opium-war": {
+      "t": "The Opium War",
+      "d": "Britain goes to war with China over the right to sell opium.",
+      "w": "First Opium War"
+    },
+    "the-telegraph": {
+      "t": "The telegraph",
+      "d": "Morse sends \"What hath God wrought\" from Washington to Baltimore.",
+      "w": "Samuel Morse"
+    },
+    "revolutions-of-1848": {
+      "t": "The Springtime of Nations",
+      "d": "Revolutions in Paris, Vienna, Berlin, Budapest and Milan.",
+      "w": "Revolutions of 1848"
+    },
+    "perrys-black-ships": {
+      "t": "Perry's black ships",
+      "d": "American warships force Japan to open up.",
+      "w": "Matthew C. Perry"
+    },
+    "crimean-war": {
+      "t": "The Crimean War",
+      "d": "Britain, France and the Ottoman Empire against Russia; Florence Nightingale.",
+      "w": "Crimean War"
+    },
+    "origin-of-species": {
+      "t": "On the Origin of Species",
+      "d": "Darwin publishes the theory of natural selection.",
+      "w": "On the Origin of Species"
+    },
+    "american-civil-war": {
+      "t": "The American Civil War",
+      "d": "North against South — for the Union and over slavery.",
+      "w": "American Civil War"
+    },
+    "gettysburg": {
+      "t": "Gettysburg",
+      "d": "The turning point of the war, and Lincoln's address.",
+      "w": "Battle of Gettysburg"
+    },
+    "meiji-restoration": {
+      "t": "The Meiji Restoration",
+      "d": "The emperor regains power and Japan modernises within a generation.",
+      "w": "Meiji Restoration"
+    },
+    "suez-canal": {
+      "t": "The Suez Canal",
+      "d": "The Mediterranean and the Red Sea are joined.",
+      "w": "Suez Canal"
+    },
+    "bulgarian-exarchate": {
+      "t": "The Bulgarian Exarchate",
+      "d": "The Sultan recognises an independent Bulgarian church.",
+      "w": "Bulgarian Exarchate"
+    },
+    "german-unification": {
+      "t": "A united Germany",
+      "d": "Wilhelm I is proclaimed emperor in the Hall of Mirrors at Versailles.",
+      "w": "German Empire"
+    },
+    "levski-hanged": {
+      "t": "Levski is hanged",
+      "d": "The Apostle of Freedom is executed in Sofia.",
+      "w": "Vasil Levski"
+    },
+    "april-uprising": {
+      "t": "The April Uprising",
+      "d": "The uprising is drowned in blood, but the world learns about Bulgaria.",
+      "w": "April Uprising"
+    },
+    "botev-band": {
+      "t": "Botev and his band",
+      "d": "Hristo Botev seizes the steamer Radetzky and dies in the Vratsa mountains.",
+      "w": "Hristo Botev"
+    },
+    "the-telephone": {
+      "t": "The telephone",
+      "d": "Alexander Graham Bell patents his device.",
+      "w": "Alexander Graham Bell"
+    },
+    "shipka-pass": {
+      "t": "The Shipka Pass",
+      "d": "Russian soldiers and Bulgarian volunteers hold the pass.",
+      "w": "Battles of Shipka Pass"
+    },
+    "siege-of-plevna": {
+      "t": "The siege of Plevna",
+      "d": "For five months Osman Pasha holds the town against Russians and Romanians.",
+      "w": "Siege of Plevna"
+    },
+    "liberation-of-bulgaria": {
+      "t": "The liberation of Bulgaria",
+      "d": "The Treaty of San Stefano — Bulgaria is back on the map.",
+      "w": "Treaty of San Stefano"
+    },
+    "congress-of-berlin": {
+      "t": "The Congress of Berlin",
+      "d": "The Great Powers tear San Stefano Bulgaria into three.",
+      "w": "Treaty of Berlin (1878)"
+    },
+    "tarnovo-constitution": {
+      "t": "The Tarnovo Constitution",
+      "d": "One of the most democratic constitutions of its day.",
+      "w": "Tarnovo Constitution"
+    },
+    "edisons-light-bulb": {
+      "t": "Edison's light bulb",
+      "d": "A carbon filament that glows for 13 hours.",
+      "w": "Thomas Edison"
+    },
+    "krakatoa": {
+      "t": "Krakatoa",
+      "d": "The blast is heard 4,800 km away; the tsunami kills tens of thousands.",
+      "w": "1883 eruption of Krakatoa"
+    },
+    "berlin-conference": {
+      "t": "The Berlin Conference",
+      "d": "The European powers carve up Africa at a table.",
+      "w": "Berlin Conference"
+    },
+    "bulgarian-unification": {
+      "t": "The Unification of Bulgaria",
+      "d": "Eastern Rumelia joins the Principality of Bulgaria.",
+      "w": "Bulgarian unification"
+    },
+    "slivnitsa": {
+      "t": "Slivnitsa",
+      "d": "The Bulgarian army throws back the Serbian attack.",
+      "w": "Battle of Slivnitsa"
+    },
+    "benz-motorwagen": {
+      "t": "Benz's automobile",
+      "d": "A three-wheeler with an internal combustion engine.",
+      "w": "Benz Patent-Motorwagen"
+    },
+    "eiffel-tower": {
+      "t": "The Eiffel Tower",
+      "d": "Built for the World's Fair on the centenary of the Revolution.",
+      "w": "Eiffel Tower"
+    },
+    "first-modern-olympics": {
+      "t": "The first modern Olympic Games",
+      "d": "Athens revives the games after 1,500 years.",
+      "w": "1896 Summer Olympics"
+    },
+    "adwa": {
+      "t": "Adwa",
+      "d": "Ethiopia defeats Italy and keeps its independence.",
+      "w": "Battle of Adwa"
+    },
+    "ilinden-preobrazhenie": {
+      "t": "The Ilinden–Preobrazhenie Uprising",
+      "d": "Macedonia and the Adrianople region rise against Ottoman rule.",
+      "w": "Ilinden–Preobrazhenie Uprising"
+    },
+    "first-flight": {
+      "t": "The first flight",
+      "d": "The Wright brothers fly for 12 seconds at Kitty Hawk.",
+      "w": "Wright brothers"
+    },
+    "tsushima": {
+      "t": "Tsushima",
+      "d": "Japan destroys the Russian fleet — the first victory of an Asian power over a European one.",
+      "w": "Battle of Tsushima"
+    },
+    "relativity": {
+      "t": "The theory of relativity",
+      "d": "Einstein publishes four papers that change physics.",
+      "w": "Annus mirabilis papers"
+    },
+    "bulgarian-independence": {
+      "t": "Bulgarian independence",
+      "d": "Ferdinand proclaims the Tsardom of Bulgaria in Tarnovo.",
+      "w": "Bulgarian Declaration of Independence"
+    },
+    "xinhai-revolution": {
+      "t": "The Xinhai Revolution",
+      "d": "The last emperor of China falls.",
+      "w": "1911 Revolution"
+    },
+    "amundsen-south-pole": {
+      "t": "Amundsen at the South Pole",
+      "d": "The Norwegians beat Scott by five weeks.",
+      "w": "Roald Amundsen"
+    },
+    "titanic": {
+      "t": "The Titanic",
+      "d": "The \"unsinkable\" ship sinks on her maiden voyage.",
+      "w": "Titanic"
+    },
+    "first-balkan-war": {
+      "t": "The Balkan War",
+      "d": "Bulgaria, Serbia, Greece and Montenegro push the Ottomans out of Europe.",
+      "w": "First Balkan War"
+    },
+    "siege-of-adrianople-1913": {
+      "t": "The capture of Adrianople",
+      "d": "The Bulgarian army storms the \"impregnable\" fortress.",
+      "w": "Siege of Adrianople (1912–1913)"
+    },
+    "second-balkan-war": {
+      "t": "The Second Balkan War",
+      "d": "The former allies turn on Bulgaria — the first national catastrophe.",
+      "w": "Second Balkan War"
+    },
+    "sarajevo": {
+      "t": "Sarajevo",
+      "d": "The assassination of Archduke Franz Ferdinand sparks the First World War.",
+      "w": "Assassination of Archduke Franz Ferdinand"
+    },
+    "marne": {
+      "t": "The Marne",
+      "d": "The German advance is stopped before Paris; trench warfare begins.",
+      "w": "First Battle of the Marne"
+    },
+    "panama-canal": {
+      "t": "The Panama Canal",
+      "d": "The Atlantic and the Pacific are joined.",
+      "w": "Panama Canal"
+    },
+    "gallipoli": {
+      "t": "Gallipoli",
+      "d": "The Entente tries to force the Dardanelles and fails.",
+      "w": "Gallipoli campaign"
+    },
+    "armenian-genocide": {
+      "t": "The Armenian genocide",
+      "d": "Hundreds of thousands of Armenians are killed and driven out of Anatolia.",
+      "w": "Armenian genocide"
+    },
+    "verdun-somme": {
+      "t": "Verdun and the Somme",
+      "d": "Two battles with over a million and a half casualties for a few kilometres.",
+      "w": "Battle of Verdun"
+    },
+    "tutrakan": {
+      "t": "Tutrakan",
+      "d": "The Bulgarian army takes the Danube fortress in five days.",
+      "w": "Battle of Turtucaia"
+    },
+    "october-revolution": {
+      "t": "The October Revolution",
+      "d": "Lenin's Bolsheviks seize power in Petrograd.",
+      "w": "October Revolution"
+    },
+    "doiran-1918": {
+      "t": "Doiran",
+      "d": "The Bulgarians hold their positions while the front collapses at Dobro Pole.",
+      "w": "Battle of Doiran (1918)"
+    },
+    "spanish-flu": {
+      "t": "The Spanish flu",
+      "d": "A pandemic that killed more people than the war.",
+      "w": "Spanish flu"
+    },
+    "treaty-of-versailles": {
+      "t": "The Treaty of Versailles",
+      "d": "The peace that sowed the next war.",
+      "w": "Treaty of Versailles"
+    },
+    "treaty-of-neuilly": {
+      "t": "The Treaty of Neuilly",
+      "d": "Bulgaria loses the Western Outlands and its access to the Aegean.",
+      "w": "Treaty of Neuilly-sur-Seine"
+    },
+    "ussr-founded": {
+      "t": "The USSR",
+      "d": "Russia, Ukraine, Belarus and Transcaucasia unite.",
+      "w": "Soviet Union"
+    },
+    "republic-of-turkey": {
+      "t": "The Republic of Turkey",
+      "d": "Mustafa Kemal Atatürk founds modern Turkey.",
+      "w": "Mustafa Kemal Atatürk"
+    },
+    "penicillin": {
+      "t": "Penicillin",
+      "d": "Fleming notices a mould that kills bacteria.",
+      "w": "Penicillin"
+    },
+    "great-depression": {
+      "t": "The Great Depression",
+      "d": "The Wall Street Crash plunges the world into crisis.",
+      "w": "Great Depression"
+    },
+    "salt-march": {
+      "t": "The Salt March",
+      "d": "Gandhi and his followers walk 390 km against the British salt tax.",
+      "w": "Salt March"
+    },
+    "hitler-in-power": {
+      "t": "Hitler takes power",
+      "d": "The Nazis take over Germany.",
+      "w": "Adolf Hitler's rise to power"
+    },
+    "long-march": {
+      "t": "The Long March",
+      "d": "Mao's Red Army retreats 10,000 km.",
+      "w": "Long March"
+    },
+    "nanjing-massacre": {
+      "t": "The Nanjing Massacre",
+      "d": "The Japanese army kills tens of thousands of civilians.",
+      "w": "Nanjing Massacre"
+    },
+    "second-world-war": {
+      "t": "The Second World War",
+      "d": "Germany invades Poland.",
+      "w": "World War II"
+    },
+    "battle-of-britain": {
+      "t": "The Battle of Britain",
+      "d": "The Luftwaffe fails to win the skies over England.",
+      "w": "Battle of Britain"
+    },
+    "treaty-of-craiova": {
+      "t": "The Treaty of Craiova",
+      "d": "Southern Dobruja returns to Bulgaria without a war.",
+      "w": "Treaty of Craiova"
+    },
+    "pearl-harbor": {
+      "t": "Pearl Harbor",
+      "d": "Japan strikes the US fleet; the United States enters the war.",
+      "w": "Attack on Pearl Harbor"
+    },
+    "operation-barbarossa": {
+      "t": "Operation Barbarossa",
+      "d": "Germany invades the Soviet Union.",
+      "w": "Operation Barbarossa"
+    },
+    "stalingrad": {
+      "t": "Stalingrad",
+      "d": "The bloodiest battle in history — the turning point of the war.",
+      "w": "Battle of Stalingrad"
+    },
+    "midway": {
+      "t": "Midway",
+      "d": "The US sinks four Japanese aircraft carriers.",
+      "w": "Battle of Midway"
+    },
+    "rescue-of-bulgarian-jews": {
+      "t": "The rescue of the Bulgarian Jews",
+      "d": "MPs, the Church and citizens stop the deportation of 48,000 people.",
+      "w": "Rescue of the Bulgarian Jews"
+    },
+    "d-day": {
+      "t": "D-Day",
+      "d": "The Allies land in Normandy.",
+      "w": "Normandy landings"
+    },
+    "hiroshima-nagasaki": {
+      "t": "Hiroshima and Nagasaki",
+      "d": "The atomic bombs end the war with Japan.",
+      "w": "Atomic bombings of Hiroshima and Nagasaki"
+    },
+    "united-nations": {
+      "t": "The United Nations",
+      "d": "51 countries sign the Charter in San Francisco.",
+      "w": "United Nations"
+    },
+    "indian-independence": {
+      "t": "Indian independence",
+      "d": "British India is partitioned into India and Pakistan.",
+      "w": "Partition of India"
+    },
+    "israel": {
+      "t": "Israel",
+      "d": "The state is proclaimed and the first Arab–Israeli war begins.",
+      "w": "Israel"
+    },
+    "berlin-blockade": {
+      "t": "The Berlin Blockade",
+      "d": "The West supplies Berlin by air for a whole year.",
+      "w": "Berlin Blockade"
+    },
+    "prc-founded": {
+      "t": "The People's Republic of China",
+      "d": "Mao proclaims the People's Republic.",
+      "w": "China"
+    },
+    "korean-war": {
+      "t": "The Korean War",
+      "d": "The first hot war of the Cold War.",
+      "w": "Korean War"
+    },
+    "everest": {
+      "t": "Everest",
+      "d": "Hillary and Tenzing Norgay stand on the summit.",
+      "w": "1953 British Mount Everest expedition"
+    },
+    "double-helix": {
+      "t": "The double helix",
+      "d": "Watson and Crick describe the structure of DNA.",
+      "w": "DNA"
+    },
+    "hungarian-revolution": {
+      "t": "The Hungarian Revolution",
+      "d": "Soviet tanks crush the uprising in Budapest.",
+      "w": "Hungarian Revolution of 1956"
+    },
+    "sputnik": {
+      "t": "Sputnik",
+      "d": "The first artificial satellite — the Space Age begins.",
+      "w": "Sputnik 1"
+    },
+    "year-of-africa": {
+      "t": "The Year of Africa",
+      "d": "Seventeen African countries become independent.",
+      "w": "Year of Africa"
+    },
+    "gagarin": {
+      "t": "Gagarin",
+      "d": "The first human in space.",
+      "w": "Yuri Gagarin"
+    },
+    "berlin-wall": {
+      "t": "The Berlin Wall",
+      "d": "Overnight the city is cut in two.",
+      "w": "Berlin Wall"
+    },
+    "cuban-missile-crisis": {
+      "t": "The Cuban Missile Crisis",
+      "d": "Thirteen days on the brink of nuclear war.",
+      "w": "Cuban Missile Crisis"
+    },
+    "vietnam-war": {
+      "t": "The Vietnam War",
+      "d": "The US sends in ground troops.",
+      "w": "Vietnam War"
+    },
+    "moon-landing": {
+      "t": "A man on the Moon",
+      "d": "Armstrong and Aldrin step onto the Sea of Tranquility.",
+      "w": "Apollo 11"
+    },
+    "arpanet": {
+      "t": "ARPANET",
+      "d": "The first message between two computers — \"LO\", before it crashed.",
+      "w": "ARPANET"
+    },
+    "iranian-revolution": {
+      "t": "The Iranian Revolution",
+      "d": "The Shah flees; Khomeini founds an Islamic republic.",
+      "w": "Iranian Revolution"
+    },
+    "chernobyl": {
+      "t": "Chernobyl",
+      "d": "The worst nuclear accident in history.",
+      "w": "Chernobyl disaster"
+    },
+    "shipka-mission": {
+      "t": "Aleksandrov's Shipka mission",
+      "d": "The second Bulgarian cosmonaut works aboard the Mir station.",
+      "w": "Aleksandar Panayotov Aleksandrov"
+    },
+    "fall-of-berlin-wall": {
+      "t": "The fall of the Berlin Wall",
+      "d": "The Cold War ends in the squares of Eastern Europe.",
+      "w": "Fall of the Berlin Wall"
+    },
+    "november-10-1989": {
+      "t": "10 November",
+      "d": "Todor Zhivkov is ousted — Bulgaria heads for democracy.",
+      "w": "Todor Zhivkov"
+    },
+    "tiananmen": {
+      "t": "Tiananmen",
+      "d": "The army crushes the protests in Beijing.",
+      "w": "1989 Tiananmen Square protests and massacre"
+    },
+    "world-wide-web": {
+      "t": "The Web",
+      "d": "Tim Berners-Lee puts the first website online at CERN.",
+      "w": "World Wide Web"
+    },
+    "dissolution-of-ussr": {
+      "t": "The dissolution of the USSR",
+      "d": "Fifteen republics become independent states.",
+      "w": "Dissolution of the Soviet Union"
+    },
+    "mandela-elected": {
+      "t": "Mandela",
+      "d": "South Africa's first free elections; apartheid ends.",
+      "w": "Nelson Mandela"
+    },
+    "rwandan-genocide": {
+      "t": "The Rwandan genocide",
+      "d": "In a hundred days about 800,000 people are killed.",
+      "w": "Rwandan genocide"
+    },
+    "september-11": {
+      "t": "September 11",
+      "d": "The attacks in New York and Washington.",
+      "w": "September 11 attacks"
+    },
+    "indian-ocean-tsunami": {
+      "t": "The Indian Ocean tsunami",
+      "d": "A magnitude 9.1 earthquake kills over 220,000 people.",
+      "w": "2004 Indian Ocean earthquake and tsunami"
+    },
+    "bulgaria-in-nato": {
+      "t": "Bulgaria joins NATO",
+      "d": "Seven Eastern European countries join the alliance.",
+      "w": "2004 enlargement of NATO"
+    },
+    "bulgaria-in-eu": {
+      "t": "Bulgaria joins the EU",
+      "d": "On 1 January Bulgaria and Romania become members of the European Union.",
+      "w": "2007 enlargement of the European Union"
+    },
+    "smartphone": {
+      "t": "The smartphone",
+      "d": "Apple unveils the iPhone; the internet moves into your pocket.",
+      "w": "iPhone (1st generation)"
+    },
+    "financial-crisis-2008": {
+      "t": "The financial crisis",
+      "d": "The collapse of Lehman Brothers shakes the world.",
+      "w": "2007–2008 financial crisis"
+    },
+    "arab-spring": {
+      "t": "The Arab Spring",
+      "d": "Protests topple regimes in Tunisia, Egypt and Libya.",
+      "w": "Arab Spring"
+    },
+    "fukushima": {
+      "t": "Fukushima",
+      "d": "The tsunami wrecks the nuclear power plant.",
+      "w": "Fukushima nuclear accident"
+    },
+    "covid-19": {
+      "t": "COVID-19",
+      "d": "A pandemic that stops the world.",
+      "w": "COVID-19 pandemic"
+    },
+    "russian-invasion-of-ukraine": {
+      "t": "The Russian invasion of Ukraine",
+      "d": "The largest war in Europe since 1945.",
+      "w": "Russian invasion of Ukraine"
+    },
+    "bulgaria-eurozone": {
+      "t": "Bulgaria joins the eurozone",
+      "d": "Bulgaria is cleared to adopt the euro from 1 January 2026.",
+      "w": "Bulgaria and the euro"
+    },
+    "potato-andes": {
+      "t": "The potato in the Andes",
+      "d": "Around Lake Titicaca the potato is domesticated — one day it will feed Europe.",
+      "w": "Potato"
+    },
+    "sahara-dries": {
+      "t": "The Sahara dries out",
+      "d": "The Green Sahara of lakes and giraffes becomes desert; people move to the Nile.",
+      "w": "African humid period"
+    },
+    "bantu-move-south": {
+      "t": "The Bantu move south",
+      "d": "Farmers from today's Cameroon begin a migration across Africa that lasts millennia.",
+      "w": "Bantu expansion"
+    },
+    "harappan-decline": {
+      "t": "The decline of Harappa",
+      "d": "The rivers shift and the cities of the Indus valley empty.",
+      "w": "Indus Valley Civilisation"
+    },
+    "rigveda": {
+      "t": "The Rigveda",
+      "d": "The oldest hymns of Hinduism are composed and passed down by heart.",
+      "w": "Rigveda"
+    },
+    "lapita-pacific": {
+      "t": "The Lapita sail into the Pacific",
+      "d": "Seafarers from the Bismarck Archipelago reach Vanuatu, Fiji and Tonga.",
+      "w": "Lapita culture"
+    },
+    "san-lorenzo": {
+      "t": "Olmec San Lorenzo",
+      "d": "The first great centre in Mesoamerica — with the colossal stone heads.",
+      "w": "San Lorenzo Tenochtitlán"
+    },
+    "samoa-tonga": {
+      "t": "Samoa and Tonga",
+      "d": "The Lapita reach Western Polynesia — Polynesian culture is born here.",
+      "w": "Polynesia"
+    },
+    "kingdom-of-kush": {
+      "t": "The Kingdom of Kush",
+      "d": "The Nubians of Napata break free from Egypt.",
+      "w": "Kingdom of Kush"
+    },
+    "kushites-rule-egypt": {
+      "t": "The Kushites conquer Egypt",
+      "d": "Piye of Napata founds the 25th Dynasty — the \"Black Pharaohs\".",
+      "w": "Twenty-fifth Dynasty of Egypt"
+    },
+    "upanishads": {
+      "t": "The Upanishads",
+      "d": "Indian sages seek the unity of the self and the world.",
+      "w": "Upanishads"
+    },
+    "mahavira-jainism": {
+      "t": "Mahavira and Jainism",
+      "d": "The teaching of non-violence towards every living being.",
+      "w": "Mahavira"
+    },
+    "nok-iron": {
+      "t": "Nok works iron",
+      "d": "In today's Nigeria — terracotta heads and the first ironsmiths south of the Sahara.",
+      "w": "Nok culture"
+    },
+    "monte-alban": {
+      "t": "Monte Albán",
+      "d": "The Zapotecs build a capital on a levelled hilltop in the Oaxaca valley.",
+      "w": "Monte Albán"
+    },
+    "meroitic-script": {
+      "t": "The Meroitic script",
+      "d": "The Kushites create their own alphabet — still not fully deciphered.",
+      "w": "Meroitic script"
+    },
+    "buddhism-sri-lanka": {
+      "t": "Buddhism in Sri Lanka",
+      "d": "Ashoka's son Mahinda converts the king of Anuradhapura.",
+      "w": "Buddhism in Sri Lanka"
+    },
+    "nazca-lines": {
+      "t": "The Nazca draw on the desert",
+      "d": "Giant lines and figures that can only be seen whole from above.",
+      "w": "Nazca Lines"
+    },
+    "sanchi-stupa": {
+      "t": "The stupa at Sanchi",
+      "d": "One of the oldest stone Buddhist monuments in India.",
+      "w": "Sanchi"
+    },
+    "teotihuacan-rises": {
+      "t": "Teotihuacan rises",
+      "d": "The city the Aztecs would call \"the place where the gods were born\" begins.",
+      "w": "Teotihuacan"
+    },
+    "kushan-empire": {
+      "t": "The Kushan Empire",
+      "d": "The Yuezhi build an empire from the Aral Sea to the Ganges — where India, Persia and Greece meet.",
+      "w": "Kushan Empire"
+    },
+    "aksum-trade": {
+      "t": "Aksum trades with Rome and India",
+      "d": "The Ethiopian kingdom strikes its own coins and controls the Red Sea.",
+      "w": "Kingdom of Aksum"
+    },
+    "pyramid-of-the-sun": {
+      "t": "The Pyramid of the Sun",
+      "d": "One of the largest pyramids in the world rises at Teotihuacan.",
+      "w": "Pyramid of the Sun"
+    },
+    "maya-glyphs": {
+      "t": "Maya hieroglyphs",
+      "d": "The Classic period: city-states with a calendar, a zero and writing.",
+      "w": "Maya script"
+    },
+    "kofun-yamato": {
+      "t": "Kofun and Yamato",
+      "d": "Giant keyhole-shaped burial mounds — the birth of the Japanese state.",
+      "w": "Kofun period"
+    },
+    "ghana-empire": {
+      "t": "The Ghana Empire",
+      "d": "Wagadu, \"the land of gold\", controls the trade across the Sahara.",
+      "w": "Ghana Empire"
+    },
+    "polynesians-hawaii": {
+      "t": "Polynesians reach Hawaii",
+      "d": "In double canoes they reach the most isolated archipelago on Earth.",
+      "w": "Hawaii"
+    },
+    "nalanda": {
+      "t": "Nalanda",
+      "d": "The Buddhist university in Bihar — with thousands of students from all over Asia.",
+      "w": "Nalanda mahavihara"
+    },
+    "zero-in-india": {
+      "t": "Zero in India",
+      "d": "A positional number system with zero — the Arabs will bring it to Europe.",
+      "w": "0"
+    },
+    "caracol-defeats-tikal": {
+      "t": "Caracol defeats Tikal",
+      "d": "The war between Maya cities begins Tikal's 130-year \"hiatus\".",
+      "w": "Caracol"
+    },
+    "pakal-the-great": {
+      "t": "Pakal the Great at Palenque",
+      "d": "68 years on the throne and a tomb with the famous sarcophagus.",
+      "w": "K'inich Janaab' Pakal"
+    },
+    "tibetan-empire": {
+      "t": "The Tibetan Empire",
+      "d": "Songtsen Gampo unites Tibet and introduces writing.",
+      "w": "Tibetan Empire"
+    },
+    "taika-reform": {
+      "t": "The Taika Reform",
+      "d": "Japan copies the Chinese state: laws, taxes, a capital.",
+      "w": "Taika Reform"
+    },
+    "silla-unifies-korea": {
+      "t": "Silla unifies Korea",
+      "d": "With Tang help Silla defeats Baekje and Goguryeo.",
+      "w": "Unified Silla"
+    },
+    "srivijaya": {
+      "t": "Srivijaya",
+      "d": "A maritime empire from Sumatra controls the Strait of Malacca.",
+      "w": "Srivijaya"
+    },
+    "tiwanaku-wari": {
+      "t": "Tiwanaku and Wari",
+      "d": "The two Andean empires that came before the Incas.",
+      "w": "Tiwanaku"
+    },
+    "borobudur": {
+      "t": "Borobudur",
+      "d": "The largest Buddhist temple in the world — on the island of Java.",
+      "w": "Borobudur"
+    },
+    "swahili-cities": {
+      "t": "The Swahili cities",
+      "d": "Kilwa, Mombasa, Zanzibar — ports between Africa, Arabia and India.",
+      "w": "Swahili coast"
+    },
+    "chichen-itza": {
+      "t": "Chichen Itza",
+      "d": "The new Maya centre in Yucatán with the pyramid of Kukulcán.",
+      "w": "Chichen Itza"
+    },
+    "igbo-ukwu": {
+      "t": "Igbo-Ukwu",
+      "d": "Exquisite bronzes in today's Nigeria — long before Benin.",
+      "w": "Igbo-Ukwu"
+    },
+    "toltecs-tula": {
+      "t": "The Toltecs at Tula",
+      "d": "The warlike Toltecs become a legend for everyone after them in Mexico.",
+      "w": "Tula (Mesoamerican site)"
+    },
+    "ile-ife": {
+      "t": "Ile-Ife",
+      "d": "The sacred city of the Yoruba and its naturalistic bronze heads.",
+      "w": "Ife"
+    },
+    "rajendra-chola-raid": {
+      "t": "Rajendra Chola's expedition",
+      "d": "The Tamil fleet attacks Srivijaya — India at sea.",
+      "w": "Rajendra I"
+    },
+    "cahokia-1050": {
+      "t": "Cahokia",
+      "d": "The largest city north of Mexico before Columbus.",
+      "w": "Cahokia"
+    },
+    "almoravids-ghana": {
+      "t": "The Almoravids in Ghana",
+      "d": "Berber warriors weaken \"the land of gold\".",
+      "w": "Almoravid dynasty"
+    },
+    "easter-island": {
+      "t": "Easter Island",
+      "d": "Polynesians settle Rapa Nui and begin raising the moai.",
+      "w": "Moai"
+    },
+    "lalibela": {
+      "t": "The churches of Lalibela",
+      "d": "Ethiopian churches carved whole out of the rock.",
+      "w": "Lalibela"
+    },
+    "great-zimbabwe": {
+      "t": "Great Zimbabwe",
+      "d": "Stone walls without mortar — the centre of the gold trade.",
+      "w": "Great Zimbabwe"
+    },
+    "delhi-sultanate": {
+      "t": "The Delhi Sultanate",
+      "d": "Qutb ud-Din Aibak founds the first great Muslim state in India.",
+      "w": "Delhi Sultanate"
+    },
+    "qutb-minar": {
+      "t": "The Qutb Minar",
+      "d": "A 73-metre minaret of red stone in Delhi.",
+      "w": "Qutb Minar"
+    },
+    "maori-new-zealand": {
+      "t": "The Māori reach New Zealand",
+      "d": "Polynesians settle the last large unpeopled land.",
+      "w": "Māori people"
+    },
+    "solomonic-dynasty": {
+      "t": "Ethiopia's Solomonic dynasty",
+      "d": "Yekuno Amlak claims descent from Solomon and the Queen of Sheba.",
+      "w": "Solomonic dynasty"
+    },
+    "great-drought-southwest": {
+      "t": "The Great Drought in the Southwest",
+      "d": "The Ancestral Puebloans leave their cliff dwellings at Mesa Verde.",
+      "w": "Mesa Verde National Park"
+    },
+    "second-kamikaze": {
+      "t": "The second kamikaze",
+      "d": "A typhoon sinks Kublai Khan's huge fleet off Japan.",
+      "w": "Mongol invasions of Japan"
+    },
+    "vijayanagara": {
+      "t": "Vijayanagara",
+      "d": "A Hindu empire in South India whose capital Hampi is among the largest cities on Earth.",
+      "w": "Vijayanagara Empire"
+    },
+    "ayutthaya-kingdom": {
+      "t": "Ayutthaya",
+      "d": "A Siamese kingdom that will rule Thailand for four centuries.",
+      "w": "Ayutthaya Kingdom"
+    },
+    "joseon-dynasty": {
+      "t": "The Joseon dynasty",
+      "d": "Korea under a new dynasty that will last until 1910.",
+      "w": "Joseon"
+    },
+    "malacca-sultanate": {
+      "t": "Malacca",
+      "d": "A port sultanate at the crossroads of the spice trade.",
+      "w": "Malacca Sultanate"
+    },
+    "angkor-abandoned": {
+      "t": "Angkor is abandoned",
+      "d": "The Siamese sack the Khmer capital.",
+      "w": "Angkor"
+    },
+    "pachacuti-inca-empire": {
+      "t": "Pachacuti founds the Inca Empire",
+      "d": "Cusco becomes the centre of Tawantinsuyu — \"the four parts of the world\".",
+      "w": "Pachacuti"
+    },
+    "hangul": {
+      "t": "The Korean Hangul alphabet",
+      "d": "King Sejong creates a simple script for all the people.",
+      "w": "Hangul"
+    },
+    "songhai": {
+      "t": "Songhai",
+      "d": "Sonni Ali takes Timbuktu — the largest empire in African history.",
+      "w": "Songhai Empire"
+    },
+    "templo-mayor": {
+      "t": "The Great Temple of Tenochtitlan",
+      "d": "The Aztecs consecrate the temple with thousands of sacrifices.",
+      "w": "Templo Mayor"
+    },
+    "cabral-brazil": {
+      "t": "Cabral in Brazil",
+      "d": "The Portuguese stray from the route to India and reach South America.",
+      "w": "Pedro Álvares Cabral"
+    },
+    "portuguese-goa": {
+      "t": "The Portuguese in Goa",
+      "d": "Afonso de Albuquerque makes Goa the capital of Portuguese India.",
+      "w": "Goa"
+    },
+    "fall-of-malacca": {
+      "t": "The fall of Malacca",
+      "d": "The Portuguese seize the key to the spice trade.",
+      "w": "Capture of Malacca (1511)"
+    },
+    "chaldiran": {
+      "t": "Chaldiran",
+      "d": "Ottoman cannon crush the Persian Safavids.",
+      "w": "Battle of Chaldiran"
+    },
+    "afonso-kongo-letters": {
+      "t": "Nzinga Mbemba writes to the King of Portugal",
+      "d": "The ruler of Kongo protests against the slave trade.",
+      "w": "Afonso I of Kongo"
+    },
+    "manila-founded": {
+      "t": "Manila",
+      "d": "Spain makes Manila the capital of the Philippines — the hub of the first global trade.",
+      "w": "Manila"
+    },
+    "tondibi": {
+      "t": "Tondibi",
+      "d": "Moroccans with muskets crush Songhai.",
+      "w": "Battle of Tondibi"
+    },
+    "tokugawa-shogunate": {
+      "t": "The Tokugawa shogunate",
+      "d": "Edo becomes the capital; 250 years of peace and a closed Japan.",
+      "w": "Tokugawa shogunate"
+    },
+    "europeans-australia": {
+      "t": "Europeans in Australia",
+      "d": "The Dutchman Willem Janszoon lands in Queensland.",
+      "w": "Willem Janszoon"
+    },
+    "nzinga-mbandi": {
+      "t": "Nzinga Mbandi",
+      "d": "The queen of Ndongo and Matamba fights the Portuguese for decades.",
+      "w": "Nzinga of Ndongo and Matamba"
+    },
+    "tasman": {
+      "t": "Tasman",
+      "d": "Abel Tasman sights Tasmania and New Zealand.",
+      "w": "Abel Tasman"
+    },
+    "cape-colony": {
+      "t": "The Cape Colony",
+      "d": "The Dutch company founds a station at the Cape of Good Hope.",
+      "w": "Dutch Cape Colony"
+    },
+    "koxinga": {
+      "t": "Koxinga expels the Dutch",
+      "d": "The pirate and general Zheng Chenggong takes Taiwan.",
+      "w": "Koxinga"
+    },
+    "shivaji": {
+      "t": "Shivaji",
+      "d": "Crowned emperor of the Marathas — the beginning of the end for the Mughals.",
+      "w": "Shivaji"
+    },
+    "ashanti-empire": {
+      "t": "The Ashanti Empire",
+      "d": "Osei Tutu and the Golden Stool unite the Ashanti.",
+      "w": "Ashanti Empire"
+    },
+    "nader-shah": {
+      "t": "Nader Shah",
+      "d": "The Persian conqueror will sack Delhi and carry off the Peacock Throne.",
+      "w": "Nader Shah"
+    },
+    "third-panipat": {
+      "t": "The Third Battle of Panipat",
+      "d": "The Afghans rout the Marathas in one of the bloodiest battles of the century.",
+      "w": "Third Battle of Panipat"
+    },
+    "death-of-cook": {
+      "t": "The death of Cook",
+      "d": "James Cook is killed in Hawaii.",
+      "w": "James Cook"
+    },
+    "first-fleet": {
+      "t": "The First Fleet in Sydney",
+      "d": "Britain founds a penal colony in Australia.",
+      "w": "First Fleet"
+    },
+    "independent-haiti": {
+      "t": "Independent Haiti",
+      "d": "The first state born of a successful slave revolt.",
+      "w": "Haiti"
+    },
+    "mexican-independence": {
+      "t": "The Mexican War of Independence",
+      "d": "The priest Hidalgo rings the bell at Dolores.",
+      "w": "Mexican War of Independence"
+    },
+    "shaka-zulu": {
+      "t": "Shaka and the Zulu",
+      "d": "Shaka turns the Zulu into a military power that shakes southern Africa.",
+      "w": "Shaka"
+    },
+    "brazil-independence": {
+      "t": "Independent Brazil",
+      "d": "Prince Pedro proclaims an empire.",
+      "w": "Independence of Brazil"
+    },
+    "treaty-of-waitangi": {
+      "t": "The Treaty of Waitangi",
+      "d": "Māori chiefs and Britain — the beginning of modern New Zealand.",
+      "w": "Treaty of Waitangi"
+    },
+    "taiping-rebellion": {
+      "t": "The Taiping Rebellion",
+      "d": "The bloodiest civil war of the 19th century — 20 million dead.",
+      "w": "Taiping Rebellion"
+    },
+    "indian-rebellion-1857": {
+      "t": "The Indian Rebellion",
+      "d": "The sepoys rise up; afterwards India passes to the British Crown.",
+      "w": "Indian Rebellion of 1857"
+    },
+    "canadian-confederation": {
+      "t": "Canada",
+      "d": "Britain's North American colonies unite in a dominion.",
+      "w": "Canadian Confederation"
+    },
+    "isandlwana": {
+      "t": "Isandlwana",
+      "d": "The Zulu destroy a British army.",
+      "w": "Battle of Isandlwana"
+    },
+    "boer-war": {
+      "t": "The Anglo-Boer War",
+      "d": "Britain fights the Boer republics; concentration camps for civilians.",
+      "w": "Second Boer War"
+    },
+    "australian-federation": {
+      "t": "The Federation of Australia",
+      "d": "The six colonies become one country.",
+      "w": "Federation of Australia"
+    },
+    "mexican-revolution": {
+      "t": "The Mexican Revolution",
+      "d": "Zapata and Pancho Villa — a decade of civil war.",
+      "w": "Mexican Revolution"
+    },
+    "ghana-independence": {
+      "t": "Ghana — the first to be free",
+      "d": "Kwame Nkrumah leads the first colony south of the Sahara to independence.",
+      "w": "Ghana"
+    },
+    "cuban-revolution": {
+      "t": "The Cuban Revolution",
+      "d": "Fidel Castro enters Havana.",
+      "w": "Cuban Revolution"
+    },
+    "cultural-revolution": {
+      "t": "The Cultural Revolution",
+      "d": "Mao unleashes the Red Guards — a decade of chaos in China.",
+      "w": "Cultural Revolution"
+    },
+    "bangladesh": {
+      "t": "Bangladesh",
+      "d": "East Pakistan wins independence after a bloody war.",
+      "w": "Bangladesh Liberation War"
+    },
+    "khmer-rouge": {
+      "t": "The Khmer Rouge",
+      "d": "Pol Pot empties Cambodia's cities; about two million die.",
+      "w": "Khmer Rouge"
+    },
+    "deng-reforms": {
+      "t": "Deng Xiaoping's reforms",
+      "d": "China opens its economy — the start of the fastest growth in history.",
+      "w": "Chinese economic reform"
+    }
+  },
+  "cultures": {
+    "natufians": {
+      "n": "Natufians",
+      "d": "The first settled hunter-gatherers of the Levant — living in villages before farming.",
+      "w": "Natufian culture"
+    },
+    "jomon": {
+      "n": "Jōmon",
+      "d": "Hunters and fishers in Japan with the oldest pottery in the world.",
+      "w": "Jōmon period"
+    },
+    "anatolian-neolithic": {
+      "n": "Neolithic Anatolia",
+      "d": "Çatalhöyük and its neighbours — the first large farming towns.",
+      "w": "Çatalhöyük"
+    },
+    "yangshao": {
+      "n": "Yangshao",
+      "d": "Neolithic farmers on the Yellow River with painted pottery.",
+      "w": "Yangshao culture"
+    },
+    "karanovo-hamangia": {
+      "n": "Karanovo and Hamangia",
+      "d": "Neolithic and Copper Age tell settlements in Thrace and Dobruja.",
+      "w": "Karanovo culture"
+    },
+    "varna-culture": {
+      "n": "Varna culture",
+      "d": "The makers of the oldest worked gold in the world.",
+      "w": "Varna culture"
+    },
+    "cucuteni-trypillia": {
+      "n": "Cucuteni–Trypillia",
+      "d": "Huge settlements of up to 15,000 people between the Carpathians and the Dnieper.",
+      "w": "Cucuteni–Trypillia culture"
+    },
+    "ubaid": {
+      "n": "Ubaid",
+      "d": "The first temples and irrigation canals in southern Mesopotamia.",
+      "w": "Ubaid period"
+    },
+    "sumer": {
+      "n": "Sumer",
+      "d": "Ur, Uruk, Lagash — the first cities, writing and laws.",
+      "w": "Sumer"
+    },
+    "megalithic-europe": {
+      "n": "Megalithic Europe",
+      "d": "Stonehenge, Carnac, Newgrange — stone monuments along the Atlantic coast.",
+      "w": "Megalith"
+    },
+    "yamnaya": {
+      "n": "Yamnaya culture",
+      "d": "Steppe herders with wagons — probably the first Indo-Europeans.",
+      "w": "Yamnaya culture"
+    },
+    "indus-valley": {
+      "n": "Indus Valley Civilisation",
+      "d": "Mohenjo-daro and Harappa: brick cities, drains, an undeciphered script.",
+      "w": "Indus Valley Civilisation"
+    },
+    "norte-chico": {
+      "n": "Norte Chico",
+      "d": "Caral and thirty more towns on the Peruvian coast — the oldest civilization in the Americas.",
+      "w": "Norte Chico civilization"
+    },
+    "elam": {
+      "n": "Elam",
+      "d": "A kingdom in today's south-western Iran, Mesopotamia's eternal rival.",
+      "w": "Elam"
+    },
+    "minoans": {
+      "n": "Minoans",
+      "d": "The palaces of Crete, sea trade and the dolphin frescoes.",
+      "w": "Minoan civilization"
+    },
+    "bell-beaker": {
+      "n": "Bell Beakers",
+      "d": "A shared burial fashion from Portugal to Hungary.",
+      "w": "Bell Beaker culture"
+    },
+    "shang": {
+      "n": "Shang",
+      "d": "The first Chinese dynasty with written records — oracle bones and bronze.",
+      "w": "Shang dynasty"
+    },
+    "mycenaean-greece": {
+      "n": "Mycenaean Greece",
+      "d": "The kings of Agamemnon's age and Linear B.",
+      "w": "Mycenaean Greece"
+    },
+    "hittites": {
+      "n": "Hittites",
+      "d": "A kingdom in Anatolia, among the first to forge iron.",
+      "w": "Hittites"
+    },
+    "olmecs": {
+      "n": "Olmecs",
+      "d": "The colossal stone heads — the \"mother culture\" of Mesoamerica.",
+      "w": "Olmecs"
+    },
+    "lapita": {
+      "n": "Lapita",
+      "d": "The seafarers who settled the Pacific from New Guinea to Samoa.",
+      "w": "Lapita culture"
+    },
+    "thracians": {
+      "n": "Thracians",
+      "d": "By Herodotus the most numerous people after the Indians — in the lands of today's Bulgaria.",
+      "w": "Thracians"
+    },
+    "phoenicians": {
+      "n": "Phoenicians",
+      "d": "Tyre, Sidon and Byblos — seafarers, purple traders, inventors of the alphabet.",
+      "w": "Phoenicia"
+    },
+    "urnfield": {
+      "n": "Urnfields",
+      "d": "Cremation and urns across Central Europe in the Late Bronze Age.",
+      "w": "Urnfield culture"
+    },
+    "chavin": {
+      "n": "Chavín",
+      "d": "The Andean religious centre whose style united Peru.",
+      "w": "Chavín culture"
+    },
+    "etruscans": {
+      "n": "Etruscans",
+      "d": "The people who taught the Romans cities, gladiators and divination.",
+      "w": "Etruscan civilization"
+    },
+    "nok": {
+      "n": "Nok",
+      "d": "Terracotta heads and early iron in today's Nigeria.",
+      "w": "Nok culture"
+    },
+    "scythians": {
+      "n": "Scythians",
+      "d": "Mounted nomads of the steppe, famous for their gold and for shooting backwards.",
+      "w": "Scythians"
+    },
+    "celts": {
+      "n": "Celts",
+      "d": "The Celts of Hallstatt and La Tène — from Spain to Galatia.",
+      "w": "Celts"
+    },
+    "sao": {
+      "n": "Sao",
+      "d": "A civilization around Lake Chad, known from bronzes and legends.",
+      "w": "Sao civilisation"
+    },
+    "sarmatians": {
+      "n": "Sarmatians",
+      "d": "Iranian nomads, the Scythians' heirs on the steppe.",
+      "w": "Sarmatians"
+    },
+    "nazca": {
+      "n": "Nazca",
+      "d": "The lines in the desert that can only be seen from above.",
+      "w": "Nazca culture"
+    },
+    "hopewell": {
+      "n": "Hopewell",
+      "d": "A network of mounds and trade from the Rockies to the Gulf of Mexico.",
+      "w": "Hopewell tradition"
+    },
+    "moche": {
+      "n": "Moche",
+      "d": "The Temples of the Sun and the Moon and portrait pottery.",
+      "w": "Moche culture"
+    },
+    "classic-maya": {
+      "n": "Classic Maya",
+      "d": "Tikal, Palenque, Copán — city-states with a calendar and writing.",
+      "w": "Maya civilization"
+    },
+    "slavs": {
+      "n": "Slavs",
+      "d": "The Slavic tribes spread from the Dnieper to the Elbe and the Balkans.",
+      "w": "Slavs"
+    },
+    "avars": {
+      "n": "Avars",
+      "d": "The steppe khaganate in Pannonia that terrorised Byzantium and the Franks.",
+      "w": "Pannonian Avars"
+    },
+    "vikings": {
+      "n": "Vikings",
+      "d": "Scandinavians who sailed from Newfoundland to Baghdad.",
+      "w": "Vikings"
+    },
+    "mississippian": {
+      "n": "Mississippian culture",
+      "d": "Cahokia and hundreds of earthen mounds along the Mississippi.",
+      "w": "Mississippian culture"
+    },
+    "ancestral-puebloans": {
+      "n": "Ancestral Puebloans",
+      "d": "Cliff villages of Chaco Canyon and Mesa Verde.",
+      "w": "Ancestral Puebloans"
+    },
+    "polynesians": {
+      "n": "Polynesians",
+      "d": "The last great wave — Hawaii, Easter Island and New Zealand.",
+      "w": "Polynesians"
+    },
+    "great-zimbabwe-culture": {
+      "n": "Great Zimbabwe",
+      "d": "Stone walls without mortar and a gold trade reaching China.",
+      "w": "Great Zimbabwe"
+    },
+    "swahili": {
+      "n": "Swahili",
+      "d": "Port cities from Mogadishu to Sofala — Africa, Arabia and India in one.",
+      "w": "Swahili coast"
+    },
+    "thule": {
+      "n": "Thule",
+      "d": "The ancestors of the Inuit, who crossed the Arctic in two centuries.",
+      "w": "Thule people"
+    }
+  },
+  "routes": {
+    "silk-road": {
+      "n": "The Silk Road",
+      "d": "A network of caravan routes between China and the Mediterranean — silk going west, silver and horses going east, ideas both ways.",
+      "w": "Silk Road"
+    },
+    "spice-route": {
+      "n": "The maritime spice route",
+      "d": "Pepper, cinnamon and cloves on the monsoon winds from Indonesia via India to Egypt.",
+      "w": "Spice trade"
+    },
+    "amber-road": {
+      "n": "The Amber Road",
+      "d": "Baltic amber travels to Aquileia, and Roman gold travels north.",
+      "w": "Amber Road"
+    },
+    "incense-route": {
+      "n": "The Incense Route",
+      "d": "Camel caravans with frankincense and myrrh from Yemen to Gaza.",
+      "w": "Incense trade route"
+    },
+    "trans-saharan-west": {
+      "n": "Saharan gold and salt",
+      "d": "Gold from Mali for salt from Taghaza — the wealth of Ghana, Mali and Songhai.",
+      "w": "Trans-Saharan trade"
+    },
+    "trans-saharan-east": {
+      "n": "From Gao to Tripoli",
+      "d": "The eastern caravan road across the Sahara.",
+      "w": "Trans-Saharan trade"
+    },
+    "via-militaris": {
+      "n": "Via Militaris",
+      "d": "The Roman road Singidunum – Naissus – Serdica – Philippopolis – Constantinople; later the Constantinople Road.",
+      "w": "Via Militaris"
+    },
+    "via-egnatia": {
+      "n": "Via Egnatia",
+      "d": "The road from the Adriatic to Byzantium through Ohrid and Thessaloniki.",
+      "w": "Via Egnatia"
+    },
+    "varangians-to-greeks": {
+      "n": "From the Varangians to the Greeks",
+      "d": "Vikings down the rivers of Rus' to Constantinople — furs and slaves for silver and silk.",
+      "w": "Trade route from the Varangians to the Greeks"
+    },
+    "hanseatic-league": {
+      "n": "The Hanseatic League",
+      "d": "The league of trading towns from London to Novgorod.",
+      "w": "Hanseatic League"
+    },
+    "atlantic-slave-trade": {
+      "n": "The Atlantic slave trade",
+      "d": "Some 12 million Africans carried off to the Americas in inhuman conditions.",
+      "w": "Atlantic slave trade"
+    },
+    "manila-galleons": {
+      "n": "The Manila galleons",
+      "d": "Once a year a Spanish galleon carries American silver to Manila and Chinese silk to Acapulco.",
+      "w": "Manila galleon"
+    },
+    "settling-the-pacific": {
+      "n": "The settling of the Pacific",
+      "d": "Austronesians set out from Taiwan and reach Easter Island by canoe.",
+      "w": "Austronesian expansion"
+    },
+    "maori-voyage": {
+      "n": "The Māori reach New Zealand",
+      "d": "The last large land to be settled by humans.",
+      "w": "Māori people"
+    },
+    "bantu-expansion": {
+      "n": "The Bantu expansion",
+      "d": "Farmers and ironsmiths spread from Cameroon to the south and east.",
+      "w": "Bantu expansion"
+    },
+    "asparuh-danube": {
+      "n": "Asparuh on the Danube",
+      "d": "After Old Great Bulgaria breaks up, Asparuh leads his Bulgars to the Danube delta.",
+      "w": "Asparuh of Bulgaria"
+    },
+    "alexander-campaign": {
+      "n": "Alexander's campaign",
+      "d": "From Macedon to the Indus and back to Babylon in eleven years, without losing a battle.",
+      "w": "Wars of Alexander the Great"
+    },
+    "hannibal-alps": {
+      "n": "Hannibal across the Alps",
+      "d": "From New Carthage over the Pyrenees and the Alps to Cannae.",
+      "w": "Hannibal's crossing of the Alps"
+    },
+    "first-crusade-route": {
+      "n": "The First Crusade",
+      "d": "From the Rhine through the Balkans and Anatolia to Jerusalem.",
+      "w": "First Crusade"
+    },
+    "mongols-in-europe": {
+      "n": "The Mongols in Europe",
+      "d": "Batu and Subutai ride through Rus', Poland and Hungary and return through Bulgaria.",
+      "w": "Mongol invasion of Europe"
+    },
+    "marco-polo-route": {
+      "n": "Marco Polo",
+      "d": "Through Persia, the Pamirs and the Gobi to the court of Kublai Khan.",
+      "w": "Marco Polo"
+    },
+    "zheng-he-last-voyage": {
+      "n": "Zheng He's last voyage",
+      "d": "The seventh voyage of the Ming fleet — to Hormuz, Arabia and Africa.",
+      "w": "Zheng He"
+    },
+    "columbus-route": {
+      "n": "Columbus",
+      "d": "Three ships, 33 days without land — and a new world.",
+      "w": "Voyages of Christopher Columbus"
+    },
+    "vasco-da-gama-route": {
+      "n": "Vasco da Gama",
+      "d": "Around Africa to India — the sea route of the spices becomes Portuguese.",
+      "w": "Vasco da Gama"
+    },
+    "magellan-elcano": {
+      "n": "Magellan and Elcano",
+      "d": "Five ships and 270 men set out; one ship and 18 men return. Magellan dies at Mactan.",
+      "w": "Magellan expedition"
+    },
+    "lewis-and-clark": {
+      "n": "Lewis and Clark",
+      "d": "The expedition that crossed North America to the Pacific.",
+      "w": "Lewis and Clark Expedition"
+    },
+    "napoleon-russia": {
+      "n": "Napoleon in Russia",
+      "d": "600,000 go in; fewer than 100,000 come out.",
+      "w": "French invasion of Russia"
+    }
+  },
+  "people": {
+    "hammurabi": {
+      "n": "Hammurabi",
+      "t": "king of Babylon",
+      "w": "Hammurabi"
+    },
+    "hatshepsut": {
+      "n": "Hatshepsut",
+      "t": "female pharaoh",
+      "w": "Hatshepsut"
+    },
+    "thutmose-iii": {
+      "n": "Thutmose III",
+      "t": "pharaoh",
+      "w": "Thutmose III"
+    },
+    "akhenaten": {
+      "n": "Akhenaten",
+      "t": "pharaoh",
+      "w": "Akhenaten"
+    },
+    "nefertiti": {
+      "n": "Nefertiti",
+      "t": "queen of Egypt",
+      "w": "Nefertiti"
+    },
+    "tutankhamun-person": {
+      "n": "Tutankhamun",
+      "t": "pharaoh",
+      "w": "Tutankhamun"
+    },
+    "ramesses-ii": {
+      "n": "Ramesses II",
+      "t": "pharaoh",
+      "w": "Ramesses II"
+    },
+    "moses": {
+      "n": "Moses",
+      "t": "prophet, by tradition",
+      "w": "Moses"
+    },
+    "david": {
+      "n": "David",
+      "t": "king of Israel",
+      "w": "David"
+    },
+    "solomon": {
+      "n": "Solomon",
+      "t": "king of Israel",
+      "w": "Solomon"
+    },
+    "homer-person": {
+      "n": "Homer",
+      "t": "poet",
+      "w": "Homer"
+    },
+    "ashurbanipal": {
+      "n": "Ashurbanipal",
+      "t": "king of Assyria",
+      "w": "Ashurbanipal"
+    },
+    "nebuchadnezzar-ii": {
+      "n": "Nebuchadnezzar II",
+      "t": "king of Babylon",
+      "w": "Nebuchadnezzar II"
+    },
+    "sappho": {
+      "n": "Sappho",
+      "t": "poet",
+      "w": "Sappho"
+    },
+    "thales": {
+      "n": "Thales",
+      "t": "philosopher",
+      "w": "Thales of Miletus"
+    },
+    "cyrus-the-great": {
+      "n": "Cyrus the Great",
+      "t": "founder of the Persian Empire",
+      "w": "Cyrus the Great"
+    },
+    "laozi": {
+      "n": "Laozi",
+      "t": "sage, by tradition",
+      "w": "Laozi"
+    },
+    "pythagoras": {
+      "n": "Pythagoras",
+      "t": "philosopher and mathematician",
+      "w": "Pythagoras"
+    },
+    "buddha-person": {
+      "n": "The Buddha",
+      "t": "founder of Buddhism",
+      "w": "The Buddha"
+    },
+    "confucius-person": {
+      "n": "Confucius",
+      "t": "philosopher",
+      "w": "Confucius"
+    },
+    "sun-tzu": {
+      "n": "Sun Tzu",
+      "t": "general",
+      "w": "Sun Tzu"
+    },
+    "darius-i": {
+      "n": "Darius I",
+      "t": "king of Persia",
+      "w": "Darius the Great"
+    },
+    "xerxes-i": {
+      "n": "Xerxes I",
+      "t": "king of Persia",
+      "w": "Xerxes I"
+    },
+    "leonidas": {
+      "n": "Leonidas",
+      "t": "king of Sparta",
+      "w": "Leonidas I"
+    },
+    "pericles": {
+      "n": "Pericles",
+      "t": "Athenian statesman",
+      "w": "Pericles"
+    },
+    "herodotus": {
+      "n": "Herodotus",
+      "t": "\"the father of history\"",
+      "w": "Herodotus"
+    },
+    "sitalces": {
+      "n": "Sitalces",
+      "t": "Odrysian king",
+      "w": "Sitalces"
+    },
+    "socrates": {
+      "n": "Socrates",
+      "t": "philosopher",
+      "w": "Socrates"
+    },
+    "thucydides": {
+      "n": "Thucydides",
+      "t": "historian",
+      "w": "Thucydides"
+    },
+    "hippocrates": {
+      "n": "Hippocrates",
+      "t": "physician",
+      "w": "Hippocrates"
+    },
+    "democritus": {
+      "n": "Democritus",
+      "t": "philosopher, atomist",
+      "w": "Democritus"
+    },
+    "plato": {
+      "n": "Plato",
+      "t": "philosopher",
+      "w": "Plato"
+    },
+    "philip-ii": {
+      "n": "Philip II of Macedon",
+      "t": "king of Macedon",
+      "w": "Philip II of Macedon"
+    },
+    "aristotle": {
+      "n": "Aristotle",
+      "t": "philosopher",
+      "w": "Aristotle"
+    },
+    "alexander-the-great": {
+      "n": "Alexander the Great",
+      "t": "conqueror",
+      "w": "Alexander the Great"
+    },
+    "seuthes-iii": {
+      "n": "Seuthes III",
+      "t": "Odrysian king, Seuthopolis",
+      "w": "Seuthes III"
+    },
+    "chandragupta-person": {
+      "n": "Chandragupta Maurya",
+      "t": "founder of the Maurya Empire",
+      "w": "Chandragupta Maurya"
+    },
+    "euclid-person": {
+      "n": "Euclid",
+      "t": "mathematician",
+      "w": "Euclid"
+    },
+    "ashoka-person": {
+      "n": "Ashoka",
+      "t": "Maurya emperor",
+      "w": "Ashoka"
+    },
+    "archimedes": {
+      "n": "Archimedes",
+      "t": "scientist",
+      "w": "Archimedes"
+    },
+    "hannibal-person": {
+      "n": "Hannibal",
+      "t": "Carthaginian general",
+      "w": "Hannibal"
+    },
+    "qin-shi-huang": {
+      "n": "Qin Shi Huang",
+      "t": "the first emperor of China",
+      "w": "Qin Shi Huang"
+    },
+    "scipio-africanus": {
+      "n": "Scipio Africanus",
+      "t": "Roman general",
+      "w": "Scipio Africanus"
+    },
+    "emperor-wu-of-han": {
+      "n": "Emperor Wu of Han",
+      "t": "Han emperor",
+      "w": "Emperor Wu of Han"
+    },
+    "sima-qian": {
+      "n": "Sima Qian",
+      "t": "historian",
+      "w": "Sima Qian"
+    },
+    "mithridates-vi": {
+      "n": "Mithridates VI",
+      "t": "king of Pontus",
+      "w": "Mithridates VI Eupator"
+    },
+    "spartacus-person": {
+      "n": "Spartacus",
+      "t": "Thracian gladiator",
+      "w": "Spartacus"
+    },
+    "cicero": {
+      "n": "Cicero",
+      "t": "orator",
+      "w": "Cicero"
+    },
+    "julius-caesar": {
+      "n": "Julius Caesar",
+      "t": "Roman dictator",
+      "w": "Julius Caesar"
+    },
+    "burebista": {
+      "n": "Burebista",
+      "t": "king of the Dacians",
+      "w": "Burebista"
+    },
+    "cleopatra": {
+      "n": "Cleopatra",
+      "t": "queen of Egypt",
+      "w": "Cleopatra"
+    },
+    "virgil": {
+      "n": "Virgil",
+      "t": "poet",
+      "w": "Virgil"
+    },
+    "augustus-person": {
+      "n": "Augustus",
+      "t": "the first Roman emperor",
+      "w": "Augustus"
+    },
+    "ovid": {
+      "n": "Ovid",
+      "t": "poet, died in exile on the Black Sea",
+      "w": "Ovid"
+    },
+    "jesus": {
+      "n": "Jesus",
+      "t": "founder of Christianity",
+      "w": "Jesus"
+    },
+    "paul-the-apostle": {
+      "n": "Paul the Apostle",
+      "t": "apostle",
+      "w": "Paul the Apostle"
+    },
+    "nero": {
+      "n": "Nero",
+      "t": "Roman emperor",
+      "w": "Nero"
+    },
+    "trajan-person": {
+      "n": "Trajan",
+      "t": "Roman emperor",
+      "w": "Trajan"
+    },
+    "decebalus": {
+      "n": "Decebalus",
+      "t": "king of Dacia",
+      "w": "Decebalus"
+    },
+    "hadrian": {
+      "n": "Hadrian",
+      "t": "Roman emperor",
+      "w": "Hadrian"
+    },
+    "marcus-aurelius": {
+      "n": "Marcus Aurelius",
+      "t": "philosopher emperor",
+      "w": "Marcus Aurelius"
+    },
+    "galen": {
+      "n": "Galen",
+      "t": "physician",
+      "w": "Galen"
+    },
+    "cao-cao": {
+      "n": "Cao Cao",
+      "t": "warlord of the Three Kingdoms",
+      "w": "Cao Cao"
+    },
+    "himiko": {
+      "n": "Himiko",
+      "t": "queen of Yamatai",
+      "w": "Himiko"
+    },
+    "diocletian": {
+      "n": "Diocletian",
+      "t": "Roman emperor",
+      "w": "Diocletian"
+    },
+    "constantine-the-great": {
+      "n": "Constantine the Great",
+      "t": "Roman emperor, born in Naissus",
+      "w": "Constantine the Great"
+    },
+    "augustine-of-hippo": {
+      "n": "Augustine of Hippo",
+      "t": "theologian",
+      "w": "Augustine of Hippo"
+    },
+    "attila": {
+      "n": "Attila",
+      "t": "ruler of the Huns",
+      "w": "Attila"
+    },
+    "hypatia": {
+      "n": "Hypatia",
+      "t": "mathematician and philosopher",
+      "w": "Hypatia"
+    },
+    "kalidasa": {
+      "n": "Kalidasa",
+      "t": "poet",
+      "w": "Kalidasa"
+    },
+    "aryabhata": {
+      "n": "Aryabhata",
+      "t": "mathematician and astronomer",
+      "w": "Aryabhata"
+    },
+    "justinian-i": {
+      "n": "Justinian I",
+      "t": "Byzantine emperor",
+      "w": "Justinian I"
+    },
+    "theodora": {
+      "n": "Theodora",
+      "t": "Byzantine empress",
+      "w": "Theodora (wife of Justinian I)"
+    },
+    "muhammad-person": {
+      "n": "Muhammad",
+      "t": "prophet of Islam",
+      "w": "Muhammad"
+    },
+    "kubrat": {
+      "n": "Khan Kubrat",
+      "t": "founder of Old Great Bulgaria",
+      "w": "Kubrat"
+    },
+    "taizong-of-tang": {
+      "n": "Taizong of Tang",
+      "t": "Tang emperor",
+      "w": "Emperor Taizong of Tang"
+    },
+    "xuanzang": {
+      "n": "Xuanzang",
+      "t": "monk and traveller",
+      "w": "Xuanzang"
+    },
+    "asparuh": {
+      "n": "Asparuh",
+      "t": "founder of Danube Bulgaria",
+      "w": "Asparuh of Bulgaria"
+    },
+    "tervel": {
+      "n": "Tervel",
+      "t": "Bulgarian khan",
+      "w": "Tervel of Bulgaria"
+    },
+    "wu-zetian": {
+      "n": "Wu Zetian",
+      "t": "the only empress regnant of China",
+      "w": "Wu Zetian"
+    },
+    "charlemagne": {
+      "n": "Charlemagne",
+      "t": "emperor of the Franks",
+      "w": "Charlemagne"
+    },
+    "harun-al-rashid": {
+      "n": "Harun al-Rashid",
+      "t": "Abbasid caliph",
+      "w": "Harun al-Rashid"
+    },
+    "krum": {
+      "n": "Khan Krum",
+      "t": "Bulgarian khan",
+      "w": "Krum"
+    },
+    "al-khwarizmi": {
+      "n": "Al-Khwarizmi",
+      "t": "mathematician — \"algebra\" and \"algorithm\" come from him",
+      "w": "Al-Khwarizmi"
+    },
+    "omurtag": {
+      "n": "Omurtag",
+      "t": "Bulgarian khan",
+      "w": "Omurtag of Bulgaria"
+    },
+    "cyril": {
+      "n": "Cyril",
+      "t": "creator of the Glagolitic alphabet",
+      "w": "Saints Cyril and Methodius"
+    },
+    "methodius": {
+      "n": "Methodius",
+      "t": "missionary to the Slavs",
+      "w": "Saints Cyril and Methodius"
+    },
+    "boris-i": {
+      "n": "Prince Boris I",
+      "t": "who made Bulgaria Christian",
+      "w": "Boris I of Bulgaria"
+    },
+    "clement-of-ohrid": {
+      "n": "Clement of Ohrid",
+      "t": "scholar and writer",
+      "w": "Clement of Ohrid"
+    },
+    "simeon-i": {
+      "n": "Tsar Simeon I",
+      "t": "the Golden Age of Bulgaria",
+      "w": "Simeon I of Bulgaria"
+    },
+    "alfred-the-great": {
+      "n": "Alfred the Great",
+      "t": "king of Wessex",
+      "w": "Alfred the Great"
+    },
+    "john-of-rila": {
+      "n": "John of Rila",
+      "t": "saint, Rila Monastery",
+      "w": "John of Rila"
+    },
+    "tsar-samuel": {
+      "n": "Tsar Samuel",
+      "t": "Bulgarian tsar",
+      "w": "Samuel of Bulgaria"
+    },
+    "basil-ii": {
+      "n": "Basil II",
+      "t": "Byzantine emperor, the Bulgar-slayer",
+      "w": "Basil II"
+    },
+    "avicenna": {
+      "n": "Avicenna",
+      "t": "physician and philosopher",
+      "w": "Avicenna"
+    },
+    "murasaki-shikibu": {
+      "n": "Murasaki Shikibu",
+      "t": "writer",
+      "w": "Murasaki Shikibu"
+    },
+    "william-the-conqueror": {
+      "n": "William the Conqueror",
+      "t": "king of England",
+      "w": "William the Conqueror"
+    },
+    "omar-khayyam": {
+      "n": "Omar Khayyam",
+      "t": "poet and mathematician",
+      "w": "Omar Khayyam"
+    },
+    "saladin": {
+      "n": "Saladin",
+      "t": "sultan of Egypt and Syria",
+      "w": "Saladin"
+    },
+    "richard-the-lionheart": {
+      "n": "Richard the Lionheart",
+      "t": "king of England",
+      "w": "Richard I of England"
+    },
+    "kaloyan": {
+      "n": "Tsar Kaloyan",
+      "t": "Bulgarian tsar",
+      "w": "Kaloyan of Bulgaria"
+    },
+    "genghis-khan-person": {
+      "n": "Genghis Khan",
+      "t": "founder of the Mongol Empire",
+      "w": "Genghis Khan"
+    },
+    "ivan-asen-ii": {
+      "n": "Ivan Asen II",
+      "t": "Bulgarian tsar",
+      "w": "Ivan Asen II of Bulgaria"
+    },
+    "sundiata-keita": {
+      "n": "Sundiata Keita",
+      "t": "founder of the Mali Empire",
+      "w": "Sundiata Keita"
+    },
+    "kublai-khan": {
+      "n": "Kublai Khan",
+      "t": "Yuan emperor",
+      "w": "Kublai Khan"
+    },
+    "marco-polo-person": {
+      "n": "Marco Polo",
+      "t": "traveller",
+      "w": "Marco Polo"
+    },
+    "dante": {
+      "n": "Dante",
+      "t": "poet",
+      "w": "Dante Alighieri"
+    },
+    "mansa-musa": {
+      "n": "Mansa Musa",
+      "t": "ruler of Mali",
+      "w": "Mansa Musa"
+    },
+    "ibn-battuta": {
+      "n": "Ibn Battuta",
+      "t": "traveller",
+      "w": "Ibn Battuta"
+    },
+    "ivan-alexander": {
+      "n": "Ivan Alexander",
+      "t": "Bulgarian tsar",
+      "w": "Ivan Alexander of Bulgaria"
+    },
+    "patriarch-euthymius": {
+      "n": "Patriarch Euthymius",
+      "t": "the last patriarch of Tarnovo",
+      "w": "Euthymius of Tarnovo"
+    },
+    "timur": {
+      "n": "Timur",
+      "t": "conqueror",
+      "w": "Timur"
+    },
+    "zheng-he": {
+      "n": "Zheng He",
+      "t": "admiral",
+      "w": "Zheng He"
+    },
+    "joan-of-arc": {
+      "n": "Joan of Arc",
+      "t": "the Maid of Orléans",
+      "w": "Joan of Arc"
+    },
+    "gutenberg": {
+      "n": "Gutenberg",
+      "t": "printer",
+      "w": "Johannes Gutenberg"
+    },
+    "mehmed-ii": {
+      "n": "Mehmed II the Conqueror",
+      "t": "Ottoman sultan",
+      "w": "Mehmed II"
+    },
+    "vlad-the-impaler": {
+      "n": "Vlad III the Impaler",
+      "t": "voivode of Wallachia",
+      "w": "Vlad the Impaler"
+    },
+    "pachacuti": {
+      "n": "Pachacuti",
+      "t": "Inca ruler",
+      "w": "Pachacuti"
+    },
+    "leonardo-da-vinci": {
+      "n": "Leonardo da Vinci",
+      "t": "painter and inventor",
+      "w": "Leonardo da Vinci"
+    },
+    "christopher-columbus": {
+      "n": "Christopher Columbus",
+      "t": "navigator",
+      "w": "Christopher Columbus"
+    },
+    "vasco-da-gama": {
+      "n": "Vasco da Gama",
+      "t": "navigator",
+      "w": "Vasco da Gama"
+    },
+    "copernicus-person": {
+      "n": "Copernicus",
+      "t": "astronomer",
+      "w": "Nicolaus Copernicus"
+    },
+    "michelangelo": {
+      "n": "Michelangelo",
+      "t": "sculptor and painter",
+      "w": "Michelangelo"
+    },
+    "martin-luther": {
+      "n": "Martin Luther",
+      "t": "reformer",
+      "w": "Martin Luther"
+    },
+    "magellan": {
+      "n": "Magellan",
+      "t": "navigator",
+      "w": "Ferdinand Magellan"
+    },
+    "moctezuma-ii": {
+      "n": "Moctezuma II",
+      "t": "Aztec ruler",
+      "w": "Moctezuma II"
+    },
+    "suleiman": {
+      "n": "Suleiman the Magnificent",
+      "t": "Ottoman sultan",
+      "w": "Suleiman the Magnificent"
+    },
+    "akbar": {
+      "n": "Akbar the Great",
+      "t": "Mughal emperor",
+      "w": "Akbar"
+    },
+    "elizabeth-i": {
+      "n": "Elizabeth I",
+      "t": "queen of England",
+      "w": "Elizabeth I"
+    },
+    "ivan-the-terrible": {
+      "n": "Ivan the Terrible",
+      "t": "first tsar of Russia",
+      "w": "Ivan the Terrible"
+    },
+    "shakespeare": {
+      "n": "Shakespeare",
+      "t": "playwright",
+      "w": "William Shakespeare"
+    },
+    "galileo": {
+      "n": "Galileo Galilei",
+      "t": "scientist",
+      "w": "Galileo Galilei"
+    },
+    "cervantes": {
+      "n": "Cervantes",
+      "t": "writer",
+      "w": "Miguel de Cervantes"
+    },
+    "tokugawa-ieyasu": {
+      "n": "Tokugawa Ieyasu",
+      "t": "shogun",
+      "w": "Tokugawa Ieyasu"
+    },
+    "shah-jahan": {
+      "n": "Shah Jahan",
+      "t": "Mughal emperor",
+      "w": "Shah Jahan"
+    },
+    "isaac-newton": {
+      "n": "Isaac Newton",
+      "t": "physicist and mathematician",
+      "w": "Isaac Newton"
+    },
+    "louis-xiv": {
+      "n": "Louis XIV",
+      "t": "the Sun King",
+      "w": "Louis XIV"
+    },
+    "peter-the-great": {
+      "n": "Peter the Great",
+      "t": "Russian emperor",
+      "w": "Peter the Great"
+    },
+    "bach": {
+      "n": "Johann Sebastian Bach",
+      "t": "composer",
+      "w": "Johann Sebastian Bach"
+    },
+    "paisius-of-hilendar": {
+      "n": "Paisius of Hilendar",
+      "t": "author of the Slavonic-Bulgarian History",
+      "w": "Paisius of Hilendar"
+    },
+    "catherine-the-great": {
+      "n": "Catherine the Great",
+      "t": "Russian empress",
+      "w": "Catherine the Great"
+    },
+    "qianlong": {
+      "n": "Qianlong",
+      "t": "Qing emperor",
+      "w": "Qianlong Emperor"
+    },
+    "george-washington": {
+      "n": "George Washington",
+      "t": "first President of the United States",
+      "w": "George Washington"
+    },
+    "mozart": {
+      "n": "Mozart",
+      "t": "composer",
+      "w": "Wolfgang Amadeus Mozart"
+    },
+    "sophronius-of-vratsa": {
+      "n": "Sophronius of Vratsa",
+      "t": "writer of the Bulgarian Revival",
+      "w": "Sophronius of Vratsa"
+    },
+    "napoleon": {
+      "n": "Napoleon Bonaparte",
+      "t": "Emperor of the French",
+      "w": "Napoleon"
+    },
+    "beethoven": {
+      "n": "Beethoven",
+      "t": "composer",
+      "w": "Ludwig van Beethoven"
+    },
+    "simon-bolivar": {
+      "n": "Simón Bolívar",
+      "t": "liberator of South America",
+      "w": "Simón Bolívar"
+    },
+    "shaka": {
+      "n": "Shaka",
+      "t": "king of the Zulu",
+      "w": "Shaka"
+    },
+    "petar-beron": {
+      "n": "Petar Beron",
+      "t": "author of the \"Fish Primer\"",
+      "w": "Petar Beron"
+    },
+    "charles-darwin": {
+      "n": "Charles Darwin",
+      "t": "naturalist",
+      "w": "Charles Darwin"
+    },
+    "abraham-lincoln": {
+      "n": "Abraham Lincoln",
+      "t": "President of the United States",
+      "w": "Abraham Lincoln"
+    },
+    "georgi-rakovski": {
+      "n": "Georgi Rakovski",
+      "t": "revolutionary",
+      "w": "Georgi Sava Rakovski"
+    },
+    "karl-marx": {
+      "n": "Karl Marx",
+      "t": "philosopher",
+      "w": "Karl Marx"
+    },
+    "otto-von-bismarck": {
+      "n": "Otto von Bismarck",
+      "t": "unifier of Germany",
+      "w": "Otto von Bismarck"
+    },
+    "lyuben-karavelov": {
+      "n": "Lyuben Karavelov",
+      "t": "writer and revolutionary",
+      "w": "Lyuben Karavelov"
+    },
+    "vasil-levski": {
+      "n": "Vasil Levski",
+      "t": "the Apostle of Freedom",
+      "w": "Vasil Levski"
+    },
+    "hristo-botev": {
+      "n": "Hristo Botev",
+      "t": "poet and revolutionary",
+      "w": "Hristo Botev"
+    },
+    "ivan-vazov": {
+      "n": "Ivan Vazov",
+      "t": "\"the patriarch of Bulgarian literature\"",
+      "w": "Ivan Vazov"
+    },
+    "stefan-stambolov": {
+      "n": "Stefan Stambolov",
+      "t": "prime minister",
+      "w": "Stefan Stambolov"
+    },
+    "meiji": {
+      "n": "Meiji",
+      "t": "emperor of Japan",
+      "w": "Emperor Meiji"
+    },
+    "nikola-tesla": {
+      "n": "Nikola Tesla",
+      "t": "inventor",
+      "w": "Nikola Tesla"
+    },
+    "marie-curie": {
+      "n": "Marie Curie",
+      "t": "physicist and chemist",
+      "w": "Marie Curie"
+    },
+    "mahatma-gandhi": {
+      "n": "Mahatma Gandhi",
+      "t": "leader of Indian independence",
+      "w": "Mahatma Gandhi"
+    },
+    "lenin": {
+      "n": "Lenin",
+      "t": "revolutionary",
+      "w": "Vladimir Lenin"
+    },
+    "gotse-delchev": {
+      "n": "Gotse Delchev",
+      "t": "revolutionary",
+      "w": "Gotse Delchev"
+    },
+    "winston-churchill": {
+      "n": "Winston Churchill",
+      "t": "British prime minister",
+      "w": "Winston Churchill"
+    },
+    "albert-einstein": {
+      "n": "Albert Einstein",
+      "t": "physicist",
+      "w": "Albert Einstein"
+    },
+    "ataturk": {
+      "n": "Atatürk",
+      "t": "founder of modern Turkey",
+      "w": "Mustafa Kemal Atatürk"
+    },
+    "picasso": {
+      "n": "Picasso",
+      "t": "painter",
+      "w": "Pablo Picasso"
+    },
+    "franklin-roosevelt": {
+      "n": "Franklin D. Roosevelt",
+      "t": "President of the United States",
+      "w": "Franklin D. Roosevelt"
+    },
+    "stalin": {
+      "n": "Stalin",
+      "t": "Soviet dictator",
+      "w": "Joseph Stalin"
+    },
+    "hitler": {
+      "n": "Hitler",
+      "t": "Nazi dictator",
+      "w": "Adolf Hitler"
+    },
+    "boris-iii": {
+      "n": "Tsar Boris III",
+      "t": "tsar of Bulgaria",
+      "w": "Boris III of Bulgaria"
+    },
+    "mao-zedong": {
+      "n": "Mao Zedong",
+      "t": "founder of the People's Republic of China",
+      "w": "Mao Zedong"
+    },
+    "john-atanasoff": {
+      "n": "John Atanasoff",
+      "t": "inventor of the first electronic digital computer",
+      "w": "John Vincent Atanasoff"
+    },
+    "nelson-mandela": {
+      "n": "Nelson Mandela",
+      "t": "President of South Africa",
+      "w": "Nelson Mandela"
+    },
+    "martin-luther-king": {
+      "n": "Martin Luther King Jr.",
+      "t": "civil rights leader",
+      "w": "Martin Luther King Jr."
+    },
+    "yuri-gagarin": {
+      "n": "Yuri Gagarin",
+      "t": "the first human in space",
+      "w": "Yuri Gagarin"
+    },
+    "neil-armstrong": {
+      "n": "Neil Armstrong",
+      "t": "the first human on the Moon",
+      "w": "Neil Armstrong"
+    },
+    "christo": {
+      "n": "Christo",
+      "t": "artist",
+      "w": "Christo and Jeanne-Claude"
+    },
+    "stephen-hawking": {
+      "n": "Stephen Hawking",
+      "t": "physicist",
+      "w": "Stephen Hawking"
+    }
+  },
+  "cities": {
+    "jericho": {
+      "n": [
+        [
+          -9000,
+          "Jericho"
+        ]
+      ],
+      "w": "Jericho"
+    },
+    "catalhoyuk-city": {
+      "n": [
+        [
+          -7400,
+          "Çatalhöyük"
+        ]
+      ],
+      "w": "Çatalhöyük"
+    },
+    "eridu": {
+      "n": [
+        [
+          -4500,
+          "Eridu"
+        ]
+      ],
+      "w": "Eridu"
+    },
+    "uruk": {
+      "n": [
+        [
+          -4500,
+          "Uruk"
+        ]
+      ],
+      "w": "Uruk"
+    },
+    "ur": {
+      "n": [
+        [
+          -3800,
+          "Ur"
+        ]
+      ],
+      "w": "Ur"
+    },
+    "babylon": {
+      "n": [
+        [
+          -2300,
+          "Babylon"
+        ]
+      ],
+      "w": "Babylon"
+    },
+    "assur": {
+      "n": [
+        [
+          -2500,
+          "Assur"
+        ]
+      ],
+      "w": "Assur"
+    },
+    "nineveh": {
+      "n": [
+        [
+          -1800,
+          "Nineveh"
+        ]
+      ],
+      "w": "Nineveh"
+    },
+    "mari": {
+      "n": [
+        [
+          -2800,
+          "Mari"
+        ]
+      ],
+      "w": "Mari, Syria"
+    },
+    "susa": {
+      "n": [
+        [
+          -3000,
+          "Susa"
+        ]
+      ],
+      "w": "Susa"
+    },
+    "memphis": {
+      "n": [
+        [
+          -3100,
+          "Memphis"
+        ]
+      ],
+      "w": "Memphis, Egypt"
+    },
+    "thebes": {
+      "n": [
+        [
+          -3200,
+          "Thebes"
+        ]
+      ],
+      "w": "Thebes, Egypt"
+    },
+    "mohenjo-daro": {
+      "n": [
+        [
+          -2600,
+          "Mohenjo-daro"
+        ]
+      ],
+      "w": "Mohenjo-daro"
+    },
+    "harappa": {
+      "n": [
+        [
+          -2600,
+          "Harappa"
+        ]
+      ],
+      "w": "Harappa"
+    },
+    "caral-city": {
+      "n": [
+        [
+          -2600,
+          "Caral"
+        ]
+      ],
+      "w": "Caral"
+    },
+    "knossos": {
+      "n": [
+        [
+          -2000,
+          "Knossos"
+        ]
+      ],
+      "w": "Knossos"
+    },
+    "mycenae": {
+      "n": [
+        [
+          -1600,
+          "Mycenae"
+        ]
+      ],
+      "w": "Mycenae"
+    },
+    "troy": {
+      "n": [
+        [
+          -3000,
+          "Troy"
+        ],
+        [
+          -700,
+          "Ilion"
+        ]
+      ],
+      "w": "Troy"
+    },
+    "hattusa": {
+      "n": [
+        [
+          -1650,
+          "Hattusa"
+        ]
+      ],
+      "w": "Hattusa"
+    },
+    "yin": {
+      "n": [
+        [
+          -1600,
+          "Yin"
+        ]
+      ],
+      "w": "Yinxu"
+    },
+    "ugarit": {
+      "n": [
+        [
+          -1450,
+          "Ugarit"
+        ]
+      ],
+      "w": "Ugarit"
+    },
+    "tyre": {
+      "n": [
+        [
+          -2750,
+          "Tyre"
+        ]
+      ],
+      "w": "Tyre, Lebanon"
+    },
+    "jerusalem": {
+      "n": [
+        [
+          -1000,
+          "Jerusalem"
+        ],
+        [
+          135,
+          "Aelia Capitolina"
+        ],
+        [
+          638,
+          "Jerusalem"
+        ]
+      ],
+      "w": "Jerusalem"
+    },
+    "damascus": {
+      "n": [
+        [
+          -2500,
+          "Damascus"
+        ]
+      ],
+      "w": "Damascus"
+    },
+    "carthage": {
+      "n": [
+        [
+          -814,
+          "Carthage"
+        ]
+      ],
+      "w": "Carthage"
+    },
+    "rome": {
+      "n": [
+        [
+          -753,
+          "Rome"
+        ]
+      ],
+      "w": "Rome"
+    },
+    "athens": {
+      "n": [
+        [
+          -1400,
+          "Athens"
+        ]
+      ],
+      "w": "Athens"
+    },
+    "sparta": {
+      "n": [
+        [
+          -900,
+          "Sparta"
+        ]
+      ],
+      "w": "Sparta"
+    },
+    "corinth": {
+      "n": [
+        [
+          -900,
+          "Corinth"
+        ]
+      ],
+      "w": "Corinth"
+    },
+    "pella": {
+      "n": [
+        [
+          -650,
+          "Pella"
+        ]
+      ],
+      "w": "Pella"
+    },
+    "thessaloniki": {
+      "n": [
+        [
+          -315,
+          "Thessaloniki"
+        ]
+      ],
+      "w": "Thessaloniki"
+    },
+    "istanbul": {
+      "n": [
+        [
+          -667,
+          "Byzantium"
+        ],
+        [
+          330,
+          "Constantinople"
+        ],
+        [
+          1453,
+          "Istanbul"
+        ]
+      ],
+      "w": "Istanbul"
+    },
+    "marseille": {
+      "n": [
+        [
+          -600,
+          "Massalia"
+        ],
+        [
+          -50,
+          "Massilia"
+        ]
+      ],
+      "w": "Marseille"
+    },
+    "sozopol": {
+      "n": [
+        [
+          -610,
+          "Apollonia"
+        ],
+        [
+          1206,
+          "Sozopol"
+        ]
+      ],
+      "w": "Sozopol"
+    },
+    "varna": {
+      "n": [
+        [
+          -570,
+          "Odessos"
+        ],
+        [
+          632,
+          "Varna"
+        ]
+      ],
+      "w": "Varna"
+    },
+    "nesebar": {
+      "n": [
+        [
+          -500,
+          "Mesembria"
+        ],
+        [
+          812,
+          "Nesebar"
+        ]
+      ],
+      "w": "Nesebar"
+    },
+    "plovdiv": {
+      "n": [
+        [
+          -4000,
+          "Eumolpias"
+        ],
+        [
+          -342,
+          "Philippopolis"
+        ],
+        [
+          46,
+          "Trimontium"
+        ],
+        [
+          815,
+          "Plovdiv"
+        ]
+      ],
+      "w": "Plovdiv"
+    },
+    "sofia": {
+      "n": [
+        [
+          -700,
+          "Serdica"
+        ],
+        [
+          809,
+          "Sredets"
+        ],
+        [
+          1376,
+          "Sofia"
+        ]
+      ],
+      "w": "Sofia"
+    },
+    "seuthopolis": {
+      "n": [
+        [
+          -330,
+          "Seuthopolis"
+        ]
+      ],
+      "w": "Seuthopolis"
+    },
+    "pliska": {
+      "n": [
+        [
+          681,
+          "Pliska"
+        ]
+      ],
+      "w": "Pliska"
+    },
+    "preslav": {
+      "n": [
+        [
+          893,
+          "Preslav"
+        ]
+      ],
+      "w": "Veliki Preslav"
+    },
+    "tarnovo": {
+      "n": [
+        [
+          1185,
+          "Tarnovo"
+        ],
+        [
+          1965,
+          "Veliko Tarnovo"
+        ]
+      ],
+      "w": "Veliko Tarnovo"
+    },
+    "vidin": {
+      "n": [
+        [
+          -29,
+          "Bononia"
+        ],
+        [
+          500,
+          "Bdin"
+        ],
+        [
+          1400,
+          "Vidin"
+        ]
+      ],
+      "w": "Vidin"
+    },
+    "ohrid": {
+      "n": [
+        [
+          -200,
+          "Lychnidos"
+        ],
+        [
+          870,
+          "Ohrid"
+        ]
+      ],
+      "w": "Ohrid"
+    },
+    "edirne": {
+      "n": [
+        [
+          125,
+          "Adrianople"
+        ],
+        [
+          1369,
+          "Edirne"
+        ]
+      ],
+      "w": "Edirne"
+    },
+    "alexandria": {
+      "n": [
+        [
+          -331,
+          "Alexandria"
+        ]
+      ],
+      "w": "Alexandria"
+    },
+    "antioch": {
+      "n": [
+        [
+          -300,
+          "Antioch"
+        ]
+      ],
+      "w": "Antioch"
+    },
+    "seleucia": {
+      "n": [
+        [
+          -305,
+          "Seleucia"
+        ]
+      ],
+      "w": "Seleucia"
+    },
+    "ctesiphon": {
+      "n": [
+        [
+          -120,
+          "Ctesiphon"
+        ]
+      ],
+      "w": "Ctesiphon"
+    },
+    "persepolis": {
+      "n": [
+        [
+          -518,
+          "Persepolis"
+        ]
+      ],
+      "w": "Persepolis"
+    },
+    "pasargadae": {
+      "n": [
+        [
+          -550,
+          "Pasargadae"
+        ]
+      ],
+      "w": "Pasargadae"
+    },
+    "samarkand": {
+      "n": [
+        [
+          -700,
+          "Maracanda"
+        ],
+        [
+          700,
+          "Samarkand"
+        ]
+      ],
+      "w": "Samarkand"
+    },
+    "bukhara": {
+      "n": [
+        [
+          -500,
+          "Bukhara"
+        ]
+      ],
+      "w": "Bukhara"
+    },
+    "balkh": {
+      "n": [
+        [
+          -500,
+          "Bactra"
+        ],
+        [
+          700,
+          "Balkh"
+        ]
+      ],
+      "w": "Balkh"
+    },
+    "taxila": {
+      "n": [
+        [
+          -600,
+          "Taxila"
+        ]
+      ],
+      "w": "Taxila"
+    },
+    "pataliputra": {
+      "n": [
+        [
+          -490,
+          "Pataliputra"
+        ],
+        [
+          1541,
+          "Patna"
+        ]
+      ],
+      "w": "Pataliputra"
+    },
+    "varanasi": {
+      "n": [
+        [
+          -1000,
+          "Varanasi"
+        ]
+      ],
+      "w": "Varanasi"
+    },
+    "xian": {
+      "n": [
+        [
+          -1046,
+          "Haojing"
+        ],
+        [
+          -202,
+          "Chang'an"
+        ],
+        [
+          1369,
+          "Xi'an"
+        ]
+      ],
+      "w": "Xi'an"
+    },
+    "luoyang": {
+      "n": [
+        [
+          -770,
+          "Luoyang"
+        ]
+      ],
+      "w": "Luoyang"
+    },
+    "beijing": {
+      "n": [
+        [
+          -1045,
+          "Ji"
+        ],
+        [
+          938,
+          "Yanjing"
+        ],
+        [
+          1153,
+          "Zhongdu"
+        ],
+        [
+          1271,
+          "Khanbaliq"
+        ],
+        [
+          1403,
+          "Beijing"
+        ]
+      ],
+      "w": "Beijing"
+    },
+    "nanjing": {
+      "n": [
+        [
+          -495,
+          "Jinling"
+        ],
+        [
+          1368,
+          "Nanjing"
+        ]
+      ],
+      "w": "Nanjing"
+    },
+    "kaifeng": {
+      "n": [
+        [
+          960,
+          "Kaifeng"
+        ]
+      ],
+      "w": "Kaifeng"
+    },
+    "hangzhou": {
+      "n": [
+        [
+          589,
+          "Hangzhou"
+        ]
+      ],
+      "w": "Hangzhou"
+    },
+    "nara": {
+      "n": [
+        [
+          710,
+          "Nara"
+        ]
+      ],
+      "w": "Nara, Nara"
+    },
+    "kyoto": {
+      "n": [
+        [
+          794,
+          "Heian-kyō"
+        ],
+        [
+          1100,
+          "Kyoto"
+        ]
+      ],
+      "w": "Kyoto"
+    },
+    "tokyo": {
+      "n": [
+        [
+          1457,
+          "Edo"
+        ],
+        [
+          1868,
+          "Tokyo"
+        ]
+      ],
+      "w": "Tokyo"
+    },
+    "seoul": {
+      "n": [
+        [
+          -18,
+          "Hanyang"
+        ],
+        [
+          1394,
+          "Hanseong"
+        ],
+        [
+          1946,
+          "Seoul"
+        ]
+      ],
+      "w": "Seoul"
+    },
+    "angkor": {
+      "n": [
+        [
+          802,
+          "Angkor"
+        ]
+      ],
+      "w": "Angkor"
+    },
+    "bagan": {
+      "n": [
+        [
+          849,
+          "Pagan"
+        ]
+      ],
+      "w": "Bagan"
+    },
+    "ayutthaya": {
+      "n": [
+        [
+          1350,
+          "Ayutthaya"
+        ]
+      ],
+      "w": "Ayutthaya (city)"
+    },
+    "bangkok": {
+      "n": [
+        [
+          1782,
+          "Bangkok"
+        ]
+      ],
+      "w": "Bangkok"
+    },
+    "aksum": {
+      "n": [
+        [
+          -100,
+          "Aksum"
+        ]
+      ],
+      "w": "Aksum"
+    },
+    "meroe": {
+      "n": [
+        [
+          -800,
+          "Meroë"
+        ]
+      ],
+      "w": "Meroë"
+    },
+    "djenne": {
+      "n": [
+        [
+          200,
+          "Djenné"
+        ]
+      ],
+      "w": "Djenné"
+    },
+    "timbuktu": {
+      "n": [
+        [
+          1100,
+          "Timbuktu"
+        ]
+      ],
+      "w": "Timbuktu"
+    },
+    "great-zimbabwe-city": {
+      "n": [
+        [
+          1100,
+          "Great Zimbabwe"
+        ]
+      ],
+      "w": "Great Zimbabwe"
+    },
+    "kilwa": {
+      "n": [
+        [
+          1000,
+          "Kilwa"
+        ]
+      ],
+      "w": "Kilwa Kisiwani"
+    },
+    "cairo-city": {
+      "n": [
+        [
+          -30,
+          "Fustat"
+        ],
+        [
+          969,
+          "Cairo"
+        ]
+      ],
+      "w": "Cairo"
+    },
+    "kairouan": {
+      "n": [
+        [
+          670,
+          "Kairouan"
+        ]
+      ],
+      "w": "Kairouan"
+    },
+    "mecca": {
+      "n": [
+        [
+          -700,
+          "Mecca"
+        ]
+      ],
+      "w": "Mecca"
+    },
+    "medina": {
+      "n": [
+        [
+          -500,
+          "Yathrib"
+        ],
+        [
+          622,
+          "Medina"
+        ]
+      ],
+      "w": "Medina"
+    },
+    "baghdad": {
+      "n": [
+        [
+          762,
+          "Baghdad"
+        ]
+      ],
+      "w": "Baghdad"
+    },
+    "cordoba": {
+      "n": [
+        [
+          -150,
+          "Corduba"
+        ],
+        [
+          711,
+          "Córdoba"
+        ]
+      ],
+      "w": "Córdoba, Spain"
+    },
+    "seville": {
+      "n": [
+        [
+          -450,
+          "Hispalis"
+        ],
+        [
+          712,
+          "Seville"
+        ]
+      ],
+      "w": "Seville"
+    },
+    "paris": {
+      "n": [
+        [
+          -50,
+          "Lutetia"
+        ],
+        [
+          360,
+          "Paris"
+        ]
+      ],
+      "w": "Paris"
+    },
+    "london": {
+      "n": [
+        [
+          47,
+          "Londinium"
+        ],
+        [
+          886,
+          "London"
+        ]
+      ],
+      "w": "London"
+    },
+    "cologne": {
+      "n": [
+        [
+          -15,
+          "Colonia Agrippina"
+        ],
+        [
+          1100,
+          "Cologne"
+        ]
+      ],
+      "w": "Cologne"
+    },
+    "aachen": {
+      "n": [
+        [
+          790,
+          "Aachen"
+        ]
+      ],
+      "w": "Aachen"
+    },
+    "vienna": {
+      "n": [
+        [
+          -15,
+          "Vindobona"
+        ],
+        [
+          881,
+          "Vienna"
+        ]
+      ],
+      "w": "Vienna"
+    },
+    "prague": {
+      "n": [
+        [
+          880,
+          "Prague"
+        ]
+      ],
+      "w": "Prague"
+    },
+    "berlin": {
+      "n": [
+        [
+          1237,
+          "Berlin"
+        ]
+      ],
+      "w": "Berlin"
+    },
+    "venice": {
+      "n": [
+        [
+          421,
+          "Venice"
+        ]
+      ],
+      "w": "Venice"
+    },
+    "florence": {
+      "n": [
+        [
+          -59,
+          "Florence"
+        ]
+      ],
+      "w": "Florence"
+    },
+    "amsterdam": {
+      "n": [
+        [
+          1275,
+          "Amsterdam"
+        ]
+      ],
+      "w": "Amsterdam"
+    },
+    "kyiv": {
+      "n": [
+        [
+          482,
+          "Kyiv"
+        ]
+      ],
+      "w": "Kyiv"
+    },
+    "novgorod": {
+      "n": [
+        [
+          859,
+          "Novgorod"
+        ]
+      ],
+      "w": "Veliky Novgorod"
+    },
+    "moscow": {
+      "n": [
+        [
+          1147,
+          "Moscow"
+        ]
+      ],
+      "w": "Moscow"
+    },
+    "saint-petersburg-city": {
+      "n": [
+        [
+          1703,
+          "Saint Petersburg"
+        ],
+        [
+          1914,
+          "Petrograd"
+        ],
+        [
+          1924,
+          "Leningrad"
+        ],
+        [
+          1991,
+          "Saint Petersburg"
+        ]
+      ],
+      "w": "Saint Petersburg"
+    },
+    "karakorum": {
+      "n": [
+        [
+          1220,
+          "Karakorum"
+        ]
+      ],
+      "w": "Karakorum"
+    },
+    "sarai": {
+      "n": [
+        [
+          1250,
+          "Sarai"
+        ]
+      ],
+      "w": "Sarai (city)"
+    },
+    "bursa": {
+      "n": [
+        [
+          1299,
+          "Bursa"
+        ]
+      ],
+      "w": "Bursa"
+    },
+    "delhi": {
+      "n": [
+        [
+          1100,
+          "Delhi"
+        ]
+      ],
+      "w": "Delhi"
+    },
+    "agra": {
+      "n": [
+        [
+          1526,
+          "Agra"
+        ]
+      ],
+      "w": "Agra"
+    },
+    "hampi": {
+      "n": [
+        [
+          1336,
+          "Vijayanagara"
+        ]
+      ],
+      "w": "Hampi"
+    },
+    "isfahan": {
+      "n": [
+        [
+          1598,
+          "Isfahan"
+        ]
+      ],
+      "w": "Isfahan"
+    },
+    "teotihuacan-city": {
+      "n": [
+        [
+          -100,
+          "Teotihuacan"
+        ]
+      ],
+      "w": "Teotihuacan"
+    },
+    "tikal": {
+      "n": [
+        [
+          -400,
+          "Tikal"
+        ]
+      ],
+      "w": "Tikal"
+    },
+    "chichen-itza-city": {
+      "n": [
+        [
+          600,
+          "Chichen Itza"
+        ]
+      ],
+      "w": "Chichen Itza"
+    },
+    "monte-alban-city": {
+      "n": [
+        [
+          -500,
+          "Monte Albán"
+        ]
+      ],
+      "w": "Monte Albán"
+    },
+    "tenochtitlan": {
+      "n": [
+        [
+          1325,
+          "Tenochtitlan"
+        ],
+        [
+          1521,
+          "Mexico City"
+        ]
+      ],
+      "w": "Tenochtitlan"
+    },
+    "cahokia-city": {
+      "n": [
+        [
+          1050,
+          "Cahokia"
+        ]
+      ],
+      "w": "Cahokia"
+    },
+    "cusco": {
+      "n": [
+        [
+          1100,
+          "Cusco"
+        ]
+      ],
+      "w": "Cusco"
+    },
+    "tiwanaku": {
+      "n": [
+        [
+          500,
+          "Tiwanaku"
+        ]
+      ],
+      "w": "Tiwanaku"
+    },
+    "chan-chan": {
+      "n": [
+        [
+          900,
+          "Chan Chan"
+        ]
+      ],
+      "w": "Chan Chan"
+    },
+    "lima": {
+      "n": [
+        [
+          1535,
+          "Lima"
+        ]
+      ],
+      "w": "Lima"
+    },
+    "new-york": {
+      "n": [
+        [
+          1624,
+          "New Amsterdam"
+        ],
+        [
+          1664,
+          "New York"
+        ]
+      ],
+      "w": "New York City"
+    },
+    "quebec": {
+      "n": [
+        [
+          1608,
+          "Quebec"
+        ]
+      ],
+      "w": "Quebec City"
+    },
+    "washington": {
+      "n": [
+        [
+          1790,
+          "Washington"
+        ]
+      ],
+      "w": "Washington, D.C."
+    },
+    "rio": {
+      "n": [
+        [
+          1565,
+          "Rio de Janeiro"
+        ]
+      ],
+      "w": "Rio de Janeiro"
+    },
+    "buenos-aires": {
+      "n": [
+        [
+          1580,
+          "Buenos Aires"
+        ]
+      ],
+      "w": "Buenos Aires"
+    },
+    "sydney": {
+      "n": [
+        [
+          1788,
+          "Sydney"
+        ]
+      ],
+      "w": "Sydney"
+    },
+    "cape-town": {
+      "n": [
+        [
+          1652,
+          "Cape Town"
+        ]
+      ],
+      "w": "Cape Town"
+    },
+    "kolkata": {
+      "n": [
+        [
+          1690,
+          "Calcutta"
+        ],
+        [
+          2001,
+          "Kolkata"
+        ]
+      ],
+      "w": "Kolkata"
+    },
+    "mumbai": {
+      "n": [
+        [
+          1507,
+          "Bombay"
+        ],
+        [
+          1995,
+          "Mumbai"
+        ]
+      ],
+      "w": "Mumbai"
+    },
+    "shanghai": {
+      "n": [
+        [
+          1843,
+          "Shanghai"
+        ]
+      ],
+      "w": "Shanghai"
+    },
+    "hong-kong": {
+      "n": [
+        [
+          1841,
+          "Hong Kong"
+        ]
+      ],
+      "w": "Hong Kong"
+    },
+    "singapore": {
+      "n": [
+        [
+          1819,
+          "Singapore"
+        ]
+      ],
+      "w": "Singapore"
+    },
+    "napata": {
+      "n": [
+        [
+          -747,
+          "Napata"
+        ]
+      ],
+      "w": "Napata"
+    },
+    "ile-ife-city": {
+      "n": [
+        [
+          1000,
+          "Ile-Ife"
+        ]
+      ],
+      "w": "Ife"
+    },
+    "benin-city": {
+      "n": [
+        [
+          1200,
+          "Benin City"
+        ]
+      ],
+      "w": "Benin City"
+    },
+    "lalibela-city": {
+      "n": [
+        [
+          1150,
+          "Lalibela"
+        ]
+      ],
+      "w": "Lalibela"
+    },
+    "gondar": {
+      "n": [
+        [
+          1636,
+          "Gondar"
+        ]
+      ],
+      "w": "Gondar"
+    },
+    "koumbi-saleh": {
+      "n": [
+        [
+          300,
+          "Koumbi Saleh"
+        ]
+      ],
+      "w": "Koumbi Saleh"
+    },
+    "gao": {
+      "n": [
+        [
+          1050,
+          "Gao"
+        ]
+      ],
+      "w": "Gao"
+    },
+    "mbanza-kongo": {
+      "n": [
+        [
+          1300,
+          "Mbanza Kongo"
+        ],
+        [
+          1570,
+          "São Salvador"
+        ],
+        [
+          1975,
+          "Mbanza Kongo"
+        ]
+      ],
+      "w": "Mbanza Kongo"
+    },
+    "mombasa": {
+      "n": [
+        [
+          1100,
+          "Mombasa"
+        ]
+      ],
+      "w": "Mombasa"
+    },
+    "zanzibar": {
+      "n": [
+        [
+          1100,
+          "Zanzibar"
+        ]
+      ],
+      "w": "Zanzibar City"
+    },
+    "kumasi": {
+      "n": [
+        [
+          1680,
+          "Kumasi"
+        ]
+      ],
+      "w": "Kumasi"
+    },
+    "anuradhapura": {
+      "n": [
+        [
+          -250,
+          "Anuradhapura"
+        ]
+      ],
+      "w": "Anuradhapura"
+    },
+    "nalanda-city": {
+      "n": [
+        [
+          427,
+          "Nalanda"
+        ]
+      ],
+      "w": "Nalanda mahavihara"
+    },
+    "thanjavur": {
+      "n": [
+        [
+          848,
+          "Thanjavur"
+        ]
+      ],
+      "w": "Thanjavur"
+    },
+    "goa": {
+      "n": [
+        [
+          1510,
+          "Goa"
+        ]
+      ],
+      "w": "Old Goa"
+    },
+    "merv": {
+      "n": [
+        [
+          -150,
+          "Merv"
+        ]
+      ],
+      "w": "Merv"
+    },
+    "lhasa": {
+      "n": [
+        [
+          640,
+          "Lhasa"
+        ]
+      ],
+      "w": "Lhasa"
+    },
+    "gyeongju": {
+      "n": [
+        [
+          -108,
+          "Gyeongju"
+        ]
+      ],
+      "w": "Gyeongju"
+    },
+    "palembang": {
+      "n": [
+        [
+          600,
+          "Palembang"
+        ]
+      ],
+      "w": "Palembang"
+    },
+    "malacca": {
+      "n": [
+        [
+          1400,
+          "Malacca"
+        ]
+      ],
+      "w": "Malacca City"
+    },
+    "manila": {
+      "n": [
+        [
+          1571,
+          "Manila"
+        ]
+      ],
+      "w": "Manila"
+    },
+    "hanoi": {
+      "n": [
+        [
+          1010,
+          "Thăng Long"
+        ],
+        [
+          1831,
+          "Hanoi"
+        ]
+      ],
+      "w": "Hanoi"
+    },
+    "jakarta": {
+      "n": [
+        [
+          1619,
+          "Batavia"
+        ],
+        [
+          1942,
+          "Jakarta"
+        ]
+      ],
+      "w": "Jakarta"
+    },
+    "san-lorenzo-city": {
+      "n": [
+        [
+          -1200,
+          "San Lorenzo"
+        ]
+      ],
+      "w": "San Lorenzo Tenochtitlán"
+    },
+    "la-venta": {
+      "n": [
+        [
+          -900,
+          "La Venta"
+        ]
+      ],
+      "w": "La Venta"
+    },
+    "palenque": {
+      "n": [
+        [
+          400,
+          "Palenque"
+        ]
+      ],
+      "w": "Palenque"
+    },
+    "tula": {
+      "n": [
+        [
+          950,
+          "Tula"
+        ]
+      ],
+      "w": "Tula (Mesoamerican site)"
+    },
+    "chavin-city": {
+      "n": [
+        [
+          -900,
+          "Chavín de Huántar"
+        ]
+      ],
+      "w": "Chavín de Huántar"
+    },
+    "wari-city": {
+      "n": [
+        [
+          600,
+          "Wari"
+        ]
+      ],
+      "w": "Wari (archaeological site)"
+    },
+    "machu-picchu": {
+      "n": [
+        [
+          1450,
+          "Machu Picchu"
+        ]
+      ],
+      "w": "Machu Picchu"
+    },
+    "mesa-verde": {
+      "n": [
+        [
+          1100,
+          "Mesa Verde"
+        ]
+      ],
+      "w": "Mesa Verde National Park"
+    },
+    "salvador": {
+      "n": [
+        [
+          1549,
+          "Salvador"
+        ]
+      ],
+      "w": "Salvador, Bahia"
+    },
+    "boston": {
+      "n": [
+        [
+          1630,
+          "Boston"
+        ]
+      ],
+      "w": "Boston"
+    },
+    "rapa-nui": {
+      "n": [
+        [
+          1100,
+          "Rapa Nui"
+        ]
+      ],
+      "w": "Easter Island"
+    },
+    "auckland": {
+      "n": [
+        [
+          1840,
+          "Auckland"
+        ]
+      ],
+      "w": "Auckland"
+    }
+  },
+  "seas": {
+    "atlantic-n": [
+      [
+        -10000,
+        "Atlantic Ocean"
+      ]
+    ],
+    "atlantic-s": [
+      [
+        -10000,
+        "Atlantic Ocean"
+      ]
+    ],
+    "pacific-ne": [
+      [
+        -10000,
+        "Pacific Ocean"
+      ]
+    ],
+    "pacific-se": [
+      [
+        -10000,
+        "Pacific Ocean"
+      ]
+    ],
+    "pacific-nw": [
+      [
+        -10000,
+        "Pacific Ocean"
+      ]
+    ],
+    "indian-ocean": [
+      [
+        -10000,
+        "Indian Ocean"
+      ]
+    ],
+    "arctic-ocean": [
+      [
+        -10000,
+        "Arctic Ocean"
+      ]
+    ],
+    "southern-ocean": [
+      [
+        -10000,
+        "Southern Ocean"
+      ]
+    ],
+    "mediterranean": [
+      [
+        -10000,
+        "Mediterranean Sea"
+      ],
+      [
+        -30,
+        "Mare Nostrum"
+      ],
+      [
+        476,
+        "Mediterranean Sea"
+      ]
+    ],
+    "black-sea": [
+      [
+        -10000,
+        "Black Sea"
+      ],
+      [
+        -700,
+        "Pontus Euxinus"
+      ],
+      [
+        1300,
+        "Black Sea"
+      ]
+    ],
+    "red-sea": [
+      [
+        -10000,
+        "Red Sea"
+      ]
+    ],
+    "caspian-sea": [
+      [
+        -10000,
+        "Caspian Sea"
+      ],
+      [
+        -500,
+        "Hyrcanian Sea"
+      ],
+      [
+        700,
+        "Caspian Sea"
+      ]
+    ],
+    "arabian-sea": [
+      [
+        -10000,
+        "Arabian Sea"
+      ],
+      [
+        -300,
+        "Erythraean Sea"
+      ],
+      [
+        500,
+        "Arabian Sea"
+      ]
+    ],
+    "bay-of-bengal": [
+      [
+        -10000,
+        "Bay of Bengal"
+      ]
+    ],
+    "south-china-sea": [
+      [
+        -10000,
+        "South China Sea"
+      ]
+    ],
+    "sea-of-japan": [
+      [
+        -10000,
+        "Sea of Japan"
+      ]
+    ],
+    "caribbean-sea": [
+      [
+        -10000,
+        "Caribbean Sea"
+      ]
+    ],
+    "gulf-of-mexico": [
+      [
+        -10000,
+        "Gulf of Mexico"
+      ]
+    ],
+    "baltic-sea": [
+      [
+        -10000,
+        "Baltic Sea"
+      ]
+    ],
+    "north-sea": [
+      [
+        -10000,
+        "North Sea"
+      ],
+      [
+        -50,
+        "Germanic Ocean"
+      ],
+      [
+        1700,
+        "North Sea"
+      ]
+    ],
+    "persian-gulf": [
+      [
+        -10000,
+        "Persian Gulf"
+      ]
+    ],
+    "hudson-bay": [
+      [
+        -10000,
+        "Hudson Bay"
+      ]
+    ],
+    "tasman-sea": [
+      [
+        -10000,
+        "Tasman Sea"
+      ]
+    ],
+    "coral-sea": [
+      [
+        -10000,
+        "Coral Sea"
+      ]
+    ],
+    "sea-of-okhotsk": [
+      [
+        -10000,
+        "Sea of Okhotsk"
+      ]
+    ],
+    "bering-sea": [
+      [
+        -10000,
+        "Bering Sea"
+      ]
+    ],
+    "norwegian-sea": [
+      [
+        -10000,
+        "Norwegian Sea"
+      ]
+    ],
+    "aral-sea": [
+      [
+        -10000,
+        "Aral Sea"
+      ]
+    ],
+    "aegean-sea": [
+      [
+        -10000,
+        "Aegean Sea"
+      ]
+    ],
+    "adriatic-sea": [
+      [
+        -10000,
+        "Adriatic Sea"
+      ]
+    ],
+    "ionian-sea": [
+      [
+        -10000,
+        "Ionian Sea"
+      ]
+    ],
+    "tyrrhenian-sea": [
+      [
+        -10000,
+        "Tyrrhenian Sea"
+      ]
+    ],
+    "sea-of-marmara": [
+      [
+        -10000,
+        "Sea of Marmara"
+      ],
+      [
+        -700,
+        "Propontis"
+      ],
+      [
+        1300,
+        "Sea of Marmara"
+      ]
+    ],
+    "sea-of-azov": [
+      [
+        -10000,
+        "Sea of Azov"
+      ],
+      [
+        -600,
+        "Maeotis"
+      ],
+      [
+        1300,
+        "Sea of Azov"
+      ]
+    ],
+    "bay-of-biscay": [
+      [
+        -10000,
+        "Bay of Biscay"
+      ]
+    ],
+    "east-china-sea": [
+      [
+        -10000,
+        "East China Sea"
+      ]
+    ],
+    "yellow-sea": [
+      [
+        -10000,
+        "Yellow Sea"
+      ]
+    ],
+    "english-channel": [
+      [
+        -10000,
+        "English Channel"
+      ]
+    ],
+    "white-sea": [
+      [
+        -10000,
+        "White Sea"
+      ]
+    ],
+    "gulf-of-aden": [
+      [
+        -10000,
+        "Gulf of Aden"
+      ]
+    ]
+  },
+  "eras": {
+    "world": {
+      "n": "World",
+      "b": [
+        "Mesolithic",
+        "Neolithic",
+        "Copper Age",
+        "Bronze Age",
+        "Early Iron Age",
+        "Classical antiquity",
+        "Early Middle Ages",
+        "High Middle Ages",
+        "Late Middle Ages",
+        "Early modern period",
+        "Modern era",
+        "The world wars",
+        "The Cold War",
+        "Contemporary era"
+      ]
+    },
+    "europe": {
+      "n": "Europe",
+      "b": [
+        "Neolithic Europe",
+        "Aegean Bronze Age",
+        "Greek Dark Ages",
+        "Archaic Greece",
+        "Classical Greece",
+        "Hellenism and the Roman Republic",
+        "The Roman Empire",
+        "The barbarian kingdoms",
+        "Carolingians and Vikings",
+        "Feudal Europe",
+        "Renaissance",
+        "Reformation and wars of religion",
+        "Absolutism and Enlightenment",
+        "Revolution and Napoleon",
+        "Nations and industry",
+        "The two world wars",
+        "Divided Europe",
+        "Europe coming together"
+      ]
+    },
+    "near-east": {
+      "n": "Near East",
+      "b": [
+        "Pre-Pottery Neolithic",
+        "Halaf and Ubaid",
+        "Uruk",
+        "The Sumerian cities",
+        "The Akkadian Empire",
+        "Ur III",
+        "Old Babylonian kingdom",
+        "Kassites, Hittites, Mitanni",
+        "Bronze Age collapse",
+        "Neo-Assyrian Empire",
+        "Neo-Babylonian kingdom",
+        "Achaemenid Persia",
+        "Seleucids",
+        "Parthia",
+        "Sasanian Persia",
+        "The Rashidun caliphs",
+        "Umayyads",
+        "Abbasids",
+        "Mongols and Mamluks",
+        "Ottoman rule",
+        "The Mandates",
+        "Modern Middle East"
+      ]
+    },
+    "egypt": {
+      "n": "Egypt",
+      "b": [
+        "Predynastic Egypt",
+        "Early Dynastic period",
+        "Old Kingdom",
+        "First Intermediate Period",
+        "Middle Kingdom",
+        "Hyksos",
+        "New Kingdom",
+        "Third Intermediate Period",
+        "Late Period",
+        "Ptolemies",
+        "Rome and Byzantium",
+        "The caliphates",
+        "Fatimids",
+        "Ayyubids",
+        "Mamluks",
+        "Ottomans and Muhammad Ali",
+        "British influence",
+        "Republic"
+      ]
+    },
+    "china": {
+      "n": "China",
+      "b": [
+        "Neolithic cultures",
+        "Xia",
+        "Shang",
+        "Western Zhou",
+        "Spring and Autumn",
+        "Warring States",
+        "Qin",
+        "Han",
+        "Three Kingdoms",
+        "Jin and the Northern and Southern dynasties",
+        "Sui",
+        "Tang",
+        "Five Dynasties",
+        "Song",
+        "Yuan",
+        "Ming",
+        "Qing",
+        "Republic of China",
+        "People's Republic of China"
+      ]
+    },
+    "india": {
+      "n": "India",
+      "b": [
+        "Mehrgarh and early villages",
+        "Harappan civilisation",
+        "Late Harappan",
+        "Vedic period",
+        "Mahajanapadas",
+        "Mauryas",
+        "The middle kingdoms",
+        "Gupta",
+        "Regional kingdoms",
+        "Delhi Sultanate",
+        "Mughals",
+        "The East India Company",
+        "British Raj",
+        "Independent India"
+      ]
+    },
+    "americas": {
+      "n": "Americas",
+      "b": [
+        "Paleo-Indians and Archaic",
+        "Norte Chico and early towns",
+        "Olmecs",
+        "Late Preclassic",
+        "Classic Maya",
+        "Toltecs and the Postclassic",
+        "Aztecs and Incas",
+        "Colonial America",
+        "Wars of independence",
+        "The new nations",
+        "Modern America"
+      ]
+    },
+    "bulgaria": {
+      "n": "Bulgaria",
+      "b": [
+        "Neolithic (Karanovo)",
+        "Copper Age, the Varna gold",
+        "Transition and decline",
+        "Bronze Age",
+        "The Thracians",
+        "The Odrysian kingdom",
+        "Moesia and Thrace under Rome",
+        "Byzantium and the Slavs",
+        "First Bulgarian Empire",
+        "Byzantine rule",
+        "Second Bulgarian Empire",
+        "Ottoman rule",
+        "Third Bulgarian State",
+        "Socialism",
+        "Democratic Bulgaria"
+      ]
+    }
+  }
+}

@@ -1,9 +1,10 @@
-import { KINDS, KIND_GROUPS, eventAlpha, spanAlpha, cityName } from './map.js';
+import { KINDS, KIND_GROUPS, kindLabel, eventAlpha, spanAlpha, cityName } from './map.js';
 import { REGIONS, regionOf, fmtYear, fmtRange } from './time.js';
+import { t, lang } from './i18n.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-// ——— „Едновременно“: какво има по света в тази година ———
+// ——— "Around the world": what exists in the chosen year ———
 export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKinds, onOpen }) {
   const { events, cultures, people } = data;
   const side = root.closest('#side');
@@ -11,12 +12,12 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
   let items = [];
   let pref = null;
   try { pref = localStorage.getItem('side'); } catch {}
-  // На телефон панелът закрива половината карта — затворен е, докато не го поискаш.
+  // On a phone the panel covers half the map, so it starts closed.
   if (pref === 'closed' || (!pref && window.innerWidth < 760)) side.classList.add('closed');
   toggle.setAttribute('aria-expanded', String(!side.classList.contains('closed')));
   toggle.addEventListener('click', () => {
     const closed = side.classList.toggle('closed');
-    // Затвореният панел не се обновява — при отваряне го пренареждаме веднага.
+    // A closed panel is not updated, so redraw it as soon as it opens.
     if (!closed) { last = ''; onOpen?.(); }
     toggle.setAttribute('aria-expanded', String(!closed));
     try { localStorage.setItem('side', closed ? 'closed' : 'open'); } catch {}
@@ -26,24 +27,24 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     if (li) onFocus(items[+li.dataset.i]);
   });
 
-  // Филтър по вид събитие — бутони над списъка; всички включени = без филтър.
+  // Event kind filter — buttons above the list; all on means no filter.
   const ALL = Object.keys(KIND_GROUPS);
   let groups = ALL;
   try {
     const g = JSON.parse(localStorage.getItem('kinds'));
     if (Array.isArray(g) && g.some(k => KIND_GROUPS[k])) groups = g.filter(k => KIND_GROUPS[k]);
   } catch {}
-  const kinds = () => (groups.length === ALL.length ? null : groups.flatMap(g => KIND_GROUPS[g][1]));
+  const kinds = () => (groups.length === ALL.length ? null : groups.flatMap(g => KIND_GROUPS[g]));
   const kindOk = k => { const ks = kinds(); return !ks || ks.includes(k); };
   function renderKinds() {
-    kindsEl.innerHTML = Object.entries(KIND_GROUPS).map(([g, [label, ks]]) =>
-      `<button data-g="${g}" aria-pressed="${groups.includes(g)}" style="--dot:${KINDS[ks[0]][1]}"><i></i>${esc(label)}</button>`).join('');
+    kindsEl.innerHTML = Object.entries(KIND_GROUPS).map(([g, ks]) =>
+      `<button data-g="${g}" aria-pressed="${groups.includes(g)}" style="--dot:${KINDS[ks[0]]}"><i></i>${esc(t('group.' + g))}</button>`).join('');
   }
   kindsEl.addEventListener('click', e => {
     const b = e.target.closest('button[data-g]');
     if (!b) return;
     const g = b.dataset.g;
-    // Клик върху единствения включен връща всички; иначе превключва.
+    // Clicking the only one left switches all back on; otherwise it toggles.
     groups = groups.includes(g) ? (groups.length === 1 ? ALL : groups.filter(x => x !== g)) : [...groups, g];
     try { localStorage.setItem('kinds', JSON.stringify(groups)); } catch {}
     renderKinds();
@@ -58,7 +59,7 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     if (key === last) return;
     last = key;
     items = [];
-    const by = Object.fromEntries(REGIONS.map(([k]) => [k, { states: [], other: [], events: [] }]));
+    const by = Object.fromEntries(REGIONS.map(k => [k, { states: [], other: [], events: [] }]));
 
     for (const [lon, lat, area, name, sharp, color, extra] of labels) {
       if (extra) continue;
@@ -74,32 +75,31 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
       if (a > 0 && kindOk(e.k)) by[regionOf(e.lon, e.lat)].events.push({ type: 'event', item: e, a });
     }
 
-    let html = `<h2>Светът около ${esc(fmtYear(year))}</h2><div class="sub">Държави по площ, култури без граници и събития от последните ${Math.round(win)} години</div>`;
+    let html = `<h2>${esc(t('side.title', { year: fmtYear(year) }))}</h2><div class="sub">${esc(t('side.sub', { n: Math.round(win) }))}</div>`;
     const push = it => { items.push(it); return items.length - 1; };
 
-    // Кой е жив в тази година — първо най-известните, после тези в разцвета си.
+    // Who is alive this year — the best known first, then those in their prime.
     const alive = people
       .filter(p => year >= p.b + 15 && year <= p.d)
       .sort((a, b) => b.i - a.i || Math.abs(year - (a.b + 40)) - Math.abs(year - (b.b + 40)))
       .slice(0, 6);
     if (alive.length) {
-      html += '<section><h3>Живи по това време</h3><ul>';
+      html += `<section><h3>${esc(t('side.alive'))}</h3><ul>`;
       for (const p of alive) {
-        const age = Math.round(year - p.b);
-        html += `<li class="person" data-i="${push({ type: 'person', item: p, lon: p.lon, lat: p.lat })}"><span class="sw pe"></span><span class="t">${esc(p.n)}<small>${esc(p.t)}</small></span><span class="y">на ${age} г.</span></li>`;
+        html += `<li class="person" data-i="${push({ type: 'person', item: p, lon: p.lon, lat: p.lat })}"><span class="sw pe"></span><span class="t">${esc(p.n)}<small>${esc(p.t)}</small></span><span class="y">${esc(t('side.age', { n: Math.round(year - p.b) }))}</span></li>`;
       }
       html += '</ul></section>';
     }
-    for (const [k, title] of REGIONS) {
+    for (const k of REGIONS) {
       const r = by[k];
       const states = r.states.sort((a, b) => b.area - a.area).slice(0, 4);
       const other = r.other.sort((a, b) => b.area - a.area).slice(0, states.length ? 2 : 4);
       const evs = r.events.sort((a, b) => b.item.i - a.item.i || b.a - a.a).slice(0, 3);
       if (!states.length && !other.length && !evs.length) continue;
-      html += `<section><h3>${esc(title)}</h3><ul>`;
+      html += `<section><h3>${esc(t('region.' + k))}</h3><ul>`;
       for (const it of evs) {
         const e = it.item;
-        html += `<li class="ev" data-i="${push(it)}"><span class="sw ev" style="background:${KINDS[e.k]?.[1]}"></span><span class="t">${esc(e.t)}</span><span class="y">${esc(fmtYear(e.y, true))}</span></li>`;
+        html += `<li class="ev" data-i="${push(it)}"><span class="sw ev" style="background:${KINDS[e.k]}"></span><span class="t">${esc(e.t)}</span><span class="y">${esc(fmtYear(e.y, true))}</span></li>`;
       }
       for (const it of [...states, ...other]) {
         const color = it.type === 'culture' ? '#f0c674' : it.color || 'rgba(236,226,205,0.4)';
@@ -112,7 +112,7 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
   return { update, refresh() { last = ''; }, kinds };
 }
 
-// ——— Картичката ———
+// ——— The detail card ———
 const card = document.getElementById('card');
 let cardToken = 0;
 
@@ -127,70 +127,70 @@ export function showCard(hit, { entities, onGo }) {
   const it = hit.item;
   switch (hit.type) {
     case 'event':
-      kind = KINDS[it.k]?.[0] || 'Събитие';
+      kind = kindLabel(it.k);
       title = it.t; when = it.ye ? fmtRange(it.y, it.ye) : fmtYear(it.y); desc = it.d;
-      wiki = { bg: it.w, en: it.we };
+      wiki = { title: it.w };
       go = it;
       break;
     case 'wd':
-      kind = (KINDS[it.k]?.[0] || 'Събитие') + ' · Wikidata';
+      kind = `${kindLabel(it.k)} · ${t('card.wikidata')}`;
       title = it.t; when = fmtYear(it.y);
-      wiki = { bg: it.wb, en: it.we, wd: it.id };
+      wiki = { title: it.w };
       go = it;
       break;
     case 'city': {
-      kind = 'Град';
+      kind = t('card.city');
       title = cityName(it, hit.year);
       when = fmtRange(it.s, it.e);
-      const names = it.n.map(([y, n]) => n);
-      if (names.length > 1) extra = `<p class="wiki">Имена през вековете: ${names.map(esc).join(' → ')}</p>`;
-      desc = it.d;
-      wiki = { bg: it.w || names[names.length - 1] };
+      const names = it.n.map(([, n]) => n);
+      if (names.length > 1) extra = `<p class="wiki">${esc(t('card.cityNames', { names: names.join(' → ') }))}</p>`;
+      wiki = { title: it.w || names[names.length - 1] };
       go = { y: hit.year, lon: it.lon, lat: it.lat };
       break;
     }
     case 'person':
       kind = it.t;
       title = it.n;
-      when = `${fmtRange(it.b, it.d)} · ${it.d - it.b} години живот`;
-      wiki = { bg: it.w };
+      when = t('card.lifespan', { range: fmtRange(it.b, it.d), n: it.d - it.b });
+      wiki = { title: it.w };
       go = { y: Math.round(it.b + Math.min(40, (it.d - it.b) * 0.6)), lon: it.lon, lat: it.lat };
       break;
     case 'culture':
-      kind = 'Култура';
+      kind = t('card.culture');
       title = it.n; when = fmtRange(it.s, it.e); desc = it.d;
-      wiki = { bg: it.w, en: it.we };
+      wiki = { title: it.w };
       go = { y: hit.year, lon: it.lon, lat: it.lat };
       break;
     case 'route':
-      kind = { trade: 'Търговски път', campaign: 'Поход', voyage: 'Плаване', migration: 'Преселение' }[it.k];
+      kind = t('route.' + it.k);
       title = it.n;
       when = it.k === 'trade' ? fmtRange(it.s, it.e) : fmtRange(it.p[0][2], it.p[it.p.length - 1][2]);
       desc = it.d;
-      wiki = { bg: it.w, en: it.we };
+      wiki = { title: it.w };
       break;
     case 'polity': {
       const p = it, ent = entities[p.e];
-      // Точността на границата не казва какво е образуванието: империя с размита
-      // граница в една снимка е империя. „Народ“ е само ако никъде не е точна.
-      kind = p.p || ent?.at.some(a => a[4]) ? 'Държава' : 'Народ / култура';
+      // Border precision says nothing about what the polity is: an empire drawn with a
+      // fuzzy border in one snapshot is still an empire. "People" only if never precise.
+      kind = p.p || ent?.at.some(a => a[4]) ? t('card.state') : t('card.people');
       title = p.n;
       if (ent) {
         const ys = ent.at.map(a => a[0]);
-        when = `В картите: ${fmtRange(Math.min(...ys), Math.max(...ys))}`;
+        when = t('card.inMaps', { range: fmtRange(Math.min(...ys), Math.max(...ys)) });
         extra += areaChart(ent.at, hit.year);
       }
       if (p.n !== p.e) extra += `<p class="wiki" lang="en">${esc(p.e)}</p>`;
-      if (p.s) extra += `<p class="wiki">Под властта на: <b>${esc(p.s)}</b></p>`;
-      if (!p.p) extra += '<p class="wiki">Границата е приблизителна — затова е размита.</p>';
-      wiki = { en: p.e, bgGuess: p.n };
+      if (p.s) extra += `<p class="wiki">${t('card.under', { s: `<b>${esc(p.s)}</b>` })}</p>`;
+      if (!p.p) extra += `<p class="wiki">${esc(t('card.fuzzy'))}</p>`;
+      // Polity names are English Wikipedia-style names; find the article in the current language from there.
+      wiki = { en: p.e };
       break;
     }
   }
-  card.innerHTML = `<button class="close" aria-label="Затвори">×</button><div class="body">
+  card.innerHTML = `<button class="close" aria-label="${esc(t('card.close'))}">×</button><div class="body">
     <div class="kind">${esc(kind)}</div><h2>${esc(title)}</h2><div class="when">${esc(when)}</div>
     ${desc ? `<p>${esc(desc)}</p>` : ''}${extra}<div class="wiki-slot"></div>
-    <div class="links">${go ? '<button data-go>Покажи</button>' : ''}</div></div>`;
+    <div class="links">${go ? `<button data-go>${esc(t('card.show'))}</button>` : ''}</div></div>`;
   card.hidden = false;
   card.scrollTop = 0;
   card.querySelector('.close').onclick = hideCard;
@@ -201,15 +201,20 @@ export function showCard(hit, { entities, onGo }) {
   if (wiki) loadWiki(wiki, !desc).then(w => {
     if (token !== cardToken || !w) return;
     if (w.thumb) card.insertAdjacentHTML('afterbegin', `<img class="img" src="${esc(w.thumb)}" alt="">`);
-    if (w.text) card.querySelector('.wiki-slot').innerHTML = `<p class="wiki">${esc(w.text)}${w.lang === 'en' ? ' <i>(англ.)</i>' : ''}</p>`;
-    card.querySelector('.links').insertAdjacentHTML('beforeend', `<a href="${esc(w.url)}" target="_blank" rel="noopener">Уикипедия ↗</a>`);
+    if (w.text) card.querySelector('.wiki-slot').innerHTML = `<p class="wiki">${esc(w.text)}${w.lang !== lang ? ` <i>${esc(t('card.otherLang'))}</i>` : ''}</p>`;
+    card.querySelector('.links').insertAdjacentHTML('beforeend', `<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(t('card.wiki'))}</a>`);
   });
 }
 
-const fmtArea = a => a >= 1e6 ? `${(a / 1e6).toLocaleString('bg-BG', { maximumFractionDigits: 1 })} млн. км²` : `${Math.round(a / 1e3).toLocaleString('bg-BG')} хил. км²`;
+const fmtArea = a => {
+  const loc = lang === 'bg' ? 'bg-BG' : 'en-US';
+  return a >= 1e6
+    ? t('area.million', { n: (a / 1e6).toLocaleString(loc, { maximumFractionDigits: 1 }) })
+    : t('area.thousand', { n: Math.round(a / 1e3).toLocaleString(loc) });
+};
 
-// Площта на държавата във всяка снимка — възход и упадък с един поглед.
-// Точките водят до своята година; текущата е отбелязана.
+// The area of the polity in every snapshot — rise and fall at a glance.
+// Each dot jumps to its year; the current one is highlighted.
 function areaChart(at, year) {
   const pts = [...at].sort((a, b) => a[0] - b[0]);
   if (pts.length < 2) return '';
@@ -223,43 +228,43 @@ function areaChart(at, year) {
   const peak = pts.reduce((a, b) => (b[3] > a[3] ? b : a));
   const cur = pts.reduce((a, b) => (Math.abs(b[0] - year) < Math.abs(a[0] - year) ? b : a));
   const dots = pts.map(p => `<circle data-jump="${p[0]},${p[1]},${p[2]}" cx="${X(p[0]).toFixed(1)}" cy="${Y(p[3]).toFixed(1)}" r="${p === cur ? 4.5 : 3}" class="${p === cur ? 'cur' : ''}"><title>${esc(fmtYear(p[0]))} · ${esc(fmtArea(p[3]))}</title></circle>`).join('');
-  return `<div class="chart"><div class="chart-h">Площ във времето <span>връх: ${esc(fmtArea(peak[3]))}, ${esc(fmtYear(peak[0]))}</span></div>
-    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Площта на държавата във времето">
+  return `<div class="chart"><div class="chart-h">${esc(t('chart.title'))} <span>${esc(t('chart.peak', { area: fmtArea(peak[3]), year: fmtYear(peak[0]) }))}</span></div>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t('chart.aria'))}">
       <path d="${area}" class="fill"/><path d="${line}" class="line"/>${dots}
       <text x="${P}" y="${H - 4}">${esc(fmtYear(y0, true))}</text><text x="${W - P}" y="${H - 4}" text-anchor="end">${esc(fmtYear(y1, true))}</text>
     </svg></div>`;
 }
 
-// Резюме и снимка от Уикипедия — на живо, ако има мрежа. Без мрежа картичката си остава.
+// Wikipedia summary and picture — live when there is a network. Offline the card simply stays without them.
 const wikiCache = new Map();
-async function wikiQuery(lang, title, wantText) {
-  const key = lang + ':' + title + ':' + wantText;
+function wikiQuery(wikiLang, title) {
+  const key = wikiLang + ':' + title;
   if (wikiCache.has(key)) return wikiCache.get(key);
   const params = new URLSearchParams({
     action: 'query', format: 'json', formatversion: '2', origin: '*', redirects: '1', titles: title,
-    prop: 'pageimages|langlinks|info' + (wantText ? '|extracts' : ''), piprop: 'thumbnail', pithumbsize: '640',
-    lllang: 'bg', inprop: 'url', ...(wantText ? { exintro: '1', explaintext: '1', exsentences: '3' } : {}),
+    prop: 'pageimages|langlinks|info|extracts', piprop: 'thumbnail', pithumbsize: '640',
+    lllang: lang, inprop: 'url', exintro: '1', explaintext: '1', exsentences: '3',
   });
-  const p = fetch(`https://${lang}.wikipedia.org/w/api.php?${params}`)
+  const p = fetch(`https://${wikiLang}.wikipedia.org/w/api.php?${params}`)
     .then(r => r.json())
     .then(j => {
       const page = j.query?.pages?.[0];
       if (!page || page.missing) return null;
-      return { lang, title: page.title, url: page.fullurl, text: page.extract?.trim(), thumb: page.thumbnail?.source, bg: page.langlinks?.[0]?.title };
+      return { lang: wikiLang, url: page.fullurl, text: page.extract?.trim(), thumb: page.thumbnail?.source, local: page.langlinks?.[0]?.title };
     })
     .catch(() => null);
   wikiCache.set(key, p);
   return p;
 }
-async function loadWiki({ bg, en, bgGuess }, wantText) {
-  let page = bg ? await wikiQuery('bg', bg, true) : null;
+// `title` is an article in the current language; `en` is an English one to translate from.
+async function loadWiki({ title, en }, wantText) {
+  let page = title ? await wikiQuery(lang, title) : null;
   if (!page && en) {
-    const e = await wikiQuery('en', en, true);
-    if (e?.bg) page = await wikiQuery('bg', e.bg, true);
+    const e = await wikiQuery('en', en);
+    if (lang !== 'en' && e?.local) page = await wikiQuery(lang, e.local);
     if (page && !page.thumb) page.thumb = e.thumb;
     page ??= e;
   }
-  if (!page && bgGuess) page = await wikiQuery('bg', bgGuess, true);
   if (!page) return null;
-  return { ...page, text: wantText || page.lang === 'bg' ? page.text : null };
+  return { ...page, text: wantText || page.lang === lang ? page.text : null };
 }
