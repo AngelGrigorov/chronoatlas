@@ -12,7 +12,14 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const HB = path.join(ROOT, '.cache/hb');
 const NE = path.join(ROOT, '.cache/ne');
 const OUT = path.join(ROOT, 'public/data');
-const NAMES_BG = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools/names-bg.json'), 'utf8'));
+// Преводите са на партиди в tools/names-bg/*.json; по-късен файл печели.
+const NB_DIR = path.join(ROOT, 'tools/names-bg');
+const nkey = s => s.normalize('NFC').trim();
+const NAMES_BG = {};
+for (const f of fs.readdirSync(NB_DIR).filter(f => f.endsWith('.json')).sort()) {
+  for (const [k, v] of Object.entries(JSON.parse(fs.readFileSync(path.join(NB_DIR, f), 'utf8')))) NAMES_BG[nkey(k)] = v;
+}
+const bgName = n => NAMES_BG[nkey(n)];
 
 fs.mkdirSync(path.join(OUT, 'borders'), { recursive: true });
 fs.mkdirSync(path.join(OUT, 'base'), { recursive: true });
@@ -59,7 +66,7 @@ for (const { year, filename } of index) {
   const feats = [], labels = [];
   for (const f of fc.features) {
     const p = f.properties;
-    if (!p.NAME || !f.geometry) continue;
+    if (!p.NAME?.trim() || !f.geometry) continue;
     const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
     let best = null, bestA = -1, total = 0;
     for (const poly of polys) {
@@ -68,18 +75,19 @@ for (const { year, filename } of index) {
       if (a > bestA) { bestA = a; best = poly; }
     }
     if (!best) continue;
-    const bg = NAMES_BG[p.NAME];
-    if (!bg) missing.set(p.NAME, (missing.get(p.NAME) || 0) + total);
+    const bg = bgName(p.NAME);
+    if (bg == null) missing.set(p.NAME, (missing.get(p.NAME) || 0) + total);
     const name = bg || p.NAME;
     const sub = p.SUBJECTO && p.SUBJECTO !== p.NAME ? p.SUBJECTO : null;
     const id = feats.length;
     feats.push({
       type: 'Feature', id,
-      properties: { n: name, e: p.NAME, c: colorFor(sub || p.NAME), p: p.BORDERPRECISION >= 2 ? 1 : 0, s: sub ? (NAMES_BG[sub] || sub) : '' },
+      properties: { n: name, e: p.NAME, c: colorFor(sub || p.NAME), p: p.BORDERPRECISION >= 2 ? 1 : 0, s: sub ? (bgName(sub) || sub) : '' },
       geometry: f.geometry,
     });
     const [lx, ly] = polylabel(best, 0.05);
-    labels.push([r2(lx), r2(ly), Math.round(total), name, p.BORDERPRECISION >= 2 ? 1 : 0]);
+    // Празен превод значи „без етикет“ — за имена като „?“ в данните.
+    if (bg !== '') labels.push([r2(lx), r2(ly), Math.round(total), name, p.BORDERPRECISION >= 2 ? 1 : 0]);
     const ent = entities[p.NAME] ??= { n: name, at: [] };
     // Една точка на снимка: най-голямата част на името през тази година.
     const row = [year, r2(lx), r2(ly), Math.round(total), p.BORDERPRECISION >= 2 ? 1 : 0];
