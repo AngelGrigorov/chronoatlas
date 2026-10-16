@@ -156,7 +156,7 @@ document.addEventListener('keydown', e => {
 
 // ——— Един кадър: годината тече, всичко се пренарежда ———
 const yearEl = document.getElementById('year'), eraEl = document.getElementById('era'), snapEl = document.getElementById('snap');
-let raf = 0, lastHash = 0, lastPanel = 0;
+let raf = 0, lastHash = 0, lastPanel = 0, panelTimer = 0;
 function dirty() { if (!raf) raf = requestAnimationFrame(frame); }
 function frame(now) {
   raf = 0;
@@ -179,7 +179,9 @@ function frame(now) {
   eraEl.textContent = band ? band[2] : '';
   const snap = map.snapshot;
   snapEl.innerHTML = snap == null ? '' : `Граници към <b>${fmtYear(snap)}</b>${Math.abs(snap - app.year) >= 1 ? ' · най-близката карта назад' : ''}`;
+  // Панелът се пренарежда най-много 5–6 пъти в секунда; пропуснатото се догонва след малко.
   if (now - lastPanel > 180) { lastPanel = now; panel.update(app.year, win(), map.labels, snap); }
+  else if (!panelTimer) panelTimer = setTimeout(() => { panelTimer = 0; dirty(); }, 200);
   if (now - lastHash > 500) { lastHash = now; writeHash(); }
   if (app.tween || app.playing) dirty();
 }

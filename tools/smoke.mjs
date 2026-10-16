@@ -25,7 +25,8 @@ async function open(hash, viewport = { width: 1440, height: 860 }) {
   const errors = [];
   page.on('pageerror', e => errors.push('pageerror: ' + e.message));
   page.on('console', m => { if (m.type() === 'error' && !/wd-events|favicon/.test(m.text() + m.location()?.url)) errors.push(m.text() + ' @ ' + (m.location()?.url || '')); });
-  page.on('requestfailed', r => errors.push('failed: ' + r.url()));
+  // MapLibre сам отказва плочките, които излизат от изгледа при движение — това не е грешка.
+  page.on('requestfailed', r => { if (r.failure()?.errorText !== 'net::ERR_ABORTED') errors.push(`failed (${r.failure()?.errorText}): ${r.url()}`); });
   page.on('response', r => { if (r.status() >= 400 && !/wd-events/.test(r.url())) errors.push(r.status() + ' ' + r.url()); });
   await page.goto(BASE + '#' + hash, { waitUntil: 'load' });
   await page.waitForSelector('#loading.done', { timeout: 30000 });

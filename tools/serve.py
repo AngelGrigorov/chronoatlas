@@ -25,6 +25,8 @@ class NoCache(http.server.SimpleHTTPRequestHandler):
 class Loopback(http.server.ThreadingHTTPServer):
     # Браузърът търси localhost първо на ::1; само IPv4 кара module worker-а да виси.
     address_family = socket.AF_INET6
+    # По подразбиране опашката е 5 връзки; картата иска десетки плочки наведнъж.
+    request_queue_size = 128
 
 
 port = int(sys.argv[1]) if len(sys.argv) > 1 else 8642

@@ -31,7 +31,8 @@ export function createPanel(root, toggle, { data, onFocus }) {
     items = [];
     const by = Object.fromEntries(REGIONS.map(([k]) => [k, { states: [], other: [], events: [] }]));
 
-    for (const [lon, lat, area, name, sharp, color] of labels) {
+    for (const [lon, lat, area, name, sharp, color, extra] of labels) {
+      if (extra) continue;
       const r = by[regionOf(lon, lat)];
       (sharp ? r.states : r.other).push({ type: 'label', name, lon, lat, area, color });
     }

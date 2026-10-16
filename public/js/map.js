@@ -501,6 +501,9 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     // 5. Държавите и народите от снимката, по площ.
     if (state.layers.borders) {
       const kmPerPx0 = 40075 / 512;
+      // Едно и също име не се повтаря по-близо от половин екран.
+      const seen = new Map();
+      const near = Math.max(W, H) * 0.5;
       for (const [lon, lat, area, name, sharp] of labels) {
         if (!facing(lon, lat)) continue;
         const kmPerPx = kmPerPx0 * Math.cos(lat * Math.PI / 180) / 2 ** z;
@@ -519,7 +522,9 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const lh = size * 1.05;
         const w = Math.max(...lines.map(l => measure(l, font, spacing)));
         const h = lh * lines.length;
+        if (seen.get(name)?.some(q => Math.hypot(q.x - p.x, q.y - p.y) < near)) continue;
         if (!freeIn(soft, p.x - w / 2 - 2, p.y - h / 2, p.x + w / 2 + 2, p.y + h / 2)) continue;
+        seen.set(name, [...(seen.get(name) || []), p]);
         lines.forEach((l, k) => text(l, p.x, p.y + (k - (lines.length - 1) / 2) * lh, font, sharp ? 'rgba(250,240,220,0.95)' : 'rgba(236,226,206,0.82)', spacing, 'center', 'rgba(8,10,16,0.7)'));
       }
     }

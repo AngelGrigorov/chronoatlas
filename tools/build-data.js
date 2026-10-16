@@ -57,6 +57,47 @@ async function simplify(file, pct, extra = '') {
 }
 
 const r2 = n => Math.round(n * 100) / 100;
+
+// Sutherland–Hodgman: пръстенът, отрязан до правоъгълник.
+function clipRing(ring, [x0, y0, x1, y1]) {
+  const edges = [
+    [p => p[0] >= x0, (a, b) => [x0, a[1] + (b[1] - a[1]) * (x0 - a[0]) / (b[0] - a[0])]],
+    [p => p[0] <= x1, (a, b) => [x1, a[1] + (b[1] - a[1]) * (x1 - a[0]) / (b[0] - a[0])]],
+    [p => p[1] >= y0, (a, b) => [a[0] + (b[0] - a[0]) * (y0 - a[1]) / (b[1] - a[1]), y0]],
+    [p => p[1] <= y1, (a, b) => [a[0] + (b[0] - a[0]) * (y1 - a[1]) / (b[1] - a[1]), y1]],
+  ];
+  let out = ring.slice(0, -1);
+  for (const [inside, cut] of edges) {
+    const src = out;
+    out = [];
+    for (let i = 0; i < src.length; i++) {
+      const a = src[(i + src.length - 1) % src.length], b = src[i];
+      if (inside(b)) { if (!inside(a)) out.push(cut(a, b)); out.push(b); }
+      else if (inside(a)) out.push(cut(a, b));
+    }
+    if (!out.length) return null;
+  }
+  return [...out, out[0]];
+}
+
+// Огромна държава (Русия, Монголската империя) има етикет и в другите си краища,
+// иначе при приближение в Европа етикетът ѝ е някъде в Сибир.
+function extraLabels(poly, mainXY) {
+  const xs = poly[0].map(p => p[0]), ys = poly[0].map(p => p[1]);
+  const out = [];
+  for (let x = Math.floor(Math.min(...xs) / 40) * 40; x < Math.max(...xs); x += 40) {
+    for (let y = Math.floor(Math.min(...ys) / 25) * 25; y < Math.max(...ys); y += 25) {
+      const ring = clipRing(poly[0], [x, y, x + 40, y + 25]);
+      if (!ring || ring.length < 4) continue;
+      const a = ringArea(ring);
+      if (a < 900000) continue;
+      const [lx, ly] = polylabel([ring], 0.1);
+      if (Math.hypot(lx - mainXY[0], ly - mainXY[1]) < 15) continue;
+      out.push([r2(lx), r2(ly), Math.round(a)]);
+    }
+  }
+  return out;
+}
 const missing = new Map();
 const entities = {};
 const index = JSON.parse(fs.readFileSync(path.join(HB, 'index.json'), 'utf8')).years;
@@ -87,7 +128,12 @@ for (const { year, filename } of index) {
     });
     const [lx, ly] = polylabel(best, 0.05);
     // Празен превод значи „без етикет“ — за имена като „?“ в данните.
-    if (bg !== '') labels.push([r2(lx), r2(ly), Math.round(total), name, p.BORDERPRECISION >= 2 ? 1 : 0, colorFor(sub || p.NAME)]);
+    if (bg !== '') {
+      const sharp = p.BORDERPRECISION >= 2 ? 1 : 0, color = colorFor(sub || p.NAME);
+      labels.push([r2(lx), r2(ly), Math.round(total), name, sharp, color]);
+      // Седмото поле 1 значи „допълнителен етикет“ — панелът го прескача.
+      if (bestA > 2500000) for (const [ex, ey, ea] of extraLabels(best, [lx, ly])) labels.push([ex, ey, ea, name, sharp, color, 1]);
+    }
     const ent = entities[p.NAME] ??= { n: name, at: [] };
     // Една точка на снимка: най-голямата част на името през тази година.
     const row = [year, r2(lx), r2(ly), Math.round(total), p.BORDERPRECISION >= 2 ? 1 : 0];
