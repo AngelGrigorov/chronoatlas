@@ -89,6 +89,16 @@ button, select, input { font: inherit; color: inherit; }
 #card .wiki { color: #cfc6b3; font-size: 13px; }
 #card .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 #card .links a, #card .links button { font-size: 12.5px; color: var(--gold); text-decoration: none; border: 1px solid var(--gold-dim); border-radius: 14px; padding: 3px 10px; background: none; cursor: pointer; }
+#card .chart { margin-top: 12px; }
+#card .chart-h { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+#card .chart-h span { text-transform: none; letter-spacing: 0; color: var(--gold); margin-left: 4px; }
+#card .chart svg { width: 100%; height: auto; display: block; }
+#card .chart .fill { fill: rgba(217, 180, 90, 0.16); }
+#card .chart .line { fill: none; stroke: var(--gold); stroke-width: 1.6; }
+#card .chart circle { fill: #121a27; stroke: var(--gold); stroke-width: 1.4; cursor: pointer; }
+#card .chart circle:hover { fill: var(--gold); }
+#card .chart circle.cur { fill: var(--gold); }
+#card .chart text { fill: var(--muted); font-size: 10px; font-family: var(--sans); }
 #card .close { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 50%; border: none; background: rgba(0, 0, 0, 0.5); color: var(--text); cursor: pointer; font-size: 16px; line-height: 1; }
 
 /* Таймлайн */

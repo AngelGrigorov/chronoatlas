@@ -142,11 +142,14 @@ export function showCard(hit, { entities, onGo }) {
       break;
     case 'polity': {
       const p = it, ent = entities[p.e];
-      kind = p.p ? 'Държава' : 'Народ / култура';
+      // Точността на границата не казва какво е образуванието: империя с размита
+      // граница в една снимка е империя. „Народ“ е само ако никъде не е точна.
+      kind = p.p || ent?.at.some(a => a[4]) ? 'Държава' : 'Народ / култура';
       title = p.n;
       if (ent) {
         const ys = ent.at.map(a => a[0]);
         when = `В картите: ${fmtRange(Math.min(...ys), Math.max(...ys))}`;
+        extra += areaChart(ent.at, hit.year);
       }
       if (p.n !== p.e) extra += `<p class="wiki" lang="en">${esc(p.e)}</p>`;
       if (p.s) extra += `<p class="wiki">Под властта на: <b>${esc(p.s)}</b></p>`;
@@ -163,12 +166,39 @@ export function showCard(hit, { entities, onGo }) {
   card.scrollTop = 0;
   card.querySelector('.close').onclick = hideCard;
   if (go) card.querySelector('[data-go]').onclick = () => onGo(go);
+  card.querySelectorAll('[data-jump]').forEach(el => {
+    el.onclick = () => { const [y, lon, lat] = el.dataset.jump.split(',').map(Number); onGo({ y, lon, lat }); };
+  });
   if (wiki) loadWiki(wiki, !desc).then(w => {
     if (token !== cardToken || !w) return;
     if (w.thumb) card.insertAdjacentHTML('afterbegin', `<img class="img" src="${esc(w.thumb)}" alt="">`);
     if (w.text) card.querySelector('.wiki-slot').innerHTML = `<p class="wiki">${esc(w.text)}${w.lang === 'en' ? ' <i>(англ.)</i>' : ''}</p>`;
     card.querySelector('.links').insertAdjacentHTML('beforeend', `<a href="${esc(w.url)}" target="_blank" rel="noopener">Уикипедия ↗</a>`);
   });
+}
+
+const fmtArea = a => a >= 1e6 ? `${(a / 1e6).toLocaleString('bg-BG', { maximumFractionDigits: 1 })} млн. км²` : `${Math.round(a / 1e3).toLocaleString('bg-BG')} хил. км²`;
+
+// Площта на държавата във всяка снимка — възход и упадък с един поглед.
+// Точките водят до своята година; текущата е отбелязана.
+function areaChart(at, year) {
+  const pts = [...at].sort((a, b) => a[0] - b[0]);
+  if (pts.length < 2) return '';
+  const W = 340, H = 86, P = 8;
+  const y0 = pts[0][0], y1 = pts[pts.length - 1][0];
+  const max = Math.max(...pts.map(p => p[3]));
+  const X = y => P + (y - y0) / (y1 - y0 || 1) * (W - 2 * P);
+  const Y = a => H - 18 - Math.sqrt(a / max) * (H - 30);
+  const line = pts.map((p, i) => `${i ? 'L' : 'M'}${X(p[0]).toFixed(1)},${Y(p[3]).toFixed(1)}`).join('');
+  const area = `${line}L${X(y1).toFixed(1)},${H - 18}L${X(y0).toFixed(1)},${H - 18}Z`;
+  const peak = pts.reduce((a, b) => (b[3] > a[3] ? b : a));
+  const cur = pts.reduce((a, b) => (Math.abs(b[0] - year) < Math.abs(a[0] - year) ? b : a));
+  const dots = pts.map(p => `<circle data-jump="${p[0]},${p[1]},${p[2]}" cx="${X(p[0]).toFixed(1)}" cy="${Y(p[3]).toFixed(1)}" r="${p === cur ? 4.5 : 3}" class="${p === cur ? 'cur' : ''}"><title>${esc(fmtYear(p[0]))} · ${esc(fmtArea(p[3]))}</title></circle>`).join('');
+  return `<div class="chart"><div class="chart-h">Площ във времето <span>връх: ${esc(fmtArea(peak[3]))}, ${esc(fmtYear(peak[0]))}</span></div>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Площта на държавата във времето">
+      <path d="${area}" class="fill"/><path d="${line}" class="line"/>${dots}
+      <text x="${P}" y="${H - 4}">${esc(fmtYear(y0, true))}</text><text x="${W - P}" y="${H - 4}" text-anchor="end">${esc(fmtYear(y1, true))}</text>
+    </svg></div>`;
 }
 
 // Резюме и снимка от Уикипедия — на живо, ако има мрежа. Без мрежа картичката си остава.
