@@ -80,7 +80,7 @@ function swordsImage() {
 }
 
 export function createMap({ container, canvas, data, initial, onPick, onSnapshot }) {
-  const { snapshots, cultures, cities, routes, events, wd } = data;
+  const { snapshots, cultures, cities, routes, events, wd, seas } = data;
   const state = { year: initial.year, win: 100, layers: { ...initial.layers } };
 
   const ev = (list, extra) => ({
@@ -422,7 +422,8 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     // се рисуват отдолу, за да не изяждат градовете при приближение.
     const hard = [], soft = [], later = [];
     const freeIn = (placed, x0, y0, x1, y1) => {
-      if (x1 < 0 || y1 < 0 || x0 > W || y0 > H) return false;
+      // Цял в екрана или никак — отрязан наполовина надпис е по-лош от липсващ.
+      if (x0 < 2 || y0 < 2 || x1 > W - 2 || y1 > H - 2) return false;
       // ponytail: O(n²) по поставените етикети; при стотици на екран е под милисекунда.
       for (const r of placed) if (x0 < r[2] && x1 > r[0] && y0 < r[3] && y1 > r[1]) return false;
       placed.push([x0, y0, x1, y1]);
@@ -504,6 +505,22 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const w = measure(name, font, 0);
         const x = p.x + 7 + w > W - 4 ? p.x - 7 - w : p.x + 7;
         if (free(x, p.y - 8, x + w, p.y + 8)) later.push(() => text(name, x, p.y, font, '#f4ecd8'));
+      }
+    }
+
+    // 3½. Моретата с имената им за годината — синкав курсив, както в стар атлас.
+    if (state.layers.rivers) {
+      const maxRank = z < 2 ? 1 : z < 3.2 ? 2 : 3;
+      for (const s of seas) {
+        if (s.r > maxRank || (s.r === 1 && z > 4.5) || !facing(s.lon, s.lat)) continue;
+        const name = cityName(s, year);
+        const size = s.r === 1 ? 17 : s.r === 2 ? 14.5 : 12.5;
+        const spacing = s.r === 1 ? 5 : s.r === 2 ? 2.2 : 1.2;
+        const font = `italic 500 ${size}px ${SERIF}`;
+        const p = map.project([s.lon, s.lat]);
+        const w = measure(name, font, spacing);
+        if (!freeIn(soft, p.x - w / 2, p.y - size / 2, p.x + w / 2, p.y + size / 2)) continue;
+        text(name, p.x, p.y, font, 'rgba(150,186,222,0.82)', spacing, 'center', 'rgba(10,20,34,0.7)');
       }
     }
 

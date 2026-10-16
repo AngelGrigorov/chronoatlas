@@ -10,7 +10,7 @@ const get = (p, fallback) => fetch(p).then(r => (r.ok ? r.json() : Promise.rejec
 });
 
 const EVENT_FILES = ['1-ancient', '2-late-antiquity', '3-medieval', '4-early-modern', '5-modern'];
-const [snapshots, entities, eventParts, cultures, cities, routes, eras, people, wdRaw] = await Promise.all([
+const [snapshots, entities, eventParts, cultures, cities, routes, eras, people, seas, wdRaw] = await Promise.all([
   get('data/snapshots.json'),
   get('data/entities.json'),
   Promise.all(EVENT_FILES.map(f => get(`data/content/events-${f}.json`))),
@@ -19,6 +19,7 @@ const [snapshots, entities, eventParts, cultures, cities, routes, eras, people, 
   get('data/content/routes.json'),
   get('data/content/eras.json'),
   get('data/content/people.json'),
+  get('data/content/seas.json'),
   get('data/wd-events.json', []),
 ]);
 // Wikidata е в компактни редове: [y, lon, lat, вид, езици, заглавие, en, bg уики, en уики, id]
@@ -33,7 +34,7 @@ const LAYERS = [
   ['battles', 'Битки', '#e0574f'],
   ['routes', 'Пътища и походи', '#ff7a5c'],
   ['cities', 'Градове', '#f4ecd8'],
-  ['rivers', 'Реки', '#4b7298'],
+  ['rivers', 'Реки и морета', '#4b7298'],
 ];
 const hash = new URLSearchParams(location.hash.slice(1));
 const num = (v, d) => (v != null && v !== '' && Number.isFinite(+v) ? +v : d);
@@ -64,7 +65,7 @@ const mapEl = document.getElementById('map');
 const map = createMap({
   container: mapEl,
   canvas: document.getElementById('labels'),
-  data: { snapshots, cultures, cities, routes, events, wd },
+  data: { snapshots, cultures, cities, routes, events, wd, seas },
   initial: {
     year: app.year, layers: app.layers, flat: app.flat,
     center: Number.isFinite(hx) && Number.isFinite(hy) ? [hx, hy] : [28, 34],
