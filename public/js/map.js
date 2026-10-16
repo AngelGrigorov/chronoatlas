@@ -30,7 +30,8 @@ const Y = ['global-state', 'year'];
 const WIN = ['global-state', 'win'];
 const age = ['-', Y, ['get', 'y']];
 // An event lights up in its year and fades over the "window", which depends on the timeline zoom.
-const eventOpacity = ['case', ['<', age, 0], 0, ['>', age, WIN], 0, ['-', 1, ['*', 0.72, ['/', age, WIN]]]];
+// Full strength for the first 30% of the window, then down to nothing by its end.
+const eventOpacity = ['case', ['<', age, 0], 0, ['>', age, WIN], 0, ['min', 1, ['/', ['-', WIN, age], ['*', 0.7, WIN]]]];
 const rippleT = ['/', age, ['*', WIN, 0.35]];
 const rippleOpacity = ['case', ['<', age, 0], 0, ['>', rippleT, 1], 0, ['*', 0.85, ['-', 1, rippleT]]];
 // Fade in after s and out before e, over f years.
@@ -39,7 +40,7 @@ const spanOpacity = ['max', 0, ['min', 1, ['/', ['-', Y, ['get', 's']], ['get', 
 // The same formula in JS — for the panel, labels and clicks.
 export function eventAlpha(y, year, win) {
   const a = year - y;
-  return a < 0 || a > win ? 0 : 1 - 0.72 * a / win;
+  return a < 0 || a > win ? 0 : Math.min(1, (win - a) / (0.7 * win));
 }
 export const spanAlpha = (s, e, f, year) => Math.max(0, Math.min(1, (year - s) / f, (e - year) / f));
 

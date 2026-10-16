@@ -1,6 +1,6 @@
 // node tools/test-time.mjs — checks for the pure helpers in time.js.
 import assert from 'node:assert/strict';
-import { wrapLine, fmtYear, fmtRange, regionOf, setTimeLang } from '../public/js/time.js';
+import { wrapLine, fmtYear, fmtRange, regionOf, setTimeLang, yearsBetween } from '../public/js/time.js';
 
 // Magellan: from −150° to −215° crosses ±180° once.
 const parts = wrapLine([[-150, -10], [-215.3, 13.4]]);
@@ -31,6 +31,12 @@ assert.equal(fmtYear(-490, true), '490 пр.Хр.');
 assert.equal(fmtYear(-10000), '10 000 г. пр.Хр.');
 assert.equal(fmtRange(-27, 476), '27 г. пр.Хр. – 476 г.');
 setTimeLang('en');
+
+// Ovid, 43 BC – AD 17: 59 years; at AD 1 he is 43.
+assert.equal(yearsBetween(-43, 17), 59);
+assert.equal(yearsBetween(-43, 1), 43);
+assert.equal(yearsBetween(-356, -323), 33);
+assert.equal(yearsBetween(1452, 1519), 67);
 
 assert.equal(regionOf(23.3, 42.7), 'europe');
 assert.equal(regionOf(44.4, 33.3), 'mena');

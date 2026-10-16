@@ -64,7 +64,7 @@
   "card.cityNames": "Names through the ages: {names}",
   "card.culture": "Culture",
   "card.state": "State",
-  "card.people": "People / culture",
+  "card.people": "State or people",
   "card.inMaps": "In the maps: {range}",
   "card.under": "Under the rule of: {s}",
   "card.fuzzy": "The border is approximate — that is why it is blurred.",

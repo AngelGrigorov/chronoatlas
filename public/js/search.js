@@ -18,12 +18,12 @@ export function createSearch(input, list, data, onSelect) {
     const best = ent.at.reduce((a, b) => (b[3] > a[3] ? b : a));
     const ys = ent.at.map(a => a[0]);
     // The English name is the key, so it stays searchable in every language.
-    add(ent.n, en !== ent.n ? en : '', { kind: t('search.state'), y: best[0], when: fmtRange(Math.min(...ys), Math.max(...ys)), lon: best[1], lat: best[2], area: best[3], w: 2 + Math.min(3, Math.log10(best[3] + 1) / 2), hit: { type: 'polity', item: { n: ent.n, e: en, p: best[4] ?? 1, s: '' } } });
+    add(ent.n, en !== ent.n ? en : '', { kind: t('search.state'), y: best[0], when: fmtRange(Math.min(...ys), Math.max(...ys)), lon: best[1], lat: best[2], area: best[3], w: 1.5 + Math.min(2.5, Math.log10(best[3] + 1) / 2), hit: { type: 'polity', item: { n: ent.n, e: en, p: best[4] ?? 1, s: '' } } });
   }
   for (const c of cultures) add(c.n, '', { kind: t('search.culture'), y: Math.round((c.s + c.e) / 2), when: fmtRange(c.s, c.e), lon: c.lon, lat: c.lat, w: 4, hit: { type: 'culture', item: c } });
   for (const c of cities) {
     const names = [...new Set(c.n.map(n => n[1]))];
-    names.forEach((n, i) => add(n, names.filter(x => x !== n).join(' '), { kind: t('search.city'), y: Math.max(c.s, c.n[i]?.[0] ?? c.s), when: fmtRange(c.s, c.e), lon: c.lon, lat: c.lat, w: 4 - c.r * 0.5, hit: { type: 'city', item: c } }));
+    names.forEach((n, i) => add(n, names.filter(x => x !== n).join(' '), { kind: t('search.city'), y: Math.max(c.s, c.n[i]?.[0] ?? c.s), when: fmtRange(c.s, c.e), lon: c.lon, lat: c.lat, w: 5 - c.r * 0.5, hit: { type: 'city', item: c } }));
   }
   for (const p of people) add(p.n, p.t, { kind: t('search.person'), y: Math.round(p.b + Math.min(40, (p.d - p.b) * 0.6)), when: fmtRange(p.b, p.d), lon: p.lon, lat: p.lat, w: 3 + p.i, hit: { type: 'person', item: p } });
   for (const r of routes) {

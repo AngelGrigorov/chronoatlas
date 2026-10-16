@@ -74,7 +74,9 @@ const app = {
   setSpan(s) { this.span = Math.min(MAX_SPAN, Math.max(MIN_SPAN, s)); dirty(); },
   stopPlay() { if (this.playing) togglePlay(false); },
 };
-const win = () => Math.min(400, Math.max(6, app.span * 0.06));
+// How long an event stays on the map: 1.2% of the visible timeline, between 3 and 60 years.
+// Wider made the map show 1989 in 2024 when the timeline was zoomed out.
+const win = () => Math.min(60, Math.max(3, app.span * 0.012));
 
 // ——— The map ———
 const mapEl = document.getElementById('map');
@@ -238,7 +240,7 @@ function frame(now) {
   const band = eras.tracks[0].b.find(([s, e]) => app.year >= s && app.year < e);
   eraEl.textContent = band ? band[2] : '';
   const snap = map.snapshot;
-  snapEl.innerHTML = snap == null ? '' : t('hud.snap', { year: fmtYear(snap) }) + (Math.abs(snap - app.year) >= 1 ? t('hud.snapBack') : '');
+  snapEl.innerHTML = snap == null ? '' : t('hud.snap', { year: fmtYear(snap) }) + (Math.round(app.year) !== snap ? t('hud.snapBack') : '');
   // The panel is rebuilt at most 5–6 times a second; whatever was skipped catches up shortly.
   if (now - lastPanel > 180) { lastPanel = now; panel.update(app.year, win(), map.labels, snap); }
   else if (!panelTimer) panelTimer = setTimeout(() => { panelTimer = 0; dirty(); }, 200);

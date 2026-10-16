@@ -1,5 +1,5 @@
 import { KINDS, KIND_GROUPS, kindLabel, eventAlpha, spanAlpha, cityName } from './map.js';
-import { REGIONS, regionOf, fmtYear, fmtRange } from './time.js';
+import { REGIONS, regionOf, fmtYear, fmtRange, yearsBetween } from './time.js';
 import { t, lang } from './i18n.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -86,7 +86,7 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     if (alive.length) {
       html += `<section><h3>${esc(t('side.alive'))}</h3><ul>`;
       for (const p of alive) {
-        html += `<li class="person" data-i="${push({ type: 'person', item: p, lon: p.lon, lat: p.lat })}"><span class="sw pe"></span><span class="t">${esc(p.n)}<small>${esc(p.t)}</small></span><span class="y">${esc(t('side.age', { n: Math.round(year - p.b) }))}</span></li>`;
+        html += `<li class="person" data-i="${push({ type: 'person', item: p, lon: p.lon, lat: p.lat })}"><span class="sw pe"></span><span class="t">${esc(p.n)}<small>${esc(p.t)}</small></span><span class="y">${esc(t('side.age', { n: yearsBetween(p.b, Math.round(year)) }))}</span></li>`;
       }
       html += '</ul></section>';
     }
@@ -151,7 +151,7 @@ export function showCard(hit, { entities, onGo }) {
     case 'person':
       kind = it.t;
       title = it.n;
-      when = t('card.lifespan', { range: fmtRange(it.b, it.d), n: it.d - it.b });
+      when = t('card.lifespan', { range: fmtRange(it.b, it.d), n: yearsBetween(it.b, it.d) });
       wiki = { title: it.w };
       go = { y: Math.round(it.b + Math.min(40, (it.d - it.b) * 0.6)), lon: it.lon, lat: it.lat };
       break;

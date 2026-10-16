@@ -20,7 +20,11 @@ export function t(key, vars) {
   return s;
 }
 export const texts = () => pack;
-export const polityName = name => pack?.polities?.[name] ?? name;
+// Some source names start in lower case ("central Asian khanates"); show them capitalised.
+export const polityName = name => {
+  const n = pack?.polities?.[name] ?? name;
+  return n.charAt(0).toUpperCase() + n.slice(1);
+};
 
 async function fetchJSON(url, opts) {
   const r = await fetch(url, opts);

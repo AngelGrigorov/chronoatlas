@@ -146,6 +146,23 @@ for (const [name, hash] of [
   await page.close();
 }
 
+console.log('Old events fade out');
+{
+  // Reported bug: in 2024 with a zoomed-out timeline the map still showed the fall of the Berlin Wall.
+  const { page, errors } = await open('y=2024&s=2400&c=8,50&z=4.6');
+  const side = await page.$eval('#side-list', el => el.innerText);
+  const visible = await page.evaluate(() => {
+    const m = window.atlas.map;
+    return m.queryRenderedFeatures({ layers: ['ev', 'bt'] })
+      .filter(f => { const a = 2024 - f.properties.y; return a >= 0 && a <= m.getGlobalState?.().win; })
+      .map(f => f.properties.y);
+  }).catch(() => []);
+  check(!/Berlin Wall|1989/.test(side), 'the fall of the Berlin Wall is gone by 2024');
+  check(visible.every(y => 2024 - y <= 60), `only recent events on the map: ${[...new Set(visible)].join(', ') || 'none'}`);
+  check(errors.length === 0, `no errors (${errors.length})`);
+  await page.close();
+}
+
 console.log('Phone');
 {
   const { page, errors } = await open('y=681&s=600&c=26,43&z=3.5', { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });

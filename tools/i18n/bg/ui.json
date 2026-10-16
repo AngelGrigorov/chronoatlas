@@ -64,7 +64,7 @@
   "card.cityNames": "Имена през вековете: {names}",
   "card.culture": "Култура",
   "card.state": "Държава",
-  "card.people": "Народ / култура",
+  "card.people": "Държава или народ",
   "card.inMaps": "В картите: {range}",
   "card.under": "Под властта на: {s}",
   "card.fuzzy": "Границата е приблизителна — затова е размита.",
