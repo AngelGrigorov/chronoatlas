@@ -4,7 +4,7 @@ import { REGIONS, regionOf, fmtYear, fmtRange } from './time.js';
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // ——— „Едновременно“: какво има по света в тази година ———
-export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKinds }) {
+export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKinds, onOpen }) {
   const { events, cultures, people } = data;
   const side = root.closest('#side');
   let last = '';
@@ -16,6 +16,8 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
   toggle.setAttribute('aria-expanded', String(!side.classList.contains('closed')));
   toggle.addEventListener('click', () => {
     const closed = side.classList.toggle('closed');
+    // Затвореният панел не се обновява — при отваряне го пренареждаме веднага.
+    if (!closed) { last = ''; onOpen?.(); }
     toggle.setAttribute('aria-expanded', String(!closed));
     try { localStorage.setItem('side', closed ? 'closed' : 'open'); } catch {}
   });
