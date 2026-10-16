@@ -9,7 +9,7 @@ const get = (p, fallback) => fetch(p).then(r => (r.ok ? r.json() : Promise.rejec
   throw err;
 });
 
-const EVENT_FILES = ['1-ancient', '2-late-antiquity', '3-medieval', '4-early-modern', '5-modern'];
+const EVENT_FILES = ['1-ancient', '2-late-antiquity', '3-medieval', '4-early-modern', '5-modern', '6-world'];
 const [snapshots, entities, eventParts, cultures, cities, routes, eras, people, seas, wdRaw] = await Promise.all([
   get('data/snapshots.json'),
   get('data/entities.json'),
