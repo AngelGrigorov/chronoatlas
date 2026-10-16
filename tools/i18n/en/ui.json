@@ -26,6 +26,7 @@
   "side.toggle": "Around the world at the same time",
   "side.title": "The world around {year}",
   "side.sub": "Countries by area, cultures without borders and events of the last {n} years",
+  "side.subExact": "Countries by area, cultures without borders and the events of {year}",
   "side.alive": "Alive at this time",
   "side.age": "aged {n}",
   "kinds.label": "Kinds of events",

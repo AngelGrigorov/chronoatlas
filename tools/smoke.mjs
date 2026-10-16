@@ -163,6 +163,22 @@ console.log('Old events fade out');
   await page.close();
 }
 
+console.log('Events of the shown year only');
+{
+  const panelAt = async (page, y) => {
+    await page.evaluate(y => window.atlas.app.setYear(y, { instant: true }), y);
+    await wait(700);
+    return page.$eval('#side-list', el => el.innerText);
+  };
+  const { page, errors } = await open('y=-490&s=1200&c=24,38&z=4');
+  check(/Battle of Marathon/.test(await panelAt(page, -490)), 'Marathon shows in 490 BC');
+  check(!/Battle of Marathon/.test(await panelAt(page, -489)), 'and is gone in 489 BC');
+  check(!/Battle of Marathon/.test(await panelAt(page, -491)), 'and is not there yet in 491 BC');
+  check(/Peloponnesian War/.test(await panelAt(page, -420)), 'a war shows through its years (Peloponnesian War, 420 BC)');
+  check(errors.length === 0, `no errors (${errors.length})`);
+  await page.close();
+}
+
 console.log('Phone');
 {
   const { page, errors } = await open('y=681&s=600&c=26,43&z=3.5', { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });

@@ -27,20 +27,27 @@ const kindColor = ['match', ['get', 'k'], ...Object.entries(KINDS).flat(), '#d8d
 export const isBattle = k => k === 'battle' || k === 'siege';
 
 const Y = ['global-state', 'year'];
+// Events work in whole years: the year shown on screen (EY), not the fractional one.
+const EY = ['global-state', 'eyear'];
 const WIN = ['global-state', 'win'];
-const age = ['-', Y, ['get', 'y']];
+const age = ['-', EY, ['get', 'y']];
+// Years since the event ended (wars have an end year; most events end the year they start).
+const ageEnd = ['-', EY, ['get', 'ye']];
 // An event lights up in its year and fades over the "window", which depends on the timeline zoom.
-// Full strength for the first 30% of the window, then down to nothing by its end.
-const eventOpacity = ['case', ['<', age, 0], 0, ['>', age, WIN], 0, ['min', 1, ['/', ['-', WIN, age], ['*', 0.7, WIN]]]];
-const rippleT = ['/', age, ['*', WIN, 0.35]];
+// An event shows exactly in its year (or through its years). WIN is 0 when time stands
+// still; only while playing does it give an event a short afterglow, or it would flash by.
+const eventOpacity = ['case', ['<', age, 0], 0, ['<=', ageEnd, 0], 1, ['>', ageEnd, WIN], 0, ['-', 1, ['/', ageEnd, ['+', WIN, 1]]]];
+const rippleT = ['/', ['max', 0, ageEnd], ['*', ['max', WIN, 1], 0.35]];
 const rippleOpacity = ['case', ['<', age, 0], 0, ['>', rippleT, 1], 0, ['*', 0.85, ['-', 1, rippleT]]];
 // Fade in after s and out before e, over f years.
 const spanOpacity = ['max', 0, ['min', 1, ['/', ['-', Y, ['get', 's']], ['get', 'f']], ['/', ['-', ['get', 'e'], Y], ['get', 'f']]]];
 
 // The same formula in JS — for the panel, labels and clicks.
-export function eventAlpha(y, year, win) {
-  const a = year - y;
-  return a < 0 || a > win ? 0 : Math.min(1, (win - a) / (0.7 * win));
+export function eventAlpha(y, year, win, ye = y) {
+  const yr = Math.round(year);
+  if (yr < y) return 0;
+  const past = yr - ye;
+  return past <= 0 ? 1 : past > win ? 0 : 1 - past / (win + 1);
 }
 export const spanAlpha = (s, e, f, year) => Math.max(0, Math.min(1, (year - s) / f, (e - year) / f));
 
@@ -82,12 +89,12 @@ function swordsImage() {
 
 export function createMap({ container, canvas, data, initial, onPick, onSnapshot }) {
   const { snapshots, cultures, cities, routes, events, wd, seas } = data;
-  const state = { year: initial.year, win: 100, layers: { ...initial.layers }, kinds: initial.kinds || null };
+  const state = { year: initial.year, win: 0, layers: { ...initial.layers }, kinds: initial.kinds || null };
   const kindOk = k => !state.kinds || state.kinds.includes(k);
 
   const ev = (list, extra) => ({
     type: 'FeatureCollection',
-    features: list.map((e, idx) => ({ type: 'Feature', id: idx, geometry: { type: 'Point', coordinates: [e.lon, e.lat] }, properties: { y: e.y, k: e.k, i: e.i || 1, ...extra?.(e) } })),
+    features: list.map((e, idx) => ({ type: 'Feature', id: idx, geometry: { type: 'Point', coordinates: [e.lon, e.lat] }, properties: { y: e.y, ye: e.ye ?? e.y, k: e.k, i: e.i || 1, ...extra?.(e) } })),
   });
   const curatedNonBattle = events.filter(e => !isBattle(e.k));
   const curatedBattle = events.filter(e => isBattle(e.k));
@@ -122,7 +129,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
   const style = {
     version: 8,
     projection: { type: initial.flat ? 'mercator' : 'globe' },
-    state: { year: { default: state.year }, win: { default: state.win } },
+    state: { year: { default: state.year }, eyear: { default: Math.round(state.year) }, win: { default: state.win } },
     sky: {
       'sky-color': '#0b1220', 'horizon-color': '#29405e', 'fog-color': '#0b1220',
       'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0],
@@ -326,8 +333,8 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
   function visibleHit(f) {
     const p = f.properties, y = state.year;
     switch (f.source) {
-      case 'ev': case 'bt': return kindOk(p.k) && eventAlpha(p.y, y, state.win) > 0.05 && { type: 'event', item: (f.source === 'ev' ? curatedNonBattle : curatedBattle)[f.id] };
-      case 'wdb': case 'wdo': return kindOk(p.k) && eventAlpha(p.y, y, state.win) > 0.05 && { type: 'wd', item: (f.source === 'wdb' ? wdBattle : wdOther)[f.id] };
+      case 'ev': case 'bt': return kindOk(p.k) && eventAlpha(p.y, y, state.win, p.ye) > 0.05 && { type: 'event', item: (f.source === 'ev' ? curatedNonBattle : curatedBattle)[f.id] };
+      case 'wdb': case 'wdo': return kindOk(p.k) && eventAlpha(p.y, y, state.win, p.ye) > 0.05 && { type: 'wd', item: (f.source === 'wdb' ? wdBattle : wdOther)[f.id] };
       case 'cities': return y >= p.s && y <= p.e && { type: 'city', item: cities[f.id] };
       case 'routes': {
         const r = routes[p.rid];
@@ -477,15 +484,16 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       ctx.fillText(str, x, y);
     };
 
-    // 1. Fresh events — they are "what is happening now".
+    // 1. This year's events — they are "what is happening now". All of them get a label
+    // when zoomed in; zoomed out, only the more important ones.
     if (state.layers.events || state.layers.battles) {
-      const minI = z < 2.6 ? 3 : z < 4 ? 2 : 1;
+      const minI = z < 2.6 ? 2 : 1;
       const fresh = events
         .filter(e => (isBattle(e.k) ? state.layers.battles : state.layers.events) && e.i >= minI && kindOk(e.k))
-        .map(e => [e, year - e.y])
-        .filter(([, a]) => a >= 0 && a <= win * 0.55)
-        .sort((a, b) => b[0].i - a[0].i || a[1] - b[1])
-        .slice(0, 10);
+        .map(e => [e, eventAlpha(e.y, year, win, e.ye)])
+        .filter(([, a]) => a > 0.3)
+        .sort((a, b) => b[0].i - a[0].i || b[1] - a[1])
+        .slice(0, 12);
       for (const [e, a] of fresh) {
         if (!facing(e.lon, e.lat)) continue;
         const p = map.project([e.lon, e.lat]);
@@ -495,7 +503,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const left = p.x + 11 + w > W - 4;
         const x0 = left ? p.x - 11 - w : p.x + 11, y = p.y;
         if (x0 < 4 || !free(x0 - 2, y - 9, x0 + w + 2, y + 9)) continue;
-        const alpha = Math.min(1, 1.6 * (1 - a / (win * 0.55)));
+        const alpha = a;
         later.push(() => { ctx.globalAlpha = alpha; text(e.t, x0, y, font, '#fff3d6'); ctx.globalAlpha = 1; });
       }
     }
@@ -628,6 +636,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       state.win = win;
       if (!ready) return;
       map.setGlobalStateProperty('year', year);
+      map.setGlobalStateProperty('eyear', Math.round(year));
       map.setGlobalStateProperty('win', win);
       wanted = snapFor(year);
       swap();

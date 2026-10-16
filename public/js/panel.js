@@ -71,11 +71,11 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
       if (a > 0.2) by[regionOf(c.lon, c.lat)].other.unshift({ type: 'culture', item: c, name: c.n, lon: c.lon, lat: c.lat, area: Infinity });
     }
     for (const e of events) {
-      const a = eventAlpha(e.y, year, win);
+      const a = eventAlpha(e.y, year, win, e.ye);
       if (a > 0 && kindOk(e.k)) by[regionOf(e.lon, e.lat)].events.push({ type: 'event', item: e, a });
     }
 
-    let html = `<h2>${esc(t('side.title', { year: fmtYear(year) }))}</h2><div class="sub">${esc(t('side.sub', { n: Math.round(win) }))}</div>`;
+    let html = `<h2>${esc(t('side.title', { year: fmtYear(year) }))}</h2><div class="sub">${esc(t(win ? 'side.sub' : 'side.subExact', { n: Math.round(win), year: fmtYear(year) }))}</div>`;
     const push = it => { items.push(it); return items.length - 1; };
 
     // Who is alive this year — the best known first, then those in their prime.
@@ -94,7 +94,7 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
       const r = by[k];
       const states = r.states.sort((a, b) => b.area - a.area).slice(0, 4);
       const other = r.other.sort((a, b) => b.area - a.area).slice(0, states.length ? 2 : 4);
-      const evs = r.events.sort((a, b) => b.item.i - a.item.i || b.a - a.a).slice(0, 3);
+      const evs = r.events.sort((a, b) => b.item.i - a.item.i || b.a - a.a).slice(0, 8);
       if (!states.length && !other.length && !evs.length) continue;
       html += `<section><h3>${esc(t('region.' + k))}</h3><ul>`;
       for (const it of evs) {

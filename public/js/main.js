@@ -74,9 +74,9 @@ const app = {
   setSpan(s) { this.span = Math.min(MAX_SPAN, Math.max(MIN_SPAN, s)); dirty(); },
   stopPlay() { if (this.playing) togglePlay(false); },
 };
-// How long an event stays on the map: 1.2% of the visible timeline, between 3 and 60 years.
-// Wider made the map show 1989 in 2024 when the timeline was zoomed out.
-const win = () => Math.min(60, Math.max(3, app.span * 0.012));
+// Events show exactly in the year on screen. Only while playing do they linger for
+// about a second of playback, otherwise at 60 years a second they would never be seen.
+const win = () => (app.playing ? Math.max(1, +speedSel.value * 0.8) : 0);
 
 // ——— The map ———
 const mapEl = document.getElementById('map');
