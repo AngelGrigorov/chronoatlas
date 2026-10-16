@@ -88,8 +88,10 @@ function onGo(g) {
 
 // ——— Таймлайнът, панелът, търсенето ———
 const timeline = createTimeline(document.getElementById('timeline'), { eras, events, snapshots, app });
-const panel = createPanel(document.getElementById('side-body'), document.getElementById('side-toggle'), {
+const panel = createPanel(document.getElementById('side-list'), document.getElementById('side-toggle'), {
   data: { events, cultures, cities, people },
+  kinds: document.getElementById('kinds'),
+  onKinds(ks) { map.setKinds(ks); dirty(); },
   onFocus(it) {
     if (it.type === 'event') { map.flyTo(it.item.lon, it.item.lat); showCard({ type: 'event', item: it.item, year: app.year }, { entities, onGo }); }
     else if (it.type === 'culture' || it.type === 'person') { map.flyTo(it.lon, it.lat); showCard({ type: it.type, item: it.item, year: app.year }, { entities, onGo }); }
@@ -102,6 +104,21 @@ createSearch(document.getElementById('q'), document.getElementById('results'), {
   map.flyTo(r.lon, r.lat, r.area ? Math.max(2.2, Math.min(5, 7.2 - Math.log10(r.area))) : 4.5);
   showCard({ ...r.hit, year: r.y }, { entities, onGo });
 });
+
+map.setKinds(panel.kinds());
+
+// Подсказка при първо отваряне; изчезва при първото завъртане на времето.
+const hint = document.getElementById('hint');
+let hinted = false;
+try { hinted = !!localStorage.getItem('hint'); } catch {}
+const hideHint = () => { hint.hidden = true; try { localStorage.setItem('hint', '1'); } catch {} };
+if (!hinted) {
+  if (matchMedia('(pointer: coarse)').matches) hint.querySelector('span').innerHTML = '<b>Плъзни</b> времевата линия, за да пътуваш във времето · <b>щипни</b> я за мащаб · <b>▶</b> пуска историята';
+  hint.hidden = false;
+  document.getElementById('hint-ok').onclick = hideHint;
+  document.getElementById('timeline').addEventListener('pointerdown', hideHint, { once: true });
+  document.getElementById('timeline').addEventListener('wheel', hideHint, { once: true, passive: true });
+}
 
 // ——— Слоевете ———
 const layersEl = document.getElementById('layers');

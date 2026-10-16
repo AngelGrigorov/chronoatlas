@@ -31,7 +31,10 @@
 
 <aside id="side" aria-label="Едновременно по света">
   <button id="side-toggle" aria-expanded="true" title="Едновременно по света">◧</button>
-  <div id="side-body"></div>
+  <div id="side-body">
+    <div id="kinds" role="group" aria-label="Видове събития"></div>
+    <div id="side-list"></div>
+  </div>
 </aside>
 
 <article id="card" hidden></article>
@@ -48,6 +51,11 @@
   </div>
   <canvas id="timeline" tabindex="0" aria-label="Времева линия: колелцето мести времето, Ctrl+колелцето мащабира"></canvas>
 </footer>
+
+<div id="hint" hidden>
+  <span><b>Колелцето</b> върху времевата линия те води напред и назад във времето · <b>Ctrl</b> + колелце мени мащаба · <b>интервал</b> пуска историята</span>
+  <button id="hint-ok">Разбрах</button>
+</div>
 
 <div id="loading">Зареждам света…</div>
 <script type="module" src="js/main.js"></script>

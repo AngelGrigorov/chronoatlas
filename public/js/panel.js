@@ -1,20 +1,21 @@
-import { KINDS, cityName, eventAlpha, spanAlpha, isBattle } from './map.js';
+import { KINDS, KIND_GROUPS, eventAlpha, spanAlpha, cityName } from './map.js';
 import { REGIONS, regionOf, fmtYear, fmtRange } from './time.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // ——— „Едновременно“: какво има по света в тази година ———
-export function createPanel(root, toggle, { data, onFocus }) {
+export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKinds }) {
   const { events, cultures, people } = data;
+  const side = root.closest('#side');
   let last = '';
   let items = [];
   let pref = null;
   try { pref = localStorage.getItem('side'); } catch {}
   // На телефон панелът закрива половината карта — затворен е, докато не го поискаш.
-  if (pref === 'closed' || (!pref && window.innerWidth < 760)) root.parentElement.classList.add('closed');
-  toggle.setAttribute('aria-expanded', String(!root.parentElement.classList.contains('closed')));
+  if (pref === 'closed' || (!pref && window.innerWidth < 760)) side.classList.add('closed');
+  toggle.setAttribute('aria-expanded', String(!side.classList.contains('closed')));
   toggle.addEventListener('click', () => {
-    const closed = root.parentElement.classList.toggle('closed');
+    const closed = side.classList.toggle('closed');
     toggle.setAttribute('aria-expanded', String(!closed));
     try { localStorage.setItem('side', closed ? 'closed' : 'open'); } catch {}
   });
@@ -23,8 +24,34 @@ export function createPanel(root, toggle, { data, onFocus }) {
     if (li) onFocus(items[+li.dataset.i]);
   });
 
+  // Филтър по вид събитие — бутони над списъка; всички включени = без филтър.
+  const ALL = Object.keys(KIND_GROUPS);
+  let groups = ALL;
+  try {
+    const g = JSON.parse(localStorage.getItem('kinds'));
+    if (Array.isArray(g) && g.some(k => KIND_GROUPS[k])) groups = g.filter(k => KIND_GROUPS[k]);
+  } catch {}
+  const kinds = () => (groups.length === ALL.length ? null : groups.flatMap(g => KIND_GROUPS[g][1]));
+  const kindOk = k => { const ks = kinds(); return !ks || ks.includes(k); };
+  function renderKinds() {
+    kindsEl.innerHTML = Object.entries(KIND_GROUPS).map(([g, [label, ks]]) =>
+      `<button data-g="${g}" aria-pressed="${groups.includes(g)}" style="--dot:${KINDS[ks[0]][1]}"><i></i>${esc(label)}</button>`).join('');
+  }
+  kindsEl.addEventListener('click', e => {
+    const b = e.target.closest('button[data-g]');
+    if (!b) return;
+    const g = b.dataset.g;
+    // Клик върху единствения включен връща всички; иначе превключва.
+    groups = groups.includes(g) ? (groups.length === 1 ? ALL : groups.filter(x => x !== g)) : [...groups, g];
+    try { localStorage.setItem('kinds', JSON.stringify(groups)); } catch {}
+    renderKinds();
+    last = '';
+    onKinds(kinds());
+  });
+  renderKinds();
+
   function update(year, win, labels, snap) {
-    if (root.parentElement.classList.contains('closed')) return;
+    if (side.classList.contains('closed')) return;
     const key = `${Math.round(year)}|${Math.round(win)}|${snap}`;
     if (key === last) return;
     last = key;
@@ -42,7 +69,7 @@ export function createPanel(root, toggle, { data, onFocus }) {
     }
     for (const e of events) {
       const a = eventAlpha(e.y, year, win);
-      if (a > 0) by[regionOf(e.lon, e.lat)].events.push({ type: 'event', item: e, a });
+      if (a > 0 && kindOk(e.k)) by[regionOf(e.lon, e.lat)].events.push({ type: 'event', item: e, a });
     }
 
     let html = `<h2>Светът около ${esc(fmtYear(year))}</h2><div class="sub">Държави по площ, култури без граници и събития от последните ${Math.round(win)} години</div>`;
@@ -65,7 +92,7 @@ export function createPanel(root, toggle, { data, onFocus }) {
       const r = by[k];
       const states = r.states.sort((a, b) => b.area - a.area).slice(0, 4);
       const other = r.other.sort((a, b) => b.area - a.area).slice(0, states.length ? 2 : 4);
-      const evs = r.events.sort((a, b) => b.item.i - a.item.i || a.a - b.a).slice(0, 3);
+      const evs = r.events.sort((a, b) => b.item.i - a.item.i || b.a - a.a).slice(0, 3);
       if (!states.length && !other.length && !evs.length) continue;
       html += `<section><h3>${esc(title)}</h3><ul>`;
       for (const it of evs) {
@@ -80,7 +107,7 @@ export function createPanel(root, toggle, { data, onFocus }) {
     }
     root.innerHTML = html;
   }
-  return { update, refresh() { last = ''; } };
+  return { update, refresh() { last = ''; }, kinds };
 }
 
 // ——— Картичката ———

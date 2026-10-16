@@ -23,6 +23,15 @@ export const KINDS = {
   quake: ['Земетресение', '#f08a3c'],
   person: ['Личност', '#d8d0c0'],
 };
+// Групите за филтъра на събитията.
+export const KIND_GROUPS = {
+  war: ['Войни', ['battle', 'siege', 'war']],
+  power: ['Власт', ['politics', 'found', 'fall', 'treaty']],
+  culture: ['Култура и наука', ['culture', 'invention', 'person']],
+  religion: ['Вяра', ['religion']],
+  discovery: ['Открития', ['discovery']],
+  nature: ['Бедствия', ['disaster', 'eruption', 'quake']],
+};
 const kindColor = ['match', ['get', 'k'], ...Object.entries(KINDS).flatMap(([k, [, c]]) => [k, c]), '#d8d0c0'];
 export const isBattle = k => k === 'battle' || k === 'siege';
 
@@ -81,7 +90,8 @@ function swordsImage() {
 
 export function createMap({ container, canvas, data, initial, onPick, onSnapshot }) {
   const { snapshots, cultures, cities, routes, events, wd, seas } = data;
-  const state = { year: initial.year, win: 100, layers: { ...initial.layers } };
+  const state = { year: initial.year, win: 100, layers: { ...initial.layers }, kinds: initial.kinds || null };
+  const kindOk = k => !state.kinds || state.kinds.includes(k);
 
   const ev = (list, extra) => ({
     type: 'FeatureCollection',
@@ -227,6 +237,17 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     cities: id => id.startsWith('cities-'),
     rivers: id => id === 'rivers' || id === 'lakes',
   };
+  // Филтърът по вид: на слоевете на MapLibre е израз, на етикетите — kindOk.
+  function applyKinds() {
+    const f = state.kinds ? ['in', ['get', 'k'], ['literal', state.kinds]] : null;
+    for (const id of ['ev', 'ev-ripple', 'bt', 'bt-ripple']) map.setFilter(id, f);
+    for (const mz of [2, 3, 4, 5]) {
+      const base = ['==', ['get', 'mz'], mz];
+      for (const id of [`wdo-${mz}`, `wdb-${mz}`]) map.setFilter(id, f ? ['all', base, f] : base);
+    }
+    draw();
+  }
+
   function applyLayerVisibility() {
     for (const l of map.getStyle().layers) {
       for (const [g, test] of Object.entries(GROUPS)) {
@@ -303,8 +324,8 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
   function visibleHit(f) {
     const p = f.properties, y = state.year;
     switch (f.source) {
-      case 'ev': case 'bt': return eventAlpha(p.y, y, state.win) > 0.05 && { type: 'event', item: (f.source === 'ev' ? curatedNonBattle : curatedBattle)[f.id] };
-      case 'wdb': case 'wdo': return eventAlpha(p.y, y, state.win) > 0.05 && { type: 'wd', item: (f.source === 'wdb' ? wdBattle : wdOther)[f.id] };
+      case 'ev': case 'bt': return kindOk(p.k) && eventAlpha(p.y, y, state.win) > 0.05 && { type: 'event', item: (f.source === 'ev' ? curatedNonBattle : curatedBattle)[f.id] };
+      case 'wdb': case 'wdo': return kindOk(p.k) && eventAlpha(p.y, y, state.win) > 0.05 && { type: 'wd', item: (f.source === 'wdb' ? wdBattle : wdOther)[f.id] };
       case 'cities': return y >= p.s && y <= p.e && { type: 'city', item: cities[f.id] };
       case 'routes': {
         const r = routes[p.rid];
@@ -430,6 +451,17 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       return true;
     };
     const free = (...box) => freeIn(hard, ...box);
+    // Местата, заети от интерфейса над картата, са заети и за етикетите.
+    const cr = container.getBoundingClientRect();
+    for (const sel of ['#hud', '#tools', '#side:not(.closed) #side-body', '#side-toggle', '#card:not([hidden])', '#hint:not([hidden])']) {
+      const el = document.querySelector(sel);
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      if (!r.width) continue;
+      const box = [r.left - cr.left, r.top - cr.top, r.right - cr.left, r.bottom - cr.top];
+      hard.push(box);
+      soft.push(box);
+    }
     const text = (str, x, y, font, fill, spacing = 0, align = 'left', halo = 'rgba(8,10,16,0.82)') => {
       ctx.font = font;
       ctx.letterSpacing = spacing + 'px';
@@ -447,7 +479,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     if (state.layers.events || state.layers.battles) {
       const minI = z < 2.6 ? 3 : z < 4 ? 2 : 1;
       const fresh = events
-        .filter(e => (isBattle(e.k) ? state.layers.battles : state.layers.events) && e.i >= minI)
+        .filter(e => (isBattle(e.k) ? state.layers.battles : state.layers.events) && e.i >= minI && kindOk(e.k))
         .map(e => [e, year - e.y])
         .filter(([, a]) => a >= 0 && a <= win * 0.55)
         .sort((a, b) => b[0].i - a[0].i || a[1] - b[1])
@@ -581,6 +613,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     // Компактната атрибуция се отваря сама при зареждане; на телефон закрива картата.
     container.querySelector('.maplibregl-ctrl-attrib')?.classList.remove('maplibregl-compact-show');
     applyLayerVisibility();
+    if (state.kinds) applyKinds();
     api.setYear(state.year, state.win);
   });
 
@@ -597,6 +630,10 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       wanted = snapFor(year);
       swap();
       draw();
+    },
+    setKinds(kinds) {
+      state.kinds = kinds;
+      if (ready) applyKinds();
     },
     setLayer(name, on) {
       state.layers[name] = on;
