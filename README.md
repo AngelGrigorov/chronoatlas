@@ -24,7 +24,8 @@ npm run serve
 ```
 
 Отвори http://localhost:8642. Папката `public/` е готовият сайт и може да се
-сервира от всеки статичен сървър.
+сервира от всеки статичен сървър. Работи и без интернет; само резюметата от
+Уикипедия в картичките искат мрежа.
 
 ## Управление
 
@@ -44,5 +45,6 @@ npm run serve
 - Релеф, суша, реки: [Natural Earth](https://www.naturalearthdata.com/) — обществено достояние
 - Събития: [Wikidata](https://www.wikidata.org/) — CC0
 - Карта: [MapLibre GL JS](https://maplibre.org/) — BSD-3
+- Шрифт: Cormorant Garamond — SIL OFL 1.1
 
 Кодът е под GPL-3.0 (`LICENSE`).
