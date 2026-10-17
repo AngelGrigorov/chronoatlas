@@ -115,8 +115,9 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
       const states = r.states.sort((a, b) => b.area - a.area).slice(0, 4);
       const evs = r.events.sort((a, b) => (b.item.i || 0) - (a.item.i || 0) || (b.item.l || 0) - (a.item.l || 0) || b.a - a.a).slice(0, 8);
       // An event, a culture and a state of the same name ("Great Zimbabwe", "Elam") are listed once.
-      const named = new Set([...states.map(s => s.name), ...evs.map(e => e.item.t)]);
-      const other = r.other.sort((a, b) => b.area - a.area).filter(o => !named.has(o.name) && named.add(o.name)).slice(0, states.length ? 2 : 4);
+      const key = name => name.toLowerCase().replace(/isation/g, 'ization');
+      const named = new Set([...states.map(s => key(s.name)), ...evs.map(e => key(e.item.t))]);
+      const other = r.other.sort((a, b) => b.area - a.area).filter(o => !named.has(key(o.name)) && named.add(key(o.name))).slice(0, states.length ? 2 : 4);
       if (!states.length && !other.length && !evs.length) continue;
       html += `<section><h3>${esc(t('region.' + k))}</h3><ul>`;
       for (const it of evs) {

@@ -496,8 +496,10 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     // culture and a state share it ("Great Zimbabwe", "Elam", "Yamnaya culture").
     const seen = new Map();
     const near = Math.max(W, H) * 0.5;
-    const repeated = (name, p) => seen.get(name)?.some(q => Math.hypot(q.x - p.x, q.y - p.y) < near);
-    const remember = (name, p) => seen.set(name, [...(seen.get(name) || []), p]);
+    // "Indus valley civilization" and "Indus Valley Civilisation" are one name.
+    const nameKey = name => name.toLowerCase().replace(/isation/g, 'ization');
+    const repeated = (name, p) => seen.get(nameKey(name))?.some(q => Math.hypot(q.x - p.x, q.y - p.y) < near);
+    const remember = (name, p) => seen.set(nameKey(name), [...(seen.get(nameKey(name)) || []), p]);
     const text = (str, x, y, font, fill, spacing = 0, align = 'left', halo = 'rgba(8,10,16,0.82)') => {
       ctx.font = font;
       ctx.letterSpacing = spacing + 'px';
