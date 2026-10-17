@@ -217,11 +217,14 @@ export function showCard(hit, { entities, onGo }) {
   card.innerHTML = `<button class="close" aria-label="${esc(t('card.close'))}">×</button><div class="body">
     <div class="kind">${esc(kind)}</div><h2>${esc(title)}</h2><div class="when">${esc(when)}</div>
     ${desc ? `<p>${esc(desc)}</p>` : ''}${extra}<div class="wiki-slot"></div>
-    <div class="links">${go ? `<button data-go>${esc(t('card.show'))}</button>` : ''}</div></div>`;
+    <div class="links">${go ? `<button data-go>${esc(t('card.show'))}</button>` : ''}<button data-copy>${esc(t('card.copy'))}</button></div></div>`;
   card.hidden = false;
   card.scrollTop = 0;
   card.querySelector('.close').onclick = hideCard;
   if (go) card.querySelector('[data-go]').onclick = () => onGo(go);
+  // The address already names the year, the view and this card.
+  const copy = card.querySelector('[data-copy]');
+  copy.onclick = () => navigator.clipboard?.writeText(location.href).then(() => { copy.textContent = t('card.copied'); }, () => {});
   card.querySelectorAll('[data-jump]').forEach(el => {
     el.onclick = () => { const [y, lon, lat] = el.dataset.jump.split(',').map(Number); onGo({ y, lon, lat }); };
   });
@@ -229,7 +232,7 @@ export function showCard(hit, { entities, onGo }) {
     if (token !== cardToken || !w) return;
     if (w.thumb) card.insertAdjacentHTML('afterbegin', `<img class="img" src="${esc(w.thumb)}" alt="">`);
     if (w.text) card.querySelector('.wiki-slot').innerHTML = `<p class="wiki">${esc(w.text)}${w.lang !== lang ? ` <i>${esc(t('card.otherLang'))}</i>` : ''}</p>`;
-    card.querySelector('.links').insertAdjacentHTML('beforeend', `<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(t('card.wiki'))}</a>`);
+    copy.insertAdjacentHTML('beforebegin', `<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(t('card.wiki'))}</a>`);
   });
 }
 

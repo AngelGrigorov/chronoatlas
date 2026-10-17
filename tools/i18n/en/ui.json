@@ -72,6 +72,8 @@
   "card.fuzzy": "The border is approximate — that is why it is blurred.",
   "card.lifespan": "{range} · {n} years of life",
   "card.show": "Show",
+  "card.copy": "Copy link",
+  "card.copied": "Link copied",
   "card.wiki": "Wikipedia ↗",
   "card.otherLang": "(English)",
   "route.trade": "Trade route",

@@ -72,6 +72,8 @@
   "card.fuzzy": "Границата е приблизителна — затова е размита.",
   "card.lifespan": "{range} · {n} години живот",
   "card.show": "Покажи",
+  "card.copy": "Копирай връзка",
+  "card.copied": "Връзката е копирана",
   "card.wiki": "Уикипедия ↗",
   "card.otherLang": "(англ.)",
   "route.trade": "Търговски път",
