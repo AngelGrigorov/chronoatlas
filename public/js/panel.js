@@ -66,10 +66,13 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     items = [];
     const by = Object.fromEntries(REGIONS.map(k => [k, { states: [], other: [], events: [] }]));
 
-    for (const [lon, lat, area, name, sharp, color, extra] of labels) {
-      if (extra) continue;
+    // A huge state has extra labels in its other parts (Russia in Europe and in Siberia):
+    // it is listed in every region it has a label in, ranked by its whole area.
+    const whole = new Map(labels.filter(l => !l[6]).map(l => [l[3], l[2]]));
+    for (const [lon, lat, area, name, sharp, color] of labels) {
       const r = by[regionOf(lon, lat)];
-      (sharp ? r.states : r.other).push({ type: 'label', name, lon, lat, area, color });
+      const list = sharp ? r.states : r.other;
+      if (!list.some(x => x.name === name)) list.push({ type: 'label', name, lon, lat, area: whole.get(name) ?? area, color });
     }
     for (const c of cultures) {
       const a = spanAlpha(c.s, c.e, Math.max(40, (c.e - c.s) * 0.15), year);
