@@ -219,6 +219,20 @@ console.log('Next and previous event');
   await page.close();
 }
 
+console.log('Search for an era');
+{
+  const { page, errors } = await open('y=1600&s=2400&c=20,45&z=3');
+  await page.click('#q');
+  await page.type('#q', 'Cold War');
+  await wait(300);
+  await page.keyboard.press('Enter');
+  await wait(1800);
+  const s = await page.evaluate(() => ({ year: Math.round(window.atlas.app.year), span: Math.round(window.atlas.app.span) }));
+  check(Math.abs(s.year - 1968) <= 1 && s.span > 50 && s.span < 80, `the Cold War fills the timeline: ${s.year}, ${s.span} years`);
+  check(errors.length === 0, `no errors (${errors.length})`);
+  await page.close();
+}
+
 console.log('Border map diamonds');
 {
   const { page, errors } = await open('y=1905&s=100&c=20,45&z=3');

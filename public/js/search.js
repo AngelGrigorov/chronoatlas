@@ -1,13 +1,13 @@
 import { kindLabel } from './map.js';
 import { t } from './i18n.js';
-import { fmtYear, fmtRange } from './time.js';
+import { fmtYear, fmtRange, MAX_YEAR } from './time.js';
 
 const norm = s => s.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/ё/g, 'е');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-// One search over everything: events, states, cultures, cities, people, routes.
+// One search over everything: events, states, cultures, cities, people, routes, eras.
 export function createSearch(input, list, data, onSelect) {
-  const { events, wd, entities, cultures, cities, routes, people } = data;
+  const { events, wd, entities, cultures, cities, routes, people, eras } = data;
   const index = [];
   const add = (label, extra, item) => index.push({ key: norm(label + (extra ? ' ' + extra : '')), label, ...item });
 
@@ -30,6 +30,14 @@ export function createSearch(input, list, data, onSelect) {
     const s = r.k === 'trade' ? r.s : r.p[0][2], e = r.k === 'trade' ? r.e : r.p[r.p.length - 1][2];
     const mid = r.p[Math.floor(r.p.length / 2)];
     add(r.n, '', { kind: r.k === 'trade' ? t('search.route') : t('search.campaign'), y: r.k === 'trade' ? Math.round((s + e) / 2) : s, when: fmtRange(s, e), lon: mid[0], lat: mid[1], w: 4, hit: { type: 'route', item: r } });
+  }
+
+  // An era fills the timeline: its middle in the centre, the whole of it in view.
+  for (const tr of eras?.tracks ?? []) {
+    for (const [s, e, name] of tr.b) {
+      const end = Math.min(e, MAX_YEAR);
+      add(name, tr.n, { kind: t('search.era'), y: Math.round((s + end) / 2), when: fmtRange(s, e > MAX_YEAR ? null : e), span: (end - s) * 1.25, w: 2.5 });
+    }
   }
 
   let results = [], sel = -1;

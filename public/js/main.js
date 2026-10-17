@@ -119,11 +119,13 @@ const panel = createPanel(document.getElementById('side-list'), document.getElem
     else map.flyTo(it.lon, it.lat);
   },
 });
-createSearch(document.getElementById('q'), document.getElementById('results'), { events, wd, entities, cultures, cities, routes, people }, r => {
+createSearch(document.getElementById('q'), document.getElementById('results'), { events, wd, entities, cultures, cities, routes, people, eras }, r => {
   app.stopPlay();
+  if (r.span) app.setSpan(r.span);
   app.setYear(r.y);
-  map.flyTo(r.lon, r.lat, r.area ? Math.max(2.2, Math.min(5, 7.2 - Math.log10(r.area))) : 4.5);
-  showCard({ ...r.hit, year: r.y }, { entities, onGo });
+  if (r.lon != null) map.flyTo(r.lon, r.lat, r.area ? Math.max(2.2, Math.min(5, 7.2 - Math.log10(r.area))) : 4.5);
+  if (r.hit) showCard({ ...r.hit, year: r.y }, { entities, onGo });
+  else hideCard();
 });
 
 map.setKinds(panel.kinds());
