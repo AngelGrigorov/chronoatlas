@@ -89,10 +89,16 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     const push = it => { items.push(it); return items.length - 1; };
 
     // Who is alive this year — the best known first, then those in their prime.
-    const alive = people
+    const ranked = people
       .filter(p => year >= p.b + 15 && year <= p.d)
-      .sort((a, b) => b.i - a.i || Math.abs(year - (a.b + 40)) - Math.abs(year - (b.b + 40)))
-      .slice(0, 6);
+      .sort((a, b) => b.i - a.i || Math.abs(year - (a.b + 40)) - Math.abs(year - (b.b + 40)));
+    // The whole world, not six Europeans: at most two per region, then the rest by rank.
+    const perRegion = {}, alive = [];
+    for (const p of ranked) {
+      const r = regionOf(p.lon, p.lat);
+      if (alive.length < 6 && (perRegion[r] = (perRegion[r] || 0) + 1) <= 2) alive.push(p);
+    }
+    for (const p of ranked) if (alive.length < 6 && !alive.includes(p)) alive.push(p);
     if (alive.length) {
       html += `<section><h3>${esc(t('side.alive'))}</h3><ul>`;
       for (const p of alive) {

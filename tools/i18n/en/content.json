@@ -3825,6 +3825,216 @@
       "n": "Stephen Hawking",
       "t": "physicist",
       "w": "Stephen Hawking"
+    },
+    "ezana": {
+      "n": "Ezana",
+      "t": "king of Aksum, who made it Christian",
+      "w": "Ezana of Axum"
+    },
+    "al-biruni": {
+      "n": "Al-Biruni",
+      "t": "scholar of India and the stars",
+      "w": "Al-Biruni"
+    },
+    "jayavarman-vii": {
+      "n": "Jayavarman VII",
+      "t": "king of the Khmer Empire",
+      "w": "Jayavarman VII"
+    },
+    "rumi": {
+      "n": "Rumi",
+      "t": "poet and mystic",
+      "w": "Rumi"
+    },
+    "ibn-khaldun": {
+      "n": "Ibn Khaldun",
+      "t": "historian",
+      "w": "Ibn Khaldun"
+    },
+    "sejong": {
+      "n": "Sejong the Great",
+      "t": "king of Korea, who gave it Hangul",
+      "w": "Sejong the Great"
+    },
+    "askia-muhammad": {
+      "n": "Askia Muhammad",
+      "t": "ruler of Songhai",
+      "w": "Askia Muhammad I"
+    },
+    "guru-nanak": {
+      "n": "Guru Nanak",
+      "t": "founder of Sikhism",
+      "w": "Guru Nanak"
+    },
+    "babur": {
+      "n": "Babur",
+      "t": "founder of the Mughal Empire",
+      "w": "Babur"
+    },
+    "oda-nobunaga": {
+      "n": "Oda Nobunaga",
+      "t": "warlord who began Japan's unification",
+      "w": "Oda Nobunaga"
+    },
+    "nzinga": {
+      "n": "Nzinga",
+      "t": "queen of Ndongo and Matamba",
+      "w": "Nzinga of Ndongo and Matamba"
+    },
+    "sor-juana": {
+      "n": "Sor Juana Inés de la Cruz",
+      "t": "poet and nun",
+      "w": "Juana Inés de la Cruz"
+    },
+    "kangxi": {
+      "n": "Kangxi",
+      "t": "emperor of China",
+      "w": "Kangxi Emperor"
+    },
+    "toussaint": {
+      "n": "Toussaint Louverture",
+      "t": "leader of the Haitian Revolution",
+      "w": "Toussaint Louverture"
+    },
+    "pemulwuy": {
+      "n": "Pemulwuy",
+      "t": "Aboriginal resistance leader",
+      "w": "Pemulwuy"
+    },
+    "usman-dan-fodio": {
+      "n": "Usman dan Fodio",
+      "t": "founder of the Sokoto Caliphate",
+      "w": "Usman dan Fodio"
+    },
+    "kamehameha": {
+      "n": "Kamehameha the Great",
+      "t": "first king of all Hawaii",
+      "w": "Kamehameha I"
+    },
+    "hokusai": {
+      "n": "Hokusai",
+      "t": "artist of The Great Wave",
+      "w": "Hokusai"
+    },
+    "te-rauparaha": {
+      "n": "Te Rauparaha",
+      "t": "Māori war leader",
+      "w": "Te Rauparaha"
+    },
+    "benito-juarez": {
+      "n": "Benito Juárez",
+      "t": "president of Mexico",
+      "w": "Benito Juárez"
+    },
+    "harriet-tubman": {
+      "n": "Harriet Tubman",
+      "t": "led slaves to freedom",
+      "w": "Harriet Tubman"
+    },
+    "lakshmibai": {
+      "n": "Lakshmibai",
+      "t": "rani of Jhansi, leader in the 1857 rebellion",
+      "w": "Rani of Jhansi"
+    },
+    "sitting-bull": {
+      "n": "Sitting Bull",
+      "t": "Lakota leader",
+      "w": "Sitting Bull"
+    },
+    "cixi": {
+      "n": "Empress Dowager Cixi",
+      "t": "ruler of Qing China",
+      "w": "Empress Dowager Cixi"
+    },
+    "liliuokalani": {
+      "n": "Liliʻuokalani",
+      "t": "last queen of Hawaii",
+      "w": "Liliʻuokalani"
+    },
+    "menelik-ii": {
+      "n": "Menelik II",
+      "t": "emperor of Ethiopia, victor of Adwa",
+      "w": "Menelik II"
+    },
+    "kate-sheppard": {
+      "n": "Kate Sheppard",
+      "t": "won women the vote",
+      "w": "Kate Sheppard"
+    },
+    "tagore": {
+      "n": "Rabindranath Tagore",
+      "t": "poet, Nobel Prize in Literature",
+      "w": "Rabindranath Tagore"
+    },
+    "sun-yat-sen": {
+      "n": "Sun Yat-sen",
+      "t": "founder of the Republic of China",
+      "w": "Sun Yat-sen"
+    },
+    "ramanujan": {
+      "n": "Srinivasa Ramanujan",
+      "t": "mathematician",
+      "w": "Srinivasa Ramanujan"
+    },
+    "nehru": {
+      "n": "Jawaharlal Nehru",
+      "t": "first prime minister of India",
+      "w": "Jawaharlal Nehru"
+    },
+    "ho-chi-minh": {
+      "n": "Ho Chi Minh",
+      "t": "leader of Vietnam",
+      "w": "Ho Chi Minh"
+    },
+    "haile-selassie": {
+      "n": "Haile Selassie",
+      "t": "emperor of Ethiopia",
+      "w": "Haile Selassie"
+    },
+    "frida-kahlo": {
+      "n": "Frida Kahlo",
+      "t": "painter",
+      "w": "Frida Kahlo"
+    },
+    "nkrumah": {
+      "n": "Kwame Nkrumah",
+      "t": "first president of Ghana",
+      "w": "Kwame Nkrumah"
+    },
+    "indira-gandhi": {
+      "n": "Indira Gandhi",
+      "t": "prime minister of India",
+      "w": "Indira Gandhi"
+    },
+    "hillary": {
+      "n": "Edmund Hillary",
+      "t": "first up Everest, with Tenzing Norgay",
+      "w": "Edmund Hillary"
+    },
+    "lumumba": {
+      "n": "Patrice Lumumba",
+      "t": "first prime minister of the Congo",
+      "w": "Patrice Lumumba"
+    },
+    "che-guevara": {
+      "n": "Che Guevara",
+      "t": "revolutionary",
+      "w": "Che Guevara"
+    },
+    "wangari-maathai": {
+      "n": "Wangari Maathai",
+      "t": "planted forests, Nobel Peace Prize",
+      "w": "Wangari Maathai"
+    },
+    "pele": {
+      "n": "Pelé",
+      "t": "footballer",
+      "w": "Pelé"
+    },
+    "li-bai": {
+      "n": "Li Bai",
+      "t": "poet",
+      "w": "Li Bai"
     }
   },
   "cities": {
