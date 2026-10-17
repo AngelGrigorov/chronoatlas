@@ -181,7 +181,7 @@ console.log('Events of the shown year only');
 
 console.log('Every state where it should be');
 // One page per year: after a change of year the previous map stays loaded underneath for the crossfade.
-for (const [year, cases] of [[1985, [[12.37, 51.34, 'East Germany'], [10, 53.55, 'West Germany'], [13.3, 52.5, 'West Germany'], [44.88, 13.05, 'South Yemen'], [44.2, 15.35, 'North Yemen'], [60, 55, 'USSR']]], [2010, [[8.2, 46.8, 'Switzerland'], [125.7, -8.8, 'East Timor'], [21, 42.6, 'Kosovo']]], [2026, [[21, 42.6, 'Kosovo'], [34.1, 45, 'Ukraine'], [30, 7, 'South Sudan']]]]) {
+for (const [year, cases] of [[1970, [[90.4, 23.8, 'Pakistan'], [106.7, 10.78, 'South Vietnam'], [105.85, 21.03, 'North Vietnam'], [33.8, 29.5, 'Sinai'], [-12.9, 24.5, 'Spanish Sahara']]], [1985, [[12.37, 51.34, 'East Germany'], [10, 53.55, 'West Germany'], [13.3, 52.5, 'West Germany'], [44.88, 13.05, 'South Yemen'], [44.2, 15.35, 'North Yemen'], [60, 55, 'USSR']]], [2010, [[8.2, 46.8, 'Switzerland'], [125.7, -8.8, 'East Timor'], [21, 42.6, 'Kosovo']]], [2026, [[21, 42.6, 'Kosovo'], [34.1, 45, 'Ukraine'], [30, 7, 'South Sudan']]]]) {
   const { page, errors } = await open(`y=${year}&s=40&c=20,30&z=2`);
   for (const [lon, lat, name] of cases) {
     await page.evaluate((lon, lat) => window.atlas.map.jumpTo({ center: [lon, lat], zoom: 5 }), lon, lat);

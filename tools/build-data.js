@@ -110,10 +110,10 @@ const RENAMES = {
 };
 const renamed = (name, year) => (RENAMES[name] && year >= RENAMES[name][0] ? RENAMES[name][1] : name);
 
-// ——— Natural Earth countries: the maps from 1985 on ———
+// ——— Natural Earth countries: the maps from 1970 on ———
 // The source has no map between 1960 and 1994 or after 2010, and its later maps miss states
 // (Switzerland is a hole; Kosovo, East Timor, Palestine and the small island states are not there). Natural Earth (1:50m, v5.1.1)
-// has every state of today; the maps of 1985–2010 are made from it by undoing what
+// has every state of today; the maps of 1970–2010 are made from it by undoing what
 // changed since (NE_RULES), so all maps from 1994 on share the same precise borders.
 const neMap = JSON.parse((await ms.applyCommands(
   `-i ${path.join(NE, 'admin0', 'ne_50m_admin_0_countries.shp')} -filter 'ADM0_A3 !== "ATA"' -filter-fields ADMIN,SOVEREIGNT,TYPE,ADM0_A3 -simplify 35% keep-shapes -o out.json precision=0.01 format=geojson`))['out.json']);
@@ -148,16 +148,25 @@ const NE_NAMES = {
   // or Bulgarian would list "Чехия" twice.
   Czechia: 'Czech Republic', 'Cabo Verde': 'Cape Verde',
 };
-// Renamed states: earlier maps use the old names.
+// Renamed states: earlier maps use the old names, [until, name] from the oldest.
 const NE_BEFORE = {
-  Eswatini: [2018, 'Swaziland'], 'North Macedonia': [2019, 'Macedonia'], 'Democratic Republic of the Congo': [1997, 'Zaire'],
+  Eswatini: [[2018, 'Swaziland']], 'North Macedonia': [[2019, 'Macedonia']],
+  'Democratic Republic of the Congo': [[1972, 'Democratic Republic of the Congo'], [1997, 'Zaire']],
+  Myanmar: [[1989, 'Burma']], 'Sri Lanka': [[1972, 'Ceylon']], Benin: [[1975, 'Dahomey']], 'Burkina Faso': [[1984, 'Upper Volta']],
 };
 const neName = (admin, year) => {
   const n = NE_NAMES[admin] ?? admin;
-  return NE_BEFORE[n] && year < NE_BEFORE[n][0] ? NE_BEFORE[n][1] : n;
+  return NE_BEFORE[n]?.find(([until]) => year < until)?.[1] ?? n;
 };
 // What was one state before (by Natural Earth's codes). The first rule that holds wins.
 const NE_RULES = [
+  { codes: ['BGD'], until: 1972, into: 'PAK' },                      // East Pakistan until 1971
+  { codes: ['ARE'], until: 1972, name: 'Trucial States', sub: 'United Kingdom' }, // the UAE from December 1971
+  { codes: ['SAH'], until: 1976, name: 'Spanish Sahara', sub: 'Spain' },
+  { codes: ['TLS'], until: 1975, name: 'Portuguese Timor', sub: 'Portugal' },
+  { codes: ['ZWE'], until: 1980, name: 'Rhodesia' },                 // Zimbabwe from April 1980
+  { codes: ['VUT'], until: 1980, name: 'New Hebrides', sub: 'United Kingdom' }, // a British–French condominium
+  { codes: ['BLZ'], until: 1973, name: 'British Honduras', sub: 'United Kingdom' },
   { codes: ['NAM'], until: 1990, name: 'South West Africa', sub: 'South Africa' }, // Namibia, independent 1990
   { codes: ['ABW', 'CUW', 'SXM'], until: 1986, name: 'Netherlands Antilles', sub: 'Netherlands' }, // Aruba left in 1986
   { codes: ['RUS', 'UKR', 'BLR', 'MDA', 'EST', 'LVA', 'LTU', 'GEO', 'ARM', 'AZE', 'KAZ', 'UZB', 'TKM', 'KGZ', 'TJK'],
@@ -178,6 +187,14 @@ const SUB_UNTIL = {
   PSX: ['Israel', 1994],         // occupied until the Palestinian Authority, 1994
   PLW: ['United States', 1995],  // a US-administered trust territory until October 1994
   FSM: ['United States', 1987], MHL: ['United States', 1987], // the same until 1986
+  // Colonies that became independent between 1970 and 1985.
+  AGO: ['Portugal', 1975], MOZ: ['Portugal', 1975], GNB: ['Portugal', 1974], CPV: ['Portugal', 1975], STP: ['Portugal', 1975],
+  SUR: ['Netherlands', 1975], PNG: ['Australia', 1975], COM: ['France', 1975], DJI: ['France', 1977],
+  BHR: ['United Kingdom', 1971], QAT: ['United Kingdom', 1971], FJI: ['United Kingdom', 1971], TON: ['United Kingdom', 1971],
+  BHS: ['United Kingdom', 1973], GRD: ['United Kingdom', 1974], SYC: ['United Kingdom', 1976], SLB: ['United Kingdom', 1978],
+  TUV: ['United Kingdom', 1978], DMA: ['United Kingdom', 1978], LCA: ['United Kingdom', 1979], KIR: ['United Kingdom', 1979],
+  VCT: ['United Kingdom', 1979], BLZ: ['United Kingdom', 1981], ATG: ['United Kingdom', 1981], KNA: ['United Kingdom', 1983],
+  BRN: ['United Kingdom', 1984],
 };
 
 // Borders Natural Earth no longer has, drawn by hand along their known course (to a few km).
@@ -197,6 +214,10 @@ const EAST_GERMANY = [[
   [13.11, 52.5], [13.12, 52.58], [13.22, 52.63], [13.3, 52.66], [13.37, 52.6], [13.4, 52.56], [13.38, 52.53],
   [13.45, 52.49], [13.43, 52.42], [13.37, 52.39], [13.25, 52.38], [13.13, 52.4], [13.11, 52.5],
 ]];
+// South Vietnam: south of the demilitarised zone on the 17th parallel (the Bến Hải river).
+const SOUTH_VIETNAM = [[[100, 17.0], [106.6, 17.0], [107.12, 17.08], [115, 17.1], [115, 5], [100, 5], [100, 17.0]]];
+// Sinai, held by Israel from 1967 to 1982: east of the Suez Canal and the Gulf of Suez.
+const SINAI = [[[32.3, 31.45], [32.33, 31.25], [32.35, 30.6], [32.55, 29.97], [33.5, 28.0], [34.25, 27.7], [35.0, 29.5], [34.9, 31.6], [32.3, 31.45]]];
 // South Yemen: from the coast east of Bab el-Mandeb, between Ta'izz and Lahij, Qa'tabah and
 // Dhale, al-Bayda and Mukayras, Harib and Bayhan, then into the desert; Socotra is inside.
 const SOUTH_YEMEN = [[
@@ -210,13 +231,15 @@ async function split(features, code, poly, inside, outside) {
   const files = { 'f.json': fc([f]), 'p.json': fc([{ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: poly } }]) };
   const cut = async op => JSON.parse((await ms.applyCommands(
     `-i f.json name=f -i p.json name=p -${op} p target=f -o out.json precision=0.01 format=geojson geojson-type=FeatureCollection`, files))['out.json']).features;
-  const state = (pieces, [ADMIN, ADM0_A3]) => pieces.map(x => ({ ...x, properties: { ADMIN, SOVEREIGNT: ADMIN, TYPE: 'Sovereign country', ADM0_A3 } }));
+  const state = (pieces, [ADMIN, ADM0_A3, SOVEREIGNT = ADMIN]) => pieces.map(x => ({ ...x, properties: { ADMIN, SOVEREIGNT, TYPE: 'Sovereign country', ADM0_A3 } }));
   return [...features.filter(x => x !== f), ...state(await cut('clip'), inside), ...state(await cut('erase'), outside)];
 }
 async function neYear(year) {
   let base = neMap.features;
   if (year < 1991) base = await split(base, 'DEU', EAST_GERMANY, ['East Germany', 'DDR'], ['West Germany', 'BRD']); // reunited October 1990
   if (year < 1990) base = await split(base, 'YEM', SOUTH_YEMEN, ['South Yemen', 'YDR'], ['North Yemen', 'YAR']);     // united May 1990
+  if (year < 1976) base = await split(base, 'VNM', SOUTH_VIETNAM, ['South Vietnam', 'SVN_'], ['North Vietnam', 'NVN']); // united July 1976
+  if (year < 1982) base = await split(base, 'EGY', SINAI, ['Sinai', 'SIN', 'Israel'], ['Egypt', 'EGY']);              // returned April 1982
   const byCode = Object.fromEntries(base.map(f => [f.properties.ADM0_A3, f]));
   const features = base.map(f => {
     const { ADMIN, SOVEREIGNT, TYPE, ADM0_A3: code } = f.properties;
@@ -234,7 +257,7 @@ async function neYear(year) {
   return JSON.parse(out['out.json']);
 }
 
-const NE_YEARS = [1985, 1991, 1993, 1994, 2000, 2010, 2011, 2019];
+const NE_YEARS = [1970, 1985, 1991, 1993, 1994, 2000, 2010, 2011, 2019];
 const years = [...index.map(y => y.year).filter(y => !NE_YEARS.includes(y)), ...NE_YEARS];
 for (const year of years) {
   const hb = index.find(y => y.year === year);
