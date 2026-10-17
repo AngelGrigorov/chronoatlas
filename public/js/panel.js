@@ -146,13 +146,13 @@ export function showCard(hit, { entities, onGo }) {
     case 'event':
       kind = kindLabel(it.k);
       title = it.t; when = it.ye ? fmtRange(it.y, it.ye) : fmtYear(it.y); desc = it.d;
-      wiki = { title: it.w };
+      wiki = { title: it.w, en: it.we };
       go = it;
       break;
     case 'wd':
       kind = `${kindLabel(it.k)} · ${t('card.wikidata')}`;
       title = it.t; when = fmtYear(it.y);
-      wiki = { title: it.w };
+      wiki = { title: it.w, en: it.we };
       go = it;
       break;
     case 'city': {
@@ -161,7 +161,7 @@ export function showCard(hit, { entities, onGo }) {
       when = fmtRange(it.s, it.e);
       const names = it.n.map(([, n]) => n);
       if (names.length > 1) extra = `<p class="wiki">${esc(t('card.cityNames', { names: names.join(' → ') }))}</p>`;
-      wiki = { title: it.w || names[names.length - 1] };
+      wiki = { title: it.w || names[names.length - 1], en: it.we };
       go = { y: hit.year, lon: it.lon, lat: it.lat };
       break;
     }
@@ -169,13 +169,13 @@ export function showCard(hit, { entities, onGo }) {
       kind = it.t;
       title = it.n;
       when = t('card.lifespan', { range: fmtRange(it.b, it.d), n: yearsBetween(it.b, it.d) });
-      wiki = { title: it.w };
+      wiki = { title: it.w, en: it.we };
       go = { y: Math.round(it.b + Math.min(40, (it.d - it.b) * 0.6)), lon: it.lon, lat: it.lat };
       break;
     case 'culture':
       kind = t('card.culture');
       title = it.n; when = fmtRange(it.s, it.e); desc = it.d;
-      wiki = { title: it.w };
+      wiki = { title: it.w, en: it.we };
       go = { y: hit.year, lon: it.lon, lat: it.lat };
       break;
     case 'route':
@@ -183,7 +183,7 @@ export function showCard(hit, { entities, onGo }) {
       title = it.n;
       when = it.k === 'trade' ? fmtRange(it.s, it.e) : fmtRange(it.p[0][2], it.p[it.p.length - 1][2]);
       desc = it.d;
-      wiki = { title: it.w };
+      wiki = { title: it.w, en: it.we };
       break;
     case 'polity': {
       const p = it, ent = entities[p.e];

@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const UA = 'chronoatlas/0.1 (personal, non-commercial)';
+const UA = 'chronoatlas/0.1 (https://github.com/AngelGrigorov/chronoatlas)';
 
 // Event kind → Wikidata classes and a minimum number of sitelinks (a measure of notability).
 const KINDS = {

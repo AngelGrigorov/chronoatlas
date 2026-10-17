@@ -43,7 +43,7 @@
     "copper-smelting-balkans": {
       "t": "Copper smelting in the Balkans",
       "d": "The Ai Bunar mine near Stara Zagora is among the oldest copper mines in the world.",
-      "w": "Ai Bunar"
+      "w": "Metallurgy during the Copper Age in Europe"
     },
     "maize-mexico": {
       "t": "Maize in Mexico",
@@ -1813,7 +1813,7 @@
     "bulgaria-in-nato": {
       "t": "Bulgaria joins NATO",
       "d": "Seven Eastern European countries join the alliance.",
-      "w": "2004 enlargement of NATO"
+      "w": "Enlargement of NATO"
     },
     "bulgaria-in-eu": {
       "t": "Bulgaria joins the EU",

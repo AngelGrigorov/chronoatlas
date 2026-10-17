@@ -57,6 +57,19 @@ for (const [lang, name] of Object.entries(LANGS)) {
     }
     if (miss.length) { problems++; console.error(`${lang}: ${miss.length} polity names without translation, e.g. ${miss.slice(0, 5).join(', ')}`); }
   }
+  // The English Wikipedia title goes along with every other language: about a fifth of the
+  // Bulgarian titles have no article, and from the English one the card finds the local
+  // article by its language links, or else shows the English summary.
+  if (lang !== 'en') {
+    const enContent = read('tools/i18n/en/content.json'), enWd = read('tools/i18n/en/wd.json');
+    for (const kind of ['events', 'cultures', 'routes', 'people', 'cities']) {
+      for (const [id, v] of Object.entries(pack[kind] || {})) {
+        const we = enContent[kind]?.[id]?.w;
+        if (we && we !== v.w) v.we = we;
+      }
+    }
+    for (const [id, v] of Object.entries(pack.wd)) if (enWd[id]?.[1] && enWd[id][1] !== v[1]) v[2] = enWd[id][1];
+  }
 
   const body = JSON.stringify(pack);
   fs.writeFileSync(path.join(OUT, `${lang}.json`), body);

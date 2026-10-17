@@ -42,7 +42,7 @@ for (const tr of eras.tracks) {
 }
 for (const [name, ent] of Object.entries(entities)) ent.n = polityName(name);
 // Wikidata rows: [year, lon, lat, kind, sitelinks, qid]
-const wd = wdRaw.map(([y, lon, lat, k, l, id]) => ({ y, lon, lat, k, l, id, t: T.wd[id]?.[0] ?? id, w: T.wd[id]?.[1] }));
+const wd = wdRaw.map(([y, lon, lat, k, l, id]) => ({ y, lon, lat, k, l, id, t: T.wd[id]?.[0] ?? id, w: T.wd[id]?.[1], we: T.wd[id]?.[2] }));
 
 // ——— State: the URL is the source of truth on load ———
 const LAYERS = [
