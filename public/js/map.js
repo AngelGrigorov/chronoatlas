@@ -396,6 +396,8 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
   // ——— Labels on a separate canvas: our own font, spacing and collisions ———
   const ctx = canvas.getContext('2d');
   const widthCache = new Map();
+  // Widths measured before a font (or its Cyrillic part) arrived are a fallback font's widths.
+  document.fonts.addEventListener('loadingdone', () => { widthCache.clear(); draw(); });
   let W = 0, H = 0, dpr = 1;
   function resize() {
     const r = container.getBoundingClientRect();
