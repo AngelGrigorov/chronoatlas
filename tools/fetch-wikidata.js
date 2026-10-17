@@ -10,7 +10,9 @@ const UA = 'chronoatlas/0.1 (personal, non-commercial)';
 
 // Event kind → Wikidata classes and a minimum number of sitelinks (a measure of notability).
 const KINDS = {
-  battle: { classes: ['Q178561', 'Q1261499', 'Q2001676', 'Q1072326'], min: 6 },
+  battle: { classes: ['Q178561', 'Q1261499', 'Q2001676'], min: 6 },
+  // Summits (Q1072326) were once filed under battles by mistake.
+  politics: { classes: ['Q1072326'], min: 6 },
   siege: { classes: ['Q188055'], min: 6 },
   treaty: { classes: ['Q131569', 'Q625298'], min: 8 },
   eruption: { classes: ['Q7692360'], min: 8 },

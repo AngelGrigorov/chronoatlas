@@ -141,9 +141,12 @@ const NE_NAMES = {
   'United States of America': 'United States', 'Republic of Serbia': 'Serbia', 'Republic of the Congo': 'Congo',
   'United Republic of Tanzania': 'Tanzania', 'The Bahamas': 'Bahamas', 'Hong Kong S.A.R.': 'Hong Kong',
   'Macao S.A.R': 'Macau', eSwatini: 'Eswatini', Aland: 'Åland',
+  // A new short form of the same name stays under the one the state had in the source,
+  // or Bulgarian would list "Чехия" twice.
+  Czechia: 'Czech Republic', 'Cabo Verde': 'Cape Verde',
 };
-// Names that changed after 2011: the 2011 map uses the old ones.
-const NE_BEFORE = { Eswatini: [2018, 'Swaziland'], 'North Macedonia': [2019, 'Macedonia'], Czechia: [2016, 'Czech Republic'], 'Cabo Verde': [2013, 'Cape Verde'] };
+// Renamed states: the 2011 map uses the old names.
+const NE_BEFORE = { Eswatini: [2018, 'Swaziland'], 'North Macedonia': [2019, 'Macedonia'] };
 const neName = (admin, year) => {
   const n = NE_NAMES[admin] ?? admin;
   return NE_BEFORE[n] && year < NE_BEFORE[n][0] ? NE_BEFORE[n][1] : n;
