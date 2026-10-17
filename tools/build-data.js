@@ -108,10 +108,10 @@ const RENAMES = {
 };
 const renamed = (name, year) => (RENAMES[name] && year >= RENAMES[name][0] ? RENAMES[name][1] : name);
 
-// ——— Natural Earth countries: the maps from 1994 on ———
-// The source's maps after 1960 miss states (Switzerland is a hole; Kosovo, East Timor, Palestine and
-// the small island states are not there) and it has none after 2010. Natural Earth (1:50m, v5.1.1)
-// has every state of today; the maps of 1994, 2000 and 2010 are made from it by undoing what
+// ——— Natural Earth countries: the maps from 1991 on ———
+// The source has no map between 1960 and 1994 or after 2010, and its later maps miss states
+// (Switzerland is a hole; Kosovo, East Timor, Palestine and the small island states are not there). Natural Earth (1:50m, v5.1.1)
+// has every state of today; the maps of 1991–2010 are made from it by undoing what
 // changed since (NE_RULES), so all maps from 1994 on share the same precise borders.
 const neMap = JSON.parse((await ms.applyCommands(
   `-i ${path.join(NE, 'admin0', 'ne_50m_admin_0_countries.shp')} -filter 'ADM0_A3 !== "ATA"' -filter-fields ADMIN,SOVEREIGNT,TYPE,ADM0_A3 -simplify 35% keep-shapes -o out.json precision=0.01 format=geojson`))['out.json']);
@@ -156,6 +156,12 @@ const neName = (admin, year) => {
 };
 // What was one state before (by Natural Earth's codes). The first rule that holds wins.
 const NE_RULES = [
+  { codes: ['RUS', 'UKR', 'BLR', 'MDA', 'EST', 'LVA', 'LTU', 'GEO', 'ARM', 'AZE', 'KAZ', 'UZB', 'TKM', 'KGZ', 'TJK'],
+    until: 1992, name: 'USSR' },                                     // dissolved in December 1991
+  { codes: ['SVN', 'HRV', 'BIH', 'MKD', 'SRB', 'MNE', 'KOS'], until: 1992, name: 'Yugoslavia' }, // broke up in 1991–92
+  { codes: ['CZE', 'SVK'], until: 1993, name: 'Czechoslovakia' },   // split on 1 January 1993
+  { codes: ['ERI'], until: 1993, into: 'ETH' },                      // Eritrea, independent 1993
+  { codes: ['SOL'], until: 1992, into: 'SOM' },                      // Somaliland declared itself in May 1991
   { codes: ['SDS'], until: 2011, into: 'SDN' },                      // South Sudan, independent 2011
   { codes: ['SRB', 'MNE', 'KOS'], until: 2006, name: 'Yugoslavia' }, // Serbia and Montenegro split in 2006
   { codes: ['KOS'], until: 2008, into: 'SRB' },                      // Kosovo declared independence in 2008
@@ -163,7 +169,11 @@ const NE_RULES = [
   { codes: ['CUW', 'SXM'], until: 2011, name: 'Netherlands Antilles', sub: 'Netherlands' }, // dissolved in October 2010
 ];
 // Territories that belonged elsewhere.
-const SUB_UNTIL = { HKG: ['United Kingdom', 1997], MAC: ['Portugal', 1999] };
+const SUB_UNTIL = {
+  HKG: ['United Kingdom', 1997], MAC: ['Portugal', 1999],
+  PSX: ['Israel', 1994],         // occupied until the Palestinian Authority, 1994
+  PLW: ['United States', 1995],  // a US-administered trust territory until October 1994
+};
 async function neYear(year) {
   const byCode = Object.fromEntries(neMap.features.map(f => [f.properties.ADM0_A3, f]));
   const features = neMap.features.map(f => {
@@ -182,7 +192,8 @@ async function neYear(year) {
   return JSON.parse(out['out.json']);
 }
 
-const NE_YEARS = [1994, 2000, 2010, 2011, 2019];
+// Nothing earlier: Natural Earth has no border between East and West Germany, or the two Yemens.
+const NE_YEARS = [1991, 1993, 1994, 2000, 2010, 2011, 2019];
 const years = [...index.map(y => y.year).filter(y => !NE_YEARS.includes(y)), ...NE_YEARS];
 for (const year of years) {
   const hb = index.find(y => y.year === year);
