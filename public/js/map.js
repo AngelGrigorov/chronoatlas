@@ -326,7 +326,9 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
   // ——— Thematic colours: with one kind of event chosen, the borders show it ———
   // Faith: every state in the colour of the faith of most of its people. The other kinds:
   // states where such events happened in the last ten years keep their colour, the rest go grey.
-  const DIM = '#2c313b', THEME_WINDOW = 10;
+  // The last ten years, or as far back as it takes for a few states to light up: discoveries
+  // and disasters are rare, and a map all grey looks broken.
+  const DIM = '#2c313b', THEME_WINDOWS = [10, 25, 50, 100, 200], THEME_MIN = 5;
   let theme = null, themeYear = null, themeTimer = 0;
   const snapIn = { bA: null, bB: null };
   const themed = { bA: new Map(), bB: new Map() };
@@ -369,14 +371,19 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       return { colours: out, legend: { type: 'faith', year, keys: Object.keys(area).sort((a, b) => area[b] - area[a]) } };
     }
     const ks = KIND_GROUPS[theme];
-    const lit = new Set();
-    for (const e of [...events, ...wd]) {
-      if (!ks.includes(e.k) || e.y > year || (e.ye ?? e.y) < year - THEME_WINDOW) continue;
-      const f = feats.find(f => !lit.has(f.id) && contains(f, e.lon, e.lat));
-      if (f) lit.add(f.id);
+    const own = [...events, ...wd].filter(e => ks.includes(e.k) && e.y <= year);
+    let lit, span;
+    for (span of THEME_WINDOWS) {
+      lit = new Set();
+      for (const e of own) {
+        if ((e.ye ?? e.y) < year - span) continue;
+        const f = feats.find(f => !lit.has(f.id) && contains(f, e.lon, e.lat));
+        if (f) lit.add(f.id);
+      }
+      if (lit.size >= THEME_MIN) break;
     }
     for (const f of feats) out.set(f.id, lit.has(f.id) ? f.properties.c : DIM);
-    return { colours: out, legend: { type: 'events', group: theme, from: year - THEME_WINDOW, to: year, n: lit.size } };
+    return { colours: out, legend: { type: 'events', group: theme, from: year - span, to: year, n: lit.size } };
   }
   function applyTheme(src) {
     const snap = snapIn[src];

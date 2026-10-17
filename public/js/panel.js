@@ -36,11 +36,9 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
 
   // Event kind filter — buttons above the list; all on means no filter.
   const ALL = Object.keys(KIND_GROUPS);
+  // Not kept between visits: a map left grey from last time looked broken.
   let groups = ALL;
-  try {
-    const g = JSON.parse(localStorage.getItem('kinds'));
-    if (Array.isArray(g) && g.some(k => KIND_GROUPS[k])) groups = g.filter(k => KIND_GROUPS[k]);
-  } catch {}
+  try { localStorage.removeItem('kinds'); } catch {}
   const kinds = () => (groups.length === ALL.length ? null : groups.flatMap(g => KIND_GROUPS[g]));
   const kindOk = k => { const ks = kinds(); return !ks || ks.includes(k); };
   function renderKinds() {
@@ -51,11 +49,13 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     const b = e.target.closest('button[data-g]');
     if (!b) return;
     const g = b.dataset.g;
-    // With all on, a click picks that one alone ("Faith" means: show me faith). After that
-    // clicks add and remove; taking away the only one left switches all back on.
-    if (groups.length === ALL.length) groups = [g];
-    else groups = groups.includes(g) ? (groups.length === 1 ? ALL : groups.filter(x => x !== g)) : [...groups, g];
-    try { localStorage.setItem('kinds', JSON.stringify(groups)); } catch {}
+    // A click shows that kind alone ("Faith" means: show me faith, and the map in faiths);
+    // a click on the one shown brings all back. Ctrl or Shift + click adds or removes one.
+    const only = groups.length === 1 && groups[0] === g;
+    if (e.ctrlKey || e.metaKey || e.shiftKey) {
+      groups = groups.length === ALL.length ? [g] : groups.includes(g) ? groups.filter(x => x !== g) : [...groups, g];
+      if (!groups.length) groups = ALL;
+    } else groups = only ? ALL : [g];
     renderKinds();
     last = '';
     onKinds(kinds());

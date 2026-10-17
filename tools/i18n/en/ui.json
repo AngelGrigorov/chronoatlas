@@ -34,6 +34,7 @@
   "side.alive": "Alive at this time",
   "side.age": "aged {n}",
   "kinds.label": "Kinds of events",
+  "kinds.help": "Click: only this kind, and the map shows it · click again: all · Ctrl+click: combine",
   "group.war": "Wars",
   "group.power": "Power",
   "group.culture": "Culture & science",

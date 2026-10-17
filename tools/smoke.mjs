@@ -258,15 +258,22 @@ console.log('Filters colour the borders');
   const [tr, faith2] = await colourAt(34, 39) ?? [];
   check(faith2 === '#3f9a5e', `the Ottoman Empire in the Sunni colour (${tr}, ${faith2})`);
   check(await page.$eval('#legend', el => !el.hidden && /Orthodox/.test(el.innerText)), 'a legend names the faiths');
+  // One click moves straight from one kind to the other.
   await page.click('#kinds button[data-g="war"]');
-  await page.click('#kinds button[data-g="religion"]');
   await wait(1200);
+  check(await page.$$eval('#kinds button[aria-pressed="true"]', bs => bs.map(b => b.dataset.g).join()) === 'war', 'a click on Wars shows Wars alone');
   const [, war] = await colourAt(21, 44) ?? [];
   const [, calm] = await colourAt(-4, 40) ?? [];
   check(war && war !== '#2c313b' && calm === '#2c313b', `Wars: Serbia lit, Spain grey (${war}, ${calm})`);
+  await page.keyboard.down('Control');
+  await page.click('#kinds button[data-g="religion"]');
+  await page.keyboard.up('Control');
+  await wait(500);
+  check(await page.$$eval('#kinds button[aria-pressed="true"]', bs => bs.length) === 2 && await page.$eval('#legend', el => el.hidden), 'Ctrl+click combines two kinds, without colours');
+  await page.click('#kinds button[data-g="war"]');
   await page.click('#kinds button[data-g="war"]');
   await wait(500);
-  check(await page.$eval('#legend', el => el.hidden), 'all kinds on again: no legend');
+  check(await page.$eval('#legend', el => el.hidden) && await page.$$eval('#kinds button[aria-pressed="true"]', bs => bs.length) === 6, 'a click on the kind shown brings all back');
   check(errors.length === 0, `no errors (${errors.length})`);
   await page.close();
 }
