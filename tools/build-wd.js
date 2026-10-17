@@ -21,6 +21,11 @@ const km = (a, b) => {
 const group = k => (k === 'battle' || k === 'siege' || k === 'war' ? 'fight' : k === 'quake' || k === 'eruption' || k === 'disaster' ? 'nature' : k);
 // Labels sometimes carry the year in brackets; the date is shown separately.
 const clean = s => s?.replace(/\s*\((\d{1,4}\s*(г\.|BC|AD)?[^)]*)\)\s*$/u, '').trim();
+// Many titles also start with the year ("2026 Mindanao earthquake"); the card shows it anyway.
+const dropYear = (s, y) => {
+  const m = s.match(/^(\d{3,4}) (.+)$/u);
+  return m && +m[1] === y ? m[2][0].toLocaleUpperCase() + m[2].slice(1) : s;
+};
 
 let dup = 0, skipped = 0;
 const rows = [], en = {}, bg = {}, untranslated = [];
@@ -35,8 +40,8 @@ for (const e of raw) {
   if (curated.some(c => Math.abs(c.y - e.y) <= 1 && (km(c, e) < 60 || (group(c.k) === group(e.kind) && km(c, e) < 150)))) { dup++; continue; }
   if (!bgTitle) untranslated.push(enTitle);
   rows.push([e.y, +e.lon.toFixed(2), +e.lat.toFixed(2), e.kind, e.links, e.id]);
-  en[e.id] = [enTitle, e.enwiki || ''];
-  bg[e.id] = [bgTitle || enTitle, e.bgwiki || ''];
+  en[e.id] = [dropYear(enTitle, e.y), e.enwiki || ''];
+  bg[e.id] = [dropYear(bgTitle || enTitle, e.y), e.bgwiki || ''];
 }
 rows.sort((a, b) => a[0] - b[0]);
 fs.writeFileSync(path.join(ROOT, 'public/data/wd-events.json'), JSON.stringify(rows));
