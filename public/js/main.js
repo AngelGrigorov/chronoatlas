@@ -2,7 +2,7 @@ import { loadLanguage, downloadLanguage, setLanguage, applyStatic, texts, polity
 import { createMap, isBattle } from './map.js';
 import { createTimeline, MIN_SPAN, MAX_SPAN } from './timeline.js';
 import { clampYear, fmtYear, MAX_YEAR } from './time.js';
-import { createPanel, showCard, hideCard, cardKey } from './panel.js';
+import { createPanel, showCard, hideCard, cardKey, setSnapshots } from './panel.js';
 import { createSearch } from './search.js';
 
 const get = (p, fallback) => fetch(p).then(r => (r.ok ? r.json() : Promise.reject(new Error(p)))).catch(err => {
@@ -25,6 +25,7 @@ const [, snapshots, entities, events, cultures, cities, routes, eras, people, se
   get('data/wd-events.json', []),
 ]);
 applyStatic();
+setSnapshots(snapshots);
 
 // The data files hold no text, only ids; texts are attached from the language pack.
 const T = texts();

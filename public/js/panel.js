@@ -246,6 +246,10 @@ const fmtArea = a => {
 
 // The area of the polity in every snapshot — rise and fall at a glance.
 // Each dot jumps to its year; the current one is highlighted.
+// The years of all the border maps: a state missing from one of them did not exist then.
+let snapshotYears = [];
+export const setSnapshots = list => { snapshotYears = list; };
+
 function areaChart(at, year) {
   const pts = [...at].sort((a, b) => a[0] - b[0]);
   if (pts.length < 2) return '';
@@ -254,8 +258,16 @@ function areaChart(at, year) {
   const max = Math.max(...pts.map(p => p[3]));
   const X = y => P + (y - y0) / (y1 - y0 || 1) * (W - 2 * P);
   const Y = a => H - 18 - Math.sqrt(a / max) * (H - 30);
-  const line = pts.map((p, i) => `${i ? 'L' : 'M'}${X(p[0]).toFixed(1)},${Y(p[3]).toFixed(1)}`).join('');
-  const area = `${line}L${X(y1).toFixed(1)},${H - 18}L${X(y0).toFixed(1)},${H - 18}Z`;
+  // One run per unbroken stretch of maps (Germany: until 1938, then again from 1991).
+  const runs = [[pts[0]]];
+  for (let i = 1; i < pts.length; i++) {
+    const gap = snapshotYears.some(y => y > pts[i - 1][0] && y < pts[i][0]);
+    if (gap) runs.push([]);
+    runs.at(-1).push(pts[i]);
+  }
+  const path = run => run.map((p, i) => `${i ? 'L' : 'M'}${X(p[0]).toFixed(1)},${Y(p[3]).toFixed(1)}`).join('');
+  const line = runs.map(path).join('');
+  const area = runs.map(r => `${path(r)}L${X(r.at(-1)[0]).toFixed(1)},${H - 18}L${X(r[0][0]).toFixed(1)},${H - 18}Z`).join('');
   const peak = pts.reduce((a, b) => (b[3] > a[3] ? b : a));
   const cur = pts.reduce((a, b) => (Math.abs(b[0] - year) < Math.abs(a[0] - year) ? b : a));
   const dots = pts.map(p => `<circle data-jump="${p[0]},${p[1]},${p[2]}" cx="${X(p[0]).toFixed(1)}" cy="${Y(p[3]).toFixed(1)}" r="${p === cur ? 4.5 : 3}" class="${p === cur ? 'cur' : ''}"><title>${esc(fmtYear(p[0]))} · ${esc(fmtArea(p[3]))}</title></circle>`).join('');
