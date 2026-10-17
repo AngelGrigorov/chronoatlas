@@ -446,11 +446,13 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     const c = map.getCenter();
     const globe = map.getProjection()?.type === 'globe';
     const cx = Math.cos(c.lat * Math.PI / 180) * Math.cos(c.lng * Math.PI / 180), cy = Math.cos(c.lat * Math.PI / 180) * Math.sin(c.lng * Math.PI / 180), cz = Math.sin(c.lat * Math.PI / 180);
-    const facing = (lon, lat) => {
-      if (!globe) return true;
+    // How squarely a point faces the viewer: 1 in the middle of the globe, 0 at its edge.
+    const depth = (lon, lat) => {
+      if (!globe) return 1;
       const la = lat * Math.PI / 180, lo = lon * Math.PI / 180;
-      return Math.cos(la) * Math.cos(lo) * cx + Math.cos(la) * Math.sin(lo) * cy + Math.sin(la) * cz > 0.2;
+      return Math.cos(la) * Math.cos(lo) * cx + Math.cos(la) * Math.sin(lo) * cy + Math.sin(la) * cz;
     };
+    const facing = (lon, lat) => depth(lon, lat) > 0.2;
     // Two layers of labels, as in a printed atlas: events, campaigns and cities ("hard")
     // never overlap each other; states and cultures ("soft") only avoid each other and
     // are drawn underneath, so they don't swallow the cities when zoomed in.
@@ -468,17 +470,18 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     // and in from the edge of the screen by up to a third of its width (on a phone the
     // country is often half off screen). With no room around, it stays where it was, under
     // the cities. Returns the new centre, or null.
-    const softAt = (x0, y, w, h) => {
+    const softAt = (x0, y, w, h, maxShift = Infinity, under = true) => {
       const x = Math.min(W - 2 - w / 2, Math.max(2 + w / 2, x0));
       if (Math.abs(x - x0) > w / 3) return null;
       const step = (h / 2 + 9) / 2;
       for (const k of [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6]) {
+        if (Math.abs(k * step) > maxShift) continue;
         for (const dx of [0, -w / 4, w / 4]) {
           const cx = x + dx, cy = y + k * step, b = [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
           if (onScreen(...b) && !hits(soft, ...b) && !hits(hard, ...b)) { soft.push(b); return [cx, cy]; }
         }
       }
-      return freeIn(soft, x - w / 2, y - h / 2, x + w / 2, y + h / 2) ? [x, y] : null;
+      return under && freeIn(soft, x - w / 2, y - h / 2, x + w / 2, y + h / 2) ? [x, y] : null;
     };
     const free = (...box) => freeIn(hard, ...box);
     // Space taken by the interface over the map is taken for labels too.
@@ -626,9 +629,11 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     if (state.layers.borders) {
       const kmPerPx0 = 40075 / 512;
       for (const [lon, lat, area, name, sharp] of labels) {
-        if (!facing(lon, lat)) continue;
+        const d = depth(lon, lat);
+        if (d <= 0.2) continue;
         const kmPerPx = kmPerPx0 * Math.cos(lat * Math.PI / 180) / 2 ** z;
-        const ext = Math.sqrt(area) / kmPerPx;
+        // Towards the edge of the globe a country is seen at a slant and looks smaller.
+        const ext = Math.sqrt(area) / kmPerPx * Math.min(1, d + 0.15);
         if (ext < 34) continue;
         const lines = splitName(sharp ? name.toUpperCase() : name);
         const longest = Math.max(...lines.map(l => l.length));
@@ -644,7 +649,9 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const w = Math.max(...lines.map(l => measure(l, font, spacing)));
         const h = lh * lines.length;
         if (repeated(name, p)) continue;
-        const at = softAt(p.x, p.y, w + 4, h);
+        // A state's name may step aside, but not out of the state.
+        // Near the edge of the globe names crowd: there one that finds no room is left out.
+        const at = softAt(p.x, p.y, w + 4, h, Math.max(8, ext * 0.5), d > 0.7);
         if (!at) continue;
         remember(name, p);
         lines.forEach((l, k) => text(l, at[0], at[1] + (k - (lines.length - 1) / 2) * lh, font, sharp ? 'rgba(250,240,220,0.95)' : 'rgba(236,226,206,0.82)', spacing, 'center', 'rgba(8,10,16,0.7)'));
