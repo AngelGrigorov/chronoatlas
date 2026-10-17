@@ -108,10 +108,11 @@ const RENAMES = {
 };
 const renamed = (name, year) => (RENAMES[name] && year >= RENAMES[name][0] ? RENAMES[name][1] : name);
 
-// ——— Natural Earth countries: the map after 2010, and the states the source misses ———
-// The source has no map after 2010, and its 1994–2010 maps miss states: Switzerland is a
-// hole, Kosovo is inside Serbia, East Timor inside Indonesia, the small island states are
-// not there at all. Natural Earth (1:50m, v5.1.1) has every one of them.
+// ——— Natural Earth countries: the maps from 1994 on ———
+// The source's maps after 1960 miss states (Switzerland is a hole; Kosovo, East Timor, Palestine and
+// the small island states are not there) and it has none after 2010. Natural Earth (1:50m, v5.1.1)
+// has every state of today; the maps of 1994, 2000 and 2010 are made from it by undoing what
+// changed since (NE_RULES), so all maps from 1994 on share the same precise borders.
 const neMap = JSON.parse((await ms.applyCommands(
   `-i ${path.join(NE, 'admin0', 'ne_50m_admin_0_countries.shp')} -filter 'ADM0_A3 !== "ATA"' -filter-fields ADMIN,SOVEREIGNT,TYPE,ADM0_A3 -simplify 35% keep-shapes -o out.json precision=0.01 format=geojson`))['out.json']);
 // Natural Earth draws Crimea as Russian, by who holds it. Here it is Ukraine, as the UN
@@ -145,50 +146,47 @@ const NE_NAMES = {
   // or Bulgarian would list "Чехия" twice.
   Czechia: 'Czech Republic', 'Cabo Verde': 'Cape Verde',
 };
-// Renamed states: the 2011 map uses the old names.
-const NE_BEFORE = { Eswatini: [2018, 'Swaziland'], 'North Macedonia': [2019, 'Macedonia'] };
+// Renamed states: earlier maps use the old names.
+const NE_BEFORE = {
+  Eswatini: [2018, 'Swaziland'], 'North Macedonia': [2019, 'Macedonia'], 'Democratic Republic of the Congo': [1997, 'Zaire'],
+};
 const neName = (admin, year) => {
   const n = NE_NAMES[admin] ?? admin;
   return NE_BEFORE[n] && year < NE_BEFORE[n][0] ? NE_BEFORE[n][1] : n;
 };
-// In the shape of the source's features: every border is a precise one.
-const neFeature = (f, year) => {
-  const { ADMIN, SOVEREIGNT, TYPE } = f.properties;
-  const sub = SOVEREIGNT !== ADMIN && TYPE !== 'Indeterminate' ? neName(SOVEREIGNT, year) : '';
-  return { type: 'Feature', properties: { NAME: neName(ADMIN, year), SUBJECTO: sub, BORDERPRECISION: 3 }, geometry: f.geometry };
-};
-// The states the source misses, from the year they exist (by Natural Earth's code).
-const MISSING_FROM = {
-  CHE: -Infinity, MCO: -Infinity, SMR: -Infinity, VAT: -Infinity, SGP: 1965, MDV: 1965, MUS: 1968, NRU: 1968,
-  BHR: 1971, CPV: 1975, COM: 1975, STP: 1975, SYC: 1976, SLB: 1978, TUV: 1978, KIR: 1979, VUT: 1980,
-  MHL: 1986, FSM: 1986, PLW: 1994, PSX: 1994, TLS: 2002, KOS: 2008,
-};
-// Cuts the missing states out of whatever the source drew there, then adds them.
-async function withMissingStates(fc, year) {
-  const have = new Set(fc.features.filter(f => f.geometry).map(f => renamed(f.properties.NAME?.trim(), year)));
-  const add = neMap.features
-    .filter(f => MISSING_FROM[f.properties.ADM0_A3] <= year && !have.has(neName(f.properties.ADMIN, year)))
-    .map(f => neFeature(f, year));
-  if (!add.length) return fc;
-  // The source sometimes has the state as an empty shape (Switzerland): that goes.
-  const added = new Set(add.map(f => f.properties.NAME));
-  fc = { ...fc, features: fc.features.filter(f => !added.has(renamed(f.properties.NAME?.trim(), year))) };
-  const out = await ms.applyCommands('-i hb.json name=hb -i add.json name=add -erase add target=hb -merge-layers target=hb,add force -o out.json precision=0.01 format=geojson',
-    { 'hb.json': JSON.stringify(fc), 'add.json': JSON.stringify({ type: 'FeatureCollection', features: add }) });
-  console.log(`  ${year}: added ${add.map(f => f.properties.NAME).join(', ')}`);
+// What was one state before (by Natural Earth's codes). The first rule that holds wins.
+const NE_RULES = [
+  { codes: ['SDS'], until: 2011, into: 'SDN' },                      // South Sudan, independent 2011
+  { codes: ['SRB', 'MNE', 'KOS'], until: 2006, name: 'Yugoslavia' }, // Serbia and Montenegro split in 2006
+  { codes: ['KOS'], until: 2008, into: 'SRB' },                      // Kosovo declared independence in 2008
+  { codes: ['TLS'], until: 1999, into: 'IDN' },                      // East Timor, under Indonesia until 1999
+  { codes: ['CUW', 'SXM'], until: 2011, name: 'Netherlands Antilles', sub: 'Netherlands' }, // dissolved in October 2010
+];
+// Territories that belonged elsewhere.
+const SUB_UNTIL = { HKG: ['United Kingdom', 1997], MAC: ['Portugal', 1999] };
+async function neYear(year) {
+  const byCode = Object.fromEntries(neMap.features.map(f => [f.properties.ADM0_A3, f]));
+  const features = neMap.features.map(f => {
+    const { ADMIN, SOVEREIGNT, TYPE, ADM0_A3: code } = f.properties;
+    let G = code, NAME = neName(ADMIN, year);
+    let SUBJECTO = SOVEREIGNT !== ADMIN && TYPE !== 'Indeterminate' ? neName(SOVEREIGNT, year) : '';
+    const rule = NE_RULES.find(r => r.codes.includes(code) && year < r.until);
+    if (rule?.into) { G = rule.into; NAME = neName(byCode[rule.into].properties.ADMIN, year); SUBJECTO = ''; }
+    else if (rule) { G = rule.name; NAME = rule.name; SUBJECTO = rule.sub ?? ''; }
+    if (SUB_UNTIL[code] && year < SUB_UNTIL[code][1]) SUBJECTO = SUB_UNTIL[code][0];
+    // In the shape of the source's features: every border is a precise one.
+    return { type: 'Feature', properties: { G, NAME, SUBJECTO, BORDERPRECISION: 3 }, geometry: f.geometry };
+  });
+  const out = await ms.applyCommands('-i in.json -dissolve G copy-fields=NAME,SUBJECTO,BORDERPRECISION -o out.json precision=0.01 format=geojson',
+    { 'in.json': JSON.stringify({ type: 'FeatureCollection', features }) });
   return JSON.parse(out['out.json']);
 }
 
-const NE_YEARS = [2011, 2019];
-const years = [...index.map(y => y.year), ...NE_YEARS];
+const NE_YEARS = [1994, 2000, 2010, 2011, 2019];
+const years = [...index.map(y => y.year).filter(y => !NE_YEARS.includes(y)), ...NE_YEARS];
 for (const year of years) {
   const hb = index.find(y => y.year === year);
-  let fc;
-  if (!hb) fc = { type: 'FeatureCollection', features: neMap.features.map(f => neFeature(f, year)) };
-  else {
-    fc = await simplify(path.join(HB, hb.filename), '35%');
-    if (year >= 1994) fc = await withMissingStates(fc, year);
-  }
+  const fc = NE_YEARS.includes(year) ? await neYear(year) : await simplify(path.join(HB, hb.filename), '35%');
   const feats = [], labels = [];
   for (const f of fc.features) {
     const p = f.properties;
