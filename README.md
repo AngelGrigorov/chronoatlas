@@ -12,6 +12,10 @@ who was where, what happened and where the armies and ships were heading — fro
   the Thracians, the Vikings
 - **Over 2,000 events**: 511 hand-picked ones plus battles, treaties, summits and
   earthquakes from Wikidata — each shown in its own year, wars through theirs
+- **Filters that recolour the map**: pick Faith and every state takes the colour of the
+  faith of most of its people (a rough map by region and century); pick Wars, Power,
+  Culture, Discovery or Disasters and the states where such events happened in the last
+  ten years light up
 - **Trade routes and campaigns** that draw themselves as time moves
 - **Cities with their names through the ages** (Byzantium → Constantinople → Istanbul)
   and **seas with their old names** (Pontus Euxinus, Propontis, Mare Nostrum)

@@ -1,7 +1,7 @@
 import { loadLanguage, downloadLanguage, setLanguage, applyStatic, texts, polityName, t, lang } from './i18n.js';
-import { createMap, isBattle } from './map.js';
+import { createMap, isBattle, KIND_GROUPS } from './map.js';
 import { createTimeline, MIN_SPAN, MAX_SPAN } from './timeline.js';
-import { clampYear, fmtYear, MAX_YEAR } from './time.js';
+import { clampYear, fmtYear, fmtRange, MAX_YEAR } from './time.js';
 import { createPanel, showCard, hideCard, cardKey, setSnapshots } from './panel.js';
 import { createSearch } from './search.js';
 
@@ -11,7 +11,7 @@ const get = (p, fallback) => fetch(p).then(r => (r.ok ? r.json() : Promise.rejec
 });
 
 // The language goes first: every text on screen comes from its pack.
-const [, snapshots, entities, events, cultures, cities, routes, eras, people, seas, wdRaw, lineages] = await Promise.all([
+const [, snapshots, entities, events, cultures, cities, routes, eras, people, seas, wdRaw, lineages, faiths] = await Promise.all([
   loadLanguage(),
   get('data/snapshots.json'),
   get('data/entities.json'),
@@ -24,6 +24,7 @@ const [, snapshots, entities, events, cultures, cities, routes, eras, people, se
   get('data/content/seas.json'),
   get('data/wd-events.json', []),
   get('data/content/lineages.json', []),
+  get('data/content/faiths.json'),
 ]);
 applyStatic();
 setSnapshots(snapshots);
@@ -92,7 +93,7 @@ const mapEl = document.getElementById('map');
 const map = createMap({
   container: mapEl,
   canvas: document.getElementById('labels'),
-  data: { snapshots, cultures, cities, routes, events, wd, seas },
+  data: { snapshots, cultures, cities, routes, events, wd, seas, faiths },
   initial: {
     year: app.year, layers: app.layers, flat: app.flat,
     center: Number.isFinite(hx) && Number.isFinite(hy) ? [hx, hy] : [28, 34],
@@ -103,6 +104,7 @@ const map = createMap({
     showCard({ ...hit, year: app.year }, { entities, onGo });
   },
   onSnapshot() { panel.refresh(); dirty(); },
+  onTheme: legend => showLegend(legend),
 });
 // For poking around from the console.
 window.atlas = { app, map: map.map };
@@ -113,12 +115,24 @@ function onGo(g) {
   map.flyTo(g.lon, g.lat);
 }
 
+// ——— One kind of event chosen: the borders show it, with a legend in the corner ———
+const themeOf = ks => (ks && Object.keys(KIND_GROUPS).find(g => KIND_GROUPS[g].length === ks.length && KIND_GROUPS[g].every(k => ks.includes(k)))) || null;
+const legendEl = document.getElementById('legend');
+function showLegend(l) {
+  legendEl.hidden = !l;
+  if (!l) return;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  legendEl.innerHTML = l.type === 'faith'
+    ? `<div class="lh">${esc(t('legend.faith'))}</div>` + l.keys.map(k => `<div><i style="background:${faiths.colors[k]}"></i>${esc(t('faith.' + k))}</div>`).join('') + `<div class="ln">${esc(t('legend.faithNote'))}</div>`
+    : `<div class="lh">${esc(t('legend.events', { group: t('group.' + l.group), range: fmtRange(l.from, l.to) }))}</div><div class="ln">${esc(t('legend.eventsNote', { n: l.n }))}</div>`;
+}
+
 // ——— Timeline, panel, search ———
 const timeline = createTimeline(document.getElementById('timeline'), { eras, events, wd, snapshots, app });
 const panel = createPanel(document.getElementById('side-list'), document.getElementById('side-toggle'), {
   data: { events, wd, cultures, cities, people },
   kinds: document.getElementById('kinds'),
-  onKinds(ks) { map.setKinds(ks); app.kinds = ks; timeline.draw(); dirty(); },
+  onKinds(ks) { map.setKinds(ks); map.setTheme(themeOf(ks)); app.kinds = ks; timeline.draw(); dirty(); },
   onOpen: () => dirty(),
   onStep: dir => stepEvent(dir),
   onFocus(it) {
@@ -137,6 +151,7 @@ createSearch(document.getElementById('q'), document.getElementById('results'), {
 });
 
 map.setKinds(panel.kinds());
+map.setTheme(themeOf(panel.kinds()));
 app.kinds = panel.kinds();
 
 // First-visit hint; it goes away the first time time is turned.

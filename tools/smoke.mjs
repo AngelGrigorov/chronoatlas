@@ -243,6 +243,34 @@ console.log('Event kind filter');
   await page.close();
 }
 
+console.log('Filters colour the borders');
+{
+  const { page, errors } = await open('y=1914&s=40&c=25,44&z=4');
+  const colourAt = (lon, lat) => page.evaluate((lon, lat) => {
+    const m = window.atlas.map, p = m.project([lon, lat]);
+    const f = m.queryRenderedFeatures([p.x, p.y]).find(f => f.layer.id.endsWith('-fill') && f.properties.e);
+    return f && [f.properties.e, m.getFeatureState({ source: f.source, id: f.id }).tc];
+  }, lon, lat);
+  await page.click('#kinds button[data-g="religion"]');
+  await wait(1200);
+  const [bg, faith] = await colourAt(25, 42.7) ?? [];
+  check(bg === 'Bulgaria' && faith === '#b8453f', `Faith: Bulgaria in the Orthodox colour (${bg}, ${faith})`);
+  const [tr, faith2] = await colourAt(34, 39) ?? [];
+  check(faith2 === '#3f9a5e', `the Ottoman Empire in the Sunni colour (${tr}, ${faith2})`);
+  check(await page.$eval('#legend', el => !el.hidden && /Orthodox/.test(el.innerText)), 'a legend names the faiths');
+  await page.click('#kinds button[data-g="war"]');
+  await page.click('#kinds button[data-g="religion"]');
+  await wait(1200);
+  const [, war] = await colourAt(21, 44) ?? [];
+  const [, calm] = await colourAt(-4, 40) ?? [];
+  check(war && war !== '#2c313b' && calm === '#2c313b', `Wars: Serbia lit, Spain grey (${war}, ${calm})`);
+  await page.click('#kinds button[data-g="war"]');
+  await wait(500);
+  check(await page.$eval('#legend', el => el.hidden), 'all kinds on again: no legend');
+  check(errors.length === 0, `no errors (${errors.length})`);
+  await page.close();
+}
+
 console.log('Search for an era');
 {
   const { page, errors } = await open('y=1600&s=2400&c=20,45&z=3');

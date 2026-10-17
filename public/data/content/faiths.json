@@ -1,0 +1,1175 @@
+{
+ "colors": {
+  "catholic": "#c98e2e",
+  "orthodox": "#b8453f",
+  "protestant": "#4a76b0",
+  "christian": "#9a6fb0",
+  "sunni": "#3f9a5e",
+  "shia": "#2a8a8a",
+  "jewish": "#7fb7e6",
+  "hindu": "#e5772e",
+  "buddhist": "#efd56a",
+  "chinese": "#c96b8b",
+  "zoroastrian": "#a0704f",
+  "ancient": "#8d8a9e",
+  "traditional": "#7d8a5a",
+  "secular": "#6b7280"
+ },
+ "names": {
+  "Ottoman Empire": "sunni",
+  "Ottoman Sultanate": "sunni",
+  "Turkey": "sunni",
+  "Republic of Turkey": "sunni",
+  "Byzantine Empire": "orthodox",
+  "Eastern Roman Empire": "orthodox",
+  "Western Roman Empire": "catholic",
+  "Roman Empire": [
+   [
+    380,
+    "ancient"
+   ],
+   [
+    9999,
+    "catholic"
+   ]
+  ],
+  "Holy Roman Empire": "catholic",
+  "Papal States": "catholic",
+  "Kingdom of France": "catholic",
+  "France": "catholic",
+  "Spain": "catholic",
+  "Portugal": "catholic",
+  "Italy": "catholic",
+  "Kingdom of Italy": "catholic",
+  "Austria": "catholic",
+  "Austrian Empire": "catholic",
+  "Austria Hungary": "catholic",
+  "Austro-Hungarian Empire": "catholic",
+  "Poland": "catholic",
+  "Poland-Lithuania": "catholic",
+  "Polish–Lithuanian Commonwealth": "catholic",
+  "Ireland": "catholic",
+  "Belgium": "catholic",
+  "Czechoslovakia": "catholic",
+  "United Kingdom": "protestant",
+  "United Kingdom of Great Britain and Ireland": "protestant",
+  "Great Britain": "protestant",
+  "Dutch Republic": "protestant",
+  "Netherlands": "protestant",
+  "Estonia": "protestant",
+  "Latvia": "protestant",
+  "Germany": "protestant",
+  "German Empire": "protestant",
+  "Prussia": "protestant",
+  "West Germany": "protestant",
+  "East Germany": "secular",
+  "United States": "protestant",
+  "Canada": "christian",
+  "Australia": "protestant",
+  "New Zealand": "protestant",
+  "Russia": "orthodox",
+  "Russian Empire": "orthodox",
+  "Tsardom of Muscovy": "orthodox",
+  "USSR": "secular",
+  "Ukraine": "orthodox",
+  "Belarus": "orthodox",
+  "Moldova": "orthodox",
+  "Romania": "orthodox",
+  "Bulgaria": "orthodox",
+  "Serbia": "orthodox",
+  "Montenegro": "orthodox",
+  "Greece": "orthodox",
+  "Georgia": "orthodox",
+  "Armenia": "orthodox",
+  "North Macedonia": "orthodox",
+  "Macedonia": "orthodox",
+  "Cyprus": "orthodox",
+  "Yugoslavia": "orthodox",
+  "Albania": "sunni",
+  "Bosnia and Herzegovina": "sunni",
+  "Kosovo": "sunni",
+  "Northern Cyprus": "sunni",
+  "Israel": "jewish",
+  "Palestine": "sunni",
+  "Iran": "shia",
+  "Iraq": "shia",
+  "Azerbaijan": "shia",
+  "Bahrain": "shia",
+  "Safavid Empire": "shia",
+  "Fatimid Caliphate": "shia",
+  "Buwayhid Emirates": "shia",
+  "Ethiopia": "orthodox",
+  "Djibouti": "sunni",
+  "Somaliland": "sunni",
+  "India": "hindu",
+  "Nepal": "hindu",
+  "Pakistan": "sunni",
+  "Bangladesh": "sunni",
+  "Mughal Empire": "sunni",
+  "Maldives": "sunni",
+  "China": "chinese",
+  "North Korea": "secular",
+  "Japan": "buddhist",
+  "Philippines": "catholic",
+  "East Timor": "catholic",
+  "Indonesia": "sunni",
+  "Malaysia": "sunni",
+  "Brunei": "sunni",
+  "Singapore": "buddhist",
+  "Khanate of the Golden Horde": [
+   [
+    1313,
+    "traditional"
+   ],
+   [
+    9999,
+    "sunni"
+   ]
+  ],
+  "Chagatai Khanate": [
+   [
+    1340,
+    "traditional"
+   ],
+   [
+    9999,
+    "sunni"
+   ]
+  ],
+  "Crimean Khanate": "sunni",
+  "Kazan Khanate": "sunni",
+  "Khanate of Kazan": "sunni",
+  "Astrakhan Khanate": "sunni",
+  "Nogai Horde": "sunni",
+  "Khanate of Sibir": "sunni",
+  "Kazakh Khanate": "sunni",
+  "Uzbek Khanate": "sunni",
+  "Khiva Khanate": "sunni",
+  "Emirate of Bukhara": "sunni",
+  "Cuman Khanates": "traditional",
+  "Mongol Empire": "traditional",
+  "Viceroyalty of New Spain": "catholic",
+  "Viceroyalty of Peru": "catholic",
+  "Viceroyalty of New Granada": "catholic",
+  "Viceroyalty of the Río de la Plata": "catholic",
+  "Viceroyalty of Brazil": "catholic",
+  "New France": "catholic",
+  "Antarctica": "none",
+  "Oromo": "traditional",
+  "Mongols": "traditional",
+  "Post-Ming Warlords": "chinese",
+  "central Asian khanates": "sunni",
+  "Golden Horde": [
+   [
+    1313,
+    "traditional"
+   ],
+   [
+    9999,
+    "sunni"
+   ]
+  ],
+  "White Horde": "sunni",
+  "Great Horde": "sunni",
+  "Kalmar Union": "catholic",
+  "Oirat Confederation": [
+   [
+    1615,
+    "traditional"
+   ],
+   [
+    9999,
+    "buddhist"
+   ]
+  ],
+  "Saami": "traditional",
+  "Sámi": "traditional",
+  "Samis": "traditional",
+  "Turkmenistan": "sunni",
+  "Greenland": [
+   [
+    1721,
+    "traditional"
+   ],
+   [
+    9999,
+    "protestant"
+   ]
+  ]
+ },
+ "keywords": [
+  [
+   "Caliphate|Emirate|Sultanate|Imamate",
+   "sunni"
+  ]
+ ],
+ "colonial": [
+  "americas",
+  "oceania"
+ ],
+ "zones": [
+  [
+   "jewish",
+   -1000,
+   70,
+   34.2,
+   30.5,
+   35.7,
+   33.3
+  ],
+  [
+   "orthodox",
+   301,
+   9999,
+   43,
+   38.5,
+   46.7,
+   41.3
+  ],
+  [
+   "orthodox",
+   337,
+   9999,
+   39.9,
+   41.3,
+   46.8,
+   43.6
+  ],
+  [
+   "shia",
+   1501,
+   9999,
+   44.7,
+   38.3,
+   50.6,
+   41.95
+  ],
+  [
+   "sunni",
+   700,
+   1501,
+   44.7,
+   38.3,
+   50.6,
+   41.95
+  ],
+  [
+   "sunni",
+   1500,
+   9999,
+   19,
+   39.6,
+   21.1,
+   42.7
+  ],
+  [
+   "orthodox",
+   330,
+   9999,
+   34,
+   3.4,
+   43,
+   18
+  ],
+  [
+   "orthodox",
+   550,
+   1400,
+   28,
+   15,
+   36,
+   22.5
+  ],
+  [
+   "ancient",
+   -3500,
+   380,
+   24,
+   21.5,
+   37,
+   32
+  ],
+  [
+   "orthodox",
+   380,
+   750,
+   24,
+   21.5,
+   37,
+   32
+  ],
+  [
+   "sunni",
+   750,
+   9999,
+   24,
+   21.5,
+   37,
+   32
+  ],
+  [
+   "ancient",
+   -3000,
+   380,
+   34,
+   29,
+   42,
+   37.2
+  ],
+  [
+   "orthodox",
+   380,
+   640,
+   34,
+   29,
+   42,
+   37.2
+  ],
+  [
+   "sunni",
+   640,
+   9999,
+   34,
+   29,
+   42,
+   37.2
+  ],
+  [
+   "ancient",
+   -3500,
+   224,
+   38,
+   29,
+   48.6,
+   37.5
+  ],
+  [
+   "zoroastrian",
+   224,
+   637,
+   38,
+   29,
+   48.6,
+   37.5
+  ],
+  [
+   "sunni",
+   637,
+   9999,
+   38,
+   29,
+   48.6,
+   37.5
+  ],
+  [
+   "ancient",
+   -3000,
+   -550,
+   44,
+   25,
+   63.5,
+   38
+  ],
+  [
+   "zoroastrian",
+   -550,
+   651,
+   44,
+   25,
+   63.5,
+   38
+  ],
+  [
+   "sunni",
+   651,
+   1501,
+   44,
+   25,
+   63.5,
+   38
+  ],
+  [
+   "shia",
+   1501,
+   9999,
+   44,
+   25,
+   63.5,
+   38
+  ],
+  [
+   "traditional",
+   -10000,
+   630,
+   34,
+   12,
+   60,
+   30
+  ],
+  [
+   "sunni",
+   630,
+   9999,
+   34,
+   12,
+   60,
+   30
+  ],
+  [
+   "ancient",
+   -3000,
+   330,
+   26,
+   35.8,
+   44.8,
+   42.2
+  ],
+  [
+   "orthodox",
+   330,
+   1100,
+   26,
+   35.8,
+   44.8,
+   42.2
+  ],
+  [
+   "sunni",
+   1100,
+   9999,
+   26,
+   35.8,
+   44.8,
+   42.2
+  ],
+  [
+   "ancient",
+   -3000,
+   380,
+   -17,
+   27,
+   24,
+   37.6
+  ],
+  [
+   "catholic",
+   380,
+   700,
+   -17,
+   27,
+   24,
+   37.6
+  ],
+  [
+   "sunni",
+   700,
+   9999,
+   -17,
+   27,
+   24,
+   37.6
+  ],
+  [
+   "traditional",
+   -10000,
+   1050,
+   -18,
+   10,
+   40,
+   27
+  ],
+  [
+   "sunni",
+   1050,
+   9999,
+   -18,
+   10,
+   40,
+   27
+  ],
+  [
+   "sunni",
+   700,
+   9999,
+   41.5,
+   -2,
+   52,
+   12.5
+  ],
+  [
+   "sunni",
+   900,
+   9999,
+   38.5,
+   -12,
+   41.5,
+   -1
+  ],
+  [
+   "traditional",
+   -10000,
+   1900,
+   -18,
+   -35,
+   52,
+   10
+  ],
+  [
+   "christian",
+   1900,
+   9999,
+   -18,
+   -35,
+   52,
+   10
+  ],
+  [
+   "catholic",
+   450,
+   9999,
+   -10.7,
+   51.3,
+   -5.9,
+   55.4
+  ],
+  [
+   "traditional",
+   -10000,
+   43,
+   -8.2,
+   49.9,
+   1.9,
+   61
+  ],
+  [
+   "ancient",
+   43,
+   410,
+   -8.2,
+   49.9,
+   1.9,
+   61
+  ],
+  [
+   "traditional",
+   410,
+   600,
+   -8.2,
+   49.9,
+   1.9,
+   61
+  ],
+  [
+   "catholic",
+   600,
+   1534,
+   -8.2,
+   49.9,
+   1.9,
+   61
+  ],
+  [
+   "protestant",
+   1534,
+   9999,
+   -8.2,
+   49.9,
+   1.9,
+   61
+  ],
+  [
+   "protestant",
+   1572,
+   9999,
+   3.3,
+   51.6,
+   7.3,
+   53.7
+  ],
+  [
+   "traditional",
+   -10000,
+   1387,
+   20.9,
+   53.8,
+   27,
+   56.45
+  ],
+  [
+   "catholic",
+   1387,
+   9999,
+   20.9,
+   53.8,
+   27,
+   56.45
+  ],
+  [
+   "traditional",
+   -10000,
+   1000,
+   -25,
+   63,
+   -13,
+   67
+  ],
+  [
+   "catholic",
+   1000,
+   1550,
+   -25,
+   63,
+   -13,
+   67
+  ],
+  [
+   "protestant",
+   1550,
+   9999,
+   -25,
+   63,
+   -13,
+   67
+  ],
+  [
+   "traditional",
+   -10000,
+   1000,
+   4,
+   54.6,
+   31.5,
+   72
+  ],
+  [
+   "catholic",
+   1000,
+   1530,
+   4,
+   54.6,
+   31.5,
+   72
+  ],
+  [
+   "protestant",
+   1530,
+   9999,
+   4,
+   54.6,
+   31.5,
+   72
+  ],
+  [
+   "traditional",
+   -10000,
+   966,
+   14,
+   49,
+   24.2,
+   54.6
+  ],
+  [
+   "catholic",
+   966,
+   9999,
+   14,
+   49,
+   24.2,
+   54.6
+  ],
+  [
+   "protestant",
+   1530,
+   9999,
+   6,
+   50.3,
+   15,
+   54.6
+  ],
+  [
+   "traditional",
+   -10000,
+   1000,
+   16,
+   45.7,
+   23,
+   48.6
+  ],
+  [
+   "catholic",
+   1000,
+   9999,
+   16,
+   45.7,
+   23,
+   48.6
+  ],
+  [
+   "traditional",
+   -10000,
+   900,
+   12,
+   48.5,
+   19,
+   51.1
+  ],
+  [
+   "ancient",
+   -3000,
+   380,
+   19.3,
+   34.8,
+   28.3,
+   41.8
+  ],
+  [
+   "traditional",
+   -10000,
+   864,
+   19.5,
+   41.8,
+   30.5,
+   48.3
+  ],
+  [
+   "orthodox",
+   380,
+   9999,
+   19.3,
+   34.8,
+   30.5,
+   48.3
+  ],
+  [
+   "sunni",
+   922,
+   1236,
+   45,
+   52,
+   53,
+   57
+  ],
+  [
+   "traditional",
+   -10000,
+   988,
+   22,
+   45,
+   50,
+   72
+  ],
+  [
+   "orthodox",
+   988,
+   9999,
+   22,
+   45,
+   50,
+   72
+  ],
+  [
+   "traditional",
+   -10000,
+   650,
+   78,
+   28.5,
+   99,
+   37
+  ],
+  [
+   "buddhist",
+   650,
+   9999,
+   78,
+   28.5,
+   99,
+   37
+  ],
+  [
+   "traditional",
+   -10000,
+   1580,
+   87,
+   41.7,
+   120,
+   52.2
+  ],
+  [
+   "buddhist",
+   1580,
+   1924,
+   87,
+   41.7,
+   120,
+   52.2
+  ],
+  [
+   "secular",
+   1924,
+   1990,
+   87,
+   41.7,
+   120,
+   52.2
+  ],
+  [
+   "buddhist",
+   1990,
+   9999,
+   87,
+   41.7,
+   120,
+   52.2
+  ],
+  [
+   "buddhist",
+   -250,
+   870,
+   60,
+   29,
+   75,
+   38.5
+  ],
+  [
+   "sunni",
+   870,
+   9999,
+   60,
+   29,
+   75,
+   38.5
+  ],
+  [
+   "zoroastrian",
+   -550,
+   750,
+   52,
+   35,
+   73,
+   45
+  ],
+  [
+   "traditional",
+   -10000,
+   750,
+   50,
+   35,
+   90,
+   45
+  ],
+  [
+   "sunni",
+   750,
+   9999,
+   50,
+   35,
+   90,
+   45
+  ],
+  [
+   "traditional",
+   -10000,
+   1350,
+   45,
+   45,
+   95,
+   56
+  ],
+  [
+   "sunni",
+   1350,
+   9999,
+   45,
+   45,
+   95,
+   56
+  ],
+  [
+   "sunni",
+   1200,
+   9999,
+   60.8,
+   24,
+   71.8,
+   37
+  ],
+  [
+   "buddhist",
+   700,
+   9999,
+   88.7,
+   26.7,
+   92.2,
+   28.4
+  ],
+  [
+   "buddhist",
+   -250,
+   9999,
+   79.4,
+   5.6,
+   82,
+   10
+  ],
+  [
+   "hindu",
+   100,
+   1400,
+   95,
+   -11,
+   141.1,
+   7.5
+  ],
+  [
+   "sunni",
+   1400,
+   9999,
+   95,
+   -11,
+   141.1,
+   7.5
+  ],
+  [
+   "hindu",
+   100,
+   1200,
+   102.3,
+   10.4,
+   107.6,
+   14.7
+  ],
+  [
+   "buddhist",
+   200,
+   9999,
+   102.1,
+   8.4,
+   109.5,
+   23.4
+  ],
+  [
+   "hindu",
+   100,
+   1100,
+   94,
+   5,
+   110,
+   28.5
+  ],
+  [
+   "buddhist",
+   1100,
+   9999,
+   94,
+   5,
+   110,
+   28.5
+  ],
+  [
+   "hindu",
+   -1500,
+   9999,
+   60.8,
+   5,
+   98,
+   37
+  ],
+  [
+   "traditional",
+   -10000,
+   1570,
+   116.9,
+   4.6,
+   126.6,
+   21
+  ],
+  [
+   "catholic",
+   1570,
+   9999,
+   116.9,
+   4.6,
+   126.6,
+   21
+  ],
+  [
+   "traditional",
+   -10000,
+   372,
+   124,
+   33,
+   131,
+   43
+  ],
+  [
+   "buddhist",
+   372,
+   1392,
+   124,
+   33,
+   131,
+   43
+  ],
+  [
+   "chinese",
+   1392,
+   9999,
+   124,
+   33,
+   131,
+   43
+  ],
+  [
+   "traditional",
+   -10000,
+   538,
+   129,
+   30,
+   146,
+   46
+  ],
+  [
+   "buddhist",
+   538,
+   9999,
+   129,
+   30,
+   146,
+   46
+  ],
+  [
+   "chinese",
+   -2000,
+   9999,
+   97,
+   18,
+   135,
+   54
+  ],
+  [
+   "traditional",
+   -10000,
+   9999,
+   60,
+   50,
+   180,
+   78
+  ],
+  [
+   "ancient",
+   -1500,
+   1521,
+   -118,
+   8,
+   -82,
+   23.5
+  ],
+  [
+   "ancient",
+   -1000,
+   1533,
+   -81,
+   -23,
+   -66,
+   -2
+  ],
+  [
+   "catholic",
+   1810,
+   9999,
+   -118,
+   -56,
+   -34,
+   32.7
+  ],
+  [
+   "protestant",
+   1850,
+   9999,
+   -170,
+   24,
+   -52,
+   75
+  ],
+  [
+   "traditional",
+   -10000,
+   9999,
+   -170,
+   -56,
+   -34,
+   75
+  ],
+  [
+   "protestant",
+   1788,
+   9999,
+   112,
+   -44,
+   154,
+   -10
+  ],
+  [
+   "protestant",
+   1840,
+   9999,
+   166,
+   -47.5,
+   179,
+   -34
+  ],
+  [
+   "christian",
+   1850,
+   9999,
+   130,
+   -30,
+   180,
+   25
+  ],
+  [
+   "christian",
+   1850,
+   9999,
+   -180,
+   -30,
+   -120,
+   25
+  ],
+  [
+   "ancient",
+   -800,
+   380,
+   -10,
+   36,
+   19.5,
+   51.5
+  ],
+  [
+   "traditional",
+   -10000,
+   800,
+   -11,
+   46,
+   25,
+   72
+  ],
+  [
+   "catholic",
+   380,
+   9999,
+   -11,
+   35.9,
+   19.5,
+   72
+  ],
+  [
+   "traditional",
+   -10000,
+   9999,
+   -180,
+   -90,
+   180,
+   90
+  ]
+ ]
+}

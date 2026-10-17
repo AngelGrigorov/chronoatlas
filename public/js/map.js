@@ -1,6 +1,7 @@
 import * as maplibregl from '../vendor/maplibre/maplibre-gl.mjs';
 import { fmtYear, fmtRange, wrapLine } from './time.js';
 import { t, polityName } from './i18n.js';
+import { faithOf } from './faith.js';
 
 const abs = p => new URL(p, location.href).href;
 const EMPTY = { type: 'FeatureCollection', features: [] };
@@ -30,6 +31,8 @@ const Y = ['global-state', 'year'];
 // Events work in whole years: the year shown on screen (EY), not the fractional one.
 const EY = ['global-state', 'eyear'];
 const WIN = ['global-state', 'win'];
+// Border colour: its own, or the theme's from feature-state while a theme is on.
+const THEMED = ['case', ['==', ['global-state', 'theme'], 1], ['coalesce', ['feature-state', 'tc'], ['get', 'c']], ['get', 'c']];
 const age = ['-', EY, ['get', 'y']];
 // Years since the event ended (wars have an end year; most events end the year they start).
 const ageEnd = ['-', EY, ['get', 'ye']];
@@ -87,8 +90,8 @@ function swordsImage() {
   return g.getImageData(0, 0, s, s);
 }
 
-export function createMap({ container, canvas, data, initial, onPick, onSnapshot }) {
-  const { snapshots, cultures, cities, routes, events, wd, seas } = data;
+export function createMap({ container, canvas, data, initial, onPick, onSnapshot, onTheme }) {
+  const { snapshots, cultures, cities, routes, events, wd, seas, faiths } = data;
   const state = { year: initial.year, win: 0, layers: { ...initial.layers }, kinds: initial.kinds || null };
   const kindOk = k => !state.kinds || state.kinds.includes(k);
 
@@ -131,7 +134,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
   const style = {
     version: 8,
     projection: { type: initial.flat ? 'mercator' : 'globe' },
-    state: { year: { default: state.year }, eyear: { default: Math.round(state.year) }, win: { default: state.win } },
+    state: { year: { default: state.year }, eyear: { default: Math.round(state.year) }, win: { default: state.win }, theme: { default: 0 } },
     sky: {
       'sky-color': '#0b1220', 'horizon-color': '#29405e', 'fog-color': '#0b1220',
       'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0],
@@ -167,11 +170,11 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         paint: { 'line-color': '#4b7298', 'line-opacity': 0.75, 'line-width': ['interpolate', ['linear'], ['zoom'], 1, ['case', ['<=', ['get', 'scalerank'], 3], 0.8, 0.3], 6, ['case', ['<=', ['get', 'scalerank'], 3], 2.2, 1.1]] },
       },
       ...['bA', 'bB'].flatMap(src => [
-        { id: `${src}-fuzzy-fill`, type: 'fill', source: src, filter: ['==', ['get', 'p'], 0], paint: { 'fill-color': ['get', 'c'], 'fill-opacity': 0 } },
-        { id: `${src}-sharp-fill`, type: 'fill', source: src, filter: ['==', ['get', 'p'], 1], paint: { 'fill-color': ['get', 'c'], 'fill-opacity': 0 } },
+        { id: `${src}-fuzzy-fill`, type: 'fill', source: src, filter: ['==', ['get', 'p'], 0], paint: { 'fill-color': THEMED, 'fill-opacity': 0 } },
+        { id: `${src}-sharp-fill`, type: 'fill', source: src, filter: ['==', ['get', 'p'], 1], paint: { 'fill-color': THEMED, 'fill-opacity': 0 } },
         { id: `${src}-hover`, type: 'fill', source: src, paint: { 'fill-color': '#fff6dc', 'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.16, 0] } },
-        { id: `${src}-fuzzy-edge`, type: 'line', source: src, filter: ['==', ['get', 'p'], 0], layout: { 'line-join': 'round' }, paint: { 'line-color': ['get', 'c'], 'line-opacity': 0, 'line-width': ['interpolate', ['linear'], ['zoom'], 1, 4, 6, 16], 'line-blur': ['interpolate', ['linear'], ['zoom'], 1, 4, 6, 14] } },
-        { id: `${src}-sharp-edge`, type: 'line', source: src, filter: ['==', ['get', 'p'], 1], layout: { 'line-join': 'round' }, paint: { 'line-color': ['get', 'c'], 'line-opacity': 0, 'line-width': ['interpolate', ['linear'], ['zoom'], 1, 2, 6, 7], 'line-blur': ['interpolate', ['linear'], ['zoom'], 1, 1.5, 6, 5], 'line-offset': ['interpolate', ['linear'], ['zoom'], 1, 0.8, 6, 3] } },
+        { id: `${src}-fuzzy-edge`, type: 'line', source: src, filter: ['==', ['get', 'p'], 0], layout: { 'line-join': 'round' }, paint: { 'line-color': THEMED, 'line-opacity': 0, 'line-width': ['interpolate', ['linear'], ['zoom'], 1, 4, 6, 16], 'line-blur': ['interpolate', ['linear'], ['zoom'], 1, 4, 6, 14] } },
+        { id: `${src}-sharp-edge`, type: 'line', source: src, filter: ['==', ['get', 'p'], 1], layout: { 'line-join': 'round' }, paint: { 'line-color': THEMED, 'line-opacity': 0, 'line-width': ['interpolate', ['linear'], ['zoom'], 1, 2, 6, 7], 'line-blur': ['interpolate', ['linear'], ['zoom'], 1, 1.5, 6, 5], 'line-offset': ['interpolate', ['linear'], ['zoom'], 1, 0.8, 6, 3] } },
         { id: `${src}-sharp-line`, type: 'line', source: src, filter: ['==', ['get', 'p'], 1], layout: { 'line-join': 'round' }, paint: { 'line-color': '#1c140c', 'line-opacity': 0, 'line-width': ['interpolate', ['linear'], ['zoom'], 1, 0.5, 6, 1.5] } },
       ]),
       { id: 'cultures', type: 'circle', source: 'cultures', paint: { 'circle-radius': kmRadius, 'circle-color': ['get', 'c'], 'circle-blur': 0.85, 'circle-opacity': ['*', 0.42, spanOpacity], 'circle-pitch-alignment': 'map' } },
@@ -266,6 +269,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         // Polity names are English keys in the data; show them in the current language.
         for (const f of snap.fc.features) {
           f.properties.n = polityName(f.properties.e);
+          f.properties.se = f.properties.s;
           if (f.properties.s) f.properties.s = polityName(f.properties.s);
         }
         for (const l of snap.labels) l[3] = polityName(l[3]);
@@ -298,6 +302,9 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         map.on('sourcedata', onData);
         source.setData(snap.fc);
       });
+      snapIn[next] = snap;
+      themed[next].clear();
+      applyTheme(next);
       clearHover();
       setBufferOpacity(next, true);
       setBufferOpacity(active, false);
@@ -314,6 +321,84 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       busy = false;
       if (wanted !== shown) swap();
     }
+  }
+
+  // ——— Thematic colours: with one kind of event chosen, the borders show it ———
+  // Faith: every state in the colour of the faith of most of its people. The other kinds:
+  // states where such events happened in the last ten years keep their colour, the rest go grey.
+  const DIM = '#2c313b', THEME_WINDOW = 10;
+  let theme = null, themeYear = null, themeTimer = 0;
+  const snapIn = { bA: null, bB: null };
+  const themed = { bA: new Map(), bB: new Map() };
+  const bboxes = new WeakMap();
+  const polysOf = f => (f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates);
+  const bboxOf = f => {
+    if (!bboxes.has(f)) {
+      let x0 = 180, y0 = 90, x1 = -180, y1 = -90;
+      for (const poly of polysOf(f)) for (const [x, y] of poly[0]) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
+      bboxes.set(f, [x0, y0, x1, y1]);
+    }
+    return bboxes.get(f);
+  };
+  const inRing = (x, y, ring) => {
+    let c = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const [xi, yi] = ring[i], [xj, yj] = ring[j];
+      if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c;
+    }
+    return c;
+  };
+  const contains = (f, x, y) => {
+    const b = bboxOf(f);
+    return x >= b[0] && x <= b[2] && y >= b[1] && y <= b[3] && polysOf(f).some(p => inRing(x, y, p[0]) && !p.slice(1).some(h => inRing(x, y, h)));
+  };
+  // id → colour, and what the legend should list.
+  function themeColours(snap, year) {
+    const out = new Map(), feats = snap.fc.features;
+    if (theme === 'religion') {
+      const at = new Map();
+      for (const l of snap.labels) if (!l[6] && !(at.get(l[3])?.[2] >= l[2])) at.set(l[3], l);
+      const area = {};
+      for (const f of feats) {
+        const l = at.get(f.properties.n);
+        const [lon, lat] = l ?? polysOf(f)[0][0][0];
+        const key = faithOf(faiths, f.properties.e, year, lon, lat, f.properties.se);
+        out.set(f.id, key ? faiths.colors[key] : DIM);
+        if (key) area[key] = (area[key] || 0) + (l?.[2] ?? 0);
+      }
+      return { colours: out, legend: { type: 'faith', year, keys: Object.keys(area).sort((a, b) => area[b] - area[a]) } };
+    }
+    const ks = KIND_GROUPS[theme];
+    const lit = new Set();
+    for (const e of [...events, ...wd]) {
+      if (!ks.includes(e.k) || e.y > year || (e.ye ?? e.y) < year - THEME_WINDOW) continue;
+      const f = feats.find(f => !lit.has(f.id) && contains(f, e.lon, e.lat));
+      if (f) lit.add(f.id);
+    }
+    for (const f of feats) out.set(f.id, lit.has(f.id) ? f.properties.c : DIM);
+    return { colours: out, legend: { type: 'events', group: theme, from: year - THEME_WINDOW, to: year, n: lit.size } };
+  }
+  function applyTheme(src) {
+    const snap = snapIn[src];
+    if (!theme || !snap || !ready) return;
+    const year = Math.round(state.year);
+    const { colours, legend } = themeColours(snap, year);
+    for (const [id, c] of colours) {
+      if (themed[src].get(id) === c) continue;
+      map.setFeatureState({ source: src, id }, { tc: c });
+      themed[src].set(id, c);
+    }
+    if (src === active || !snapIn[active]) onTheme?.(legend);
+  }
+  // During play the year changes every frame; the colours follow a few times a second.
+  function themeFollowYear() {
+    if (!theme || Math.round(state.year) === themeYear || themeTimer) return;
+    themeTimer = setTimeout(() => {
+      themeTimer = 0;
+      themeYear = Math.round(state.year);
+      applyTheme(active);
+      if (Math.round(state.year) !== themeYear) themeFollowYear();
+    }, 120);
   }
 
   // ——— Hover and clicks ———
@@ -671,6 +756,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     applyLayerVisibility();
     if (state.kinds) applyKinds();
     api.setYear(state.year, state.win);
+    if (theme) api.setTheme(theme);
   });
 
   let tiered = false;
@@ -693,7 +779,17 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       }
       wanted = snapFor(year);
       swap();
+      themeFollowYear();
       draw();
+    },
+    // One group of event kinds ('religion', 'war'…) colours the borders; null turns it off.
+    setTheme(group) {
+      theme = group;
+      themeYear = Math.round(state.year);
+      if (!ready) return;
+      map.setGlobalStateProperty('theme', group ? 1 : 0);
+      if (group) { applyTheme('bA'); applyTheme('bB'); applyTheme(active); }
+      else onTheme?.(null);
     },
     setKinds(kinds) {
       state.kinds = kinds;

@@ -2,6 +2,8 @@
 import assert from 'node:assert/strict';
 import { wrapLine, fmtYear, fmtRange, regionOf, setTimeLang, yearsBetween } from '../public/js/time.js';
 import { tidyName } from '../public/js/i18n.js';
+import { faithOf } from '../public/js/faith.js';
+import fs from 'node:fs';
 
 // Magellan: from −150° to −215° crosses ±180° once.
 const parts = wrapLine([[-150, -10], [-215.3, 13.4]]);
@@ -52,4 +54,15 @@ assert.equal(tidyName('𐓏𐒰𐓓𐒰𐓓𐒷  𐒼𐓂𐓊𐒻  𐓆𐒻𐒿�
 assert.equal(tidyName('Dakeł Keyoh (ᑕᗸᒡ ᗲᘏᑋ)'), 'Dakeł Keyoh');
 assert.equal(tidyName('Niitsítpiis-stahkoii ᖹᐟᒧᐧᐨᑯᐧ ᓴᐦᖾᐟ (Blackfoot / Niitsítapi ᖹᐟᒧᐧᒣᑯ)'), 'Niitsítpiis-stahkoii (Blackfoot / Niitsítapi)');
 assert.equal(tidyName('Kō Hawaiʻi Paeʻāina (Hawaiian Kingdom)'), 'Kō Hawaiʻi Paeʻāina (Hawaiian Kingdom)');
-console.log('time.js, i18n.js: all checks passed');
+
+// Faith by name, by keyword, by ruler in the Americas, by region and century.
+const F = JSON.parse(fs.readFileSync(new URL('../public/data/content/faiths.json', import.meta.url), 'utf8'));
+assert.equal(faithOf(F, 'Bulgaria', 1914, 25, 42.7), 'orthodox');
+assert.equal(faithOf(F, 'Roman Empire', 117, 12, 42), 'ancient');
+assert.equal(faithOf(F, 'Abbasid Caliphate', 800, 44, 33), 'sunni');
+assert.equal(faithOf(F, 'Cuba', 1700, -79, 21.5, 'Spain'), 'catholic');
+assert.equal(faithOf(F, 'Thracians', -500, 25, 42.5), 'traditional');
+assert.equal(faithOf(F, 'Kievan Rus', 1100, 30.5, 50.5), 'orthodox');
+assert.equal(faithOf(F, 'Tibet', 1700, 88, 32), 'buddhist');
+assert.equal(faithOf(F, 'Antarctica', 2019, 0, -80), null);
+console.log('time.js, i18n.js, faith.js: all checks passed');
