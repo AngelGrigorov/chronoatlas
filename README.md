@@ -18,7 +18,8 @@ who was where, what happened and where the armies and ships were heading — fro
 - **Around the world at the same time** — a side panel with what existed in the
   chosen year, by region, and who was alive
 - **Eras in eight tracks** (world, Europe, Near East, Egypt, China, India, the Americas,
-  Bulgaria), **search**, **▶ play**, and a link to every moment (`#y=-490`)
+  Bulgaria), **search**, **▶ play**, and a link to every moment and card
+  (`#y=-490&o=event:battle-of-marathon`)
 
 | | |
 |---|---|

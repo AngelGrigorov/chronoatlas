@@ -179,6 +179,23 @@ console.log('Events of the shown year only');
   await page.close();
 }
 
+console.log('Links to a card');
+{
+  const { page, errors } = await open('y=-490&s=1200&c=24,38&z=4&o=event%3Abattle-of-marathon');
+  const title = () => page.$eval('#card', el => (el.hidden ? '' : el.querySelector('h2').textContent));
+  check(/Marathon/.test(await title()), `the link opens the card: "${await title()}"`);
+  await page.click('#card .close');
+  await wait(300);
+  check(!/[#&]o=/.test(await page.evaluate(() => location.hash)), 'closing it takes it out of the address');
+  await page.goto(BASE + '#y=1600&s=600&c=30,38&z=3.3&o=polity%3AOttoman%20Empire', { waitUntil: 'load' });
+  await page.reload({ waitUntil: 'load' });
+  await ready(page);
+  check(/Ottoman/.test(await title()), `a state opens too: "${await title()}"`);
+  check(/o=polity%3AOttoman/.test(await page.evaluate(() => location.hash)), 'and stays in the address');
+  check(errors.length === 0, `no errors (${errors.length})`);
+  await page.close();
+}
+
 console.log('Phone');
 {
   const { page, errors } = await open('y=681&s=600&c=26,43&z=3.5', { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });

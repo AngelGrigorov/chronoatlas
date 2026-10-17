@@ -2,7 +2,7 @@ import { loadLanguage, downloadLanguage, setLanguage, applyStatic, texts, polity
 import { createMap } from './map.js';
 import { createTimeline, MIN_SPAN, MAX_SPAN } from './timeline.js';
 import { clampYear, fmtYear, MAX_YEAR } from './time.js';
-import { createPanel, showCard, hideCard } from './panel.js';
+import { createPanel, showCard, hideCard, cardKey } from './panel.js';
 import { createSearch } from './search.js';
 
 const get = (p, fallback) => fetch(p).then(r => (r.ok ? r.json() : Promise.reject(new Error(p)))).catch(err => {
@@ -249,16 +249,33 @@ function frame(now) {
 }
 function writeHash() {
   const c = map.map.getCenter();
-  const h = `y=${Math.round(app.year)}&s=${Math.round(app.span)}&c=${c.lng.toFixed(2)},${c.lat.toFixed(2)}&z=${map.map.getZoom().toFixed(2)}${app.flat ? '&p=flat' : ''}`;
+  const h = `y=${Math.round(app.year)}&s=${Math.round(app.span)}&c=${c.lng.toFixed(2)},${c.lat.toFixed(2)}&z=${map.map.getZoom().toFixed(2)}${app.flat ? '&p=flat' : ''}${cardKey ? '&o=' + encodeURIComponent(cardKey) : ''}`;
   if (location.hash.slice(1) !== h) history.replaceState(null, '', '#' + h);
 }
 map.map.on('moveend', writeHash);
+document.getElementById('card').addEventListener('cardchange', writeHash);
+
+// A link with o=type:id opens that card, e.g. #y=-490&o=event:marathon.
+function cardFromKey(key) {
+  const i = key?.indexOf(':') ?? -1;
+  if (i < 0) return null;
+  const type = key.slice(0, i), id = key.slice(i + 1);
+  if (type === 'polity') {
+    const ent = entities[id];
+    return ent && { type, item: { n: ent.n, e: id, p: ent.at.some(a => a[4]) ? 1 : 0, s: '' } };
+  }
+  const list = { event: events, wd, city: cities, person: people, culture: cultures, route: routes }[type];
+  const item = list?.find(x => x.id === id);
+  return item && { type, item };
+}
 window.addEventListener('hashchange', () => {
   const h = new URLSearchParams(location.hash.slice(1));
   if (h.has('y')) app.setYear(num(h.get('y'), app.year));
 });
 
 await map.whenReady;
+const linked = cardFromKey(hash.get('o'));
+if (linked) showCard({ ...linked, year: app.year }, { entities, onGo });
 dirty();
 document.fonts.load("600 16px 'Cormorant Garamond'").finally(() => dirty());
 document.getElementById('loading').classList.add('done');

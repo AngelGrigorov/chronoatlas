@@ -119,14 +119,19 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
 // ——— The detail card ———
 const card = document.getElementById('card');
 let cardToken = 0;
+// What the open card shows, as "type:id" — it goes into the address so a link opens it again.
+export let cardKey = null;
+const setKey = k => { cardKey = k; card.dispatchEvent(new Event('cardchange')); };
 
 export function hideCard() {
   card.hidden = true;
   cardToken++;
+  setKey(null);
 }
 
 export function showCard(hit, { entities, onGo }) {
   const token = ++cardToken;
+  setKey(`${hit.type}:${hit.type === 'polity' ? hit.item.e : hit.item.id}`);
   let kind = '', title = '', when = '', desc = '', extra = '', wiki = null, go = null;
   const it = hit.item;
   switch (hit.type) {
