@@ -1,6 +1,6 @@
 import { KINDS, KIND_GROUPS, kindLabel, eventAlpha, spanAlpha, cityName } from './map.js';
 import { REGIONS, regionOf, fmtYear, fmtRange, yearsBetween } from './time.js';
-import { t, lang } from './i18n.js';
+import { t, lang, polityName } from './i18n.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -203,9 +203,17 @@ export function showCard(hit, { entities, onGo }) {
       kind = p.p || ent?.at.some(a => a[4]) ? t('card.state') : t('card.people');
       title = p.n;
       if (ent) {
-        const ys = ent.at.map(a => a[0]);
+        // The same state under its other names, the larger one where two share a map.
+        const byYear = new Map();
+        for (const n of ent.line ?? [p.e]) {
+          for (const a of entities[n].at) if (!(byYear.get(a[0])?.[3] >= a[3])) byYear.set(a[0], [...a, n]);
+        }
+        const at = [...byYear.values()];
+        const ys = at.map(a => a[0]);
         when = t('card.inMaps', { range: fmtRange(Math.min(...ys), Math.max(...ys)) });
-        extra += areaChart(ent.at, hit.year);
+        extra += areaChart(at, hit.year, p.e);
+        const others = (ent.line ?? []).filter(n => n !== p.e).map(n => entities[n].n);
+        if (others.length) extra += `<p class="wiki">${esc(t('card.alsoAs', { names: others.join(', ') }))}</p>`;
       }
       if (p.n !== p.e) extra += `<p class="wiki" lang="en">${esc(p.e)}</p>`;
       if (p.s) extra += `<p class="wiki">${t('card.under', { s: `<b>${esc(p.s)}</b>` })}</p>`;
@@ -250,7 +258,7 @@ const fmtArea = a => {
 let snapshotYears = [];
 export const setSnapshots = list => { snapshotYears = list; };
 
-function areaChart(at, year) {
+function areaChart(at, year, main) {
   const pts = [...at].sort((a, b) => a[0] - b[0]);
   if (pts.length < 2) return '';
   const W = 340, H = 86, P = 8;
@@ -270,7 +278,7 @@ function areaChart(at, year) {
   const area = runs.map(r => `${path(r)}L${X(r.at(-1)[0]).toFixed(1)},${H - 18}L${X(r[0][0]).toFixed(1)},${H - 18}Z`).join('');
   const peak = pts.reduce((a, b) => (b[3] > a[3] ? b : a));
   const cur = pts.reduce((a, b) => (Math.abs(b[0] - year) < Math.abs(a[0] - year) ? b : a));
-  const dots = pts.map(p => `<circle data-jump="${p[0]},${p[1]},${p[2]}" cx="${X(p[0]).toFixed(1)}" cy="${Y(p[3]).toFixed(1)}" r="${p === cur ? 4.5 : 3}" class="${p === cur ? 'cur' : ''}"><title>${esc(fmtYear(p[0]))} · ${esc(fmtArea(p[3]))}</title></circle>`).join('');
+  const dots = pts.map(p => `<circle data-jump="${p[0]},${p[1]},${p[2]}" cx="${X(p[0]).toFixed(1)}" cy="${Y(p[3]).toFixed(1)}" r="${p === cur ? 4.5 : 3}" class="${p === cur ? 'cur' : ''}"><title>${esc(fmtYear(p[0]))} · ${esc(fmtArea(p[3]))}${p[5] && p[5] !== main ? ` · ${esc(polityName(p[5]))}` : ''}</title></circle>`).join('');
   return `<div class="chart"><div class="chart-h">${esc(t('chart.title'))} <span>${esc(t('chart.peak', { area: fmtArea(peak[3]), year: fmtYear(peak[0]) }))}</span></div>
     <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t('chart.aria'))}">
       <path d="${area}" class="fill"/><path d="${line}" class="line"/>${dots}

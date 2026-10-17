@@ -68,6 +68,7 @@
   "card.state": "Държава",
   "card.people": "Държава или народ",
   "card.inMaps": "В картите: {range}",
+  "card.alsoAs": "В картите и като {names}",
   "card.under": "Под властта на: {s}",
   "card.fuzzy": "Границата е приблизителна — затова е размита.",
   "card.lifespan": "{range} · {n} години живот",

@@ -68,6 +68,7 @@
   "card.state": "State",
   "card.people": "State or people",
   "card.inMaps": "In the maps: {range}",
+  "card.alsoAs": "Also in the maps as {names}",
   "card.under": "Under the rule of: {s}",
   "card.fuzzy": "The border is approximate — that is why it is blurred.",
   "card.lifespan": "{range} · {n} years of life",

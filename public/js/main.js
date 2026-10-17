@@ -11,7 +11,7 @@ const get = (p, fallback) => fetch(p).then(r => (r.ok ? r.json() : Promise.rejec
 });
 
 // The language goes first: every text on screen comes from its pack.
-const [, snapshots, entities, events, cultures, cities, routes, eras, people, seas, wdRaw] = await Promise.all([
+const [, snapshots, entities, events, cultures, cities, routes, eras, people, seas, wdRaw, lineages] = await Promise.all([
   loadLanguage(),
   get('data/snapshots.json'),
   get('data/entities.json'),
@@ -23,6 +23,7 @@ const [, snapshots, entities, events, cultures, cities, routes, eras, people, se
   get('data/content/people.json'),
   get('data/content/seas.json'),
   get('data/wd-events.json', []),
+  get('data/content/lineages.json', []),
 ]);
 applyStatic();
 setSnapshots(snapshots);
@@ -42,6 +43,11 @@ for (const tr of eras.tracks) {
   tr.b.at(-1)[1] = Math.max(tr.b.at(-1)[1], MAX_YEAR + 1);
 }
 for (const [name, ent] of Object.entries(entities)) ent.n = polityName(name);
+// One state under the names it had in different maps (German Empire, Germany): its card shows them together.
+for (const line of lineages) {
+  const names = line.filter(n => entities[n]);
+  for (const n of names) entities[n].line = names;
+}
 // Wikidata rows: [year, lon, lat, kind, sitelinks, qid]
 const wd = wdRaw.map(([y, lon, lat, k, l, id]) => ({ y, lon, lat, k, l, id, t: T.wd[id]?.[0] ?? id, w: T.wd[id]?.[1], we: T.wd[id]?.[2] }));
 
