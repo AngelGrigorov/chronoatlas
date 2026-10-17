@@ -68,10 +68,14 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
 
     // A huge state has extra labels in its other parts (Russia in Europe and in Siberia):
     // it is listed in every region it has a label in, ranked by its whole area.
-    const whole = new Map(labels.filter(l => !l[6]).map(l => [l[3], l[2]]));
-    for (const [lon, lat, area, name, sharp, color] of labels) {
+    // A name can have several parts (the Ottoman Empire also on the Eritrean coast): the largest counts.
+    const whole = new Map();
+    for (const l of labels) if (!l[6] && l[2] > (whole.get(l[3]) ?? 0)) whole.set(l[3], l[2]);
+    // …and is a state if any of its parts has a precise border.
+    const precise = new Set(labels.filter(l => l[4]).map(l => l[3]));
+    for (const [lon, lat, area, name, , color] of labels) {
       const r = by[regionOf(lon, lat)];
-      const list = sharp ? r.states : r.other;
+      const list = precise.has(name) ? r.states : r.other;
       if (!list.some(x => x.name === name)) list.push({ type: 'label', name, lon, lat, area: whole.get(name) ?? area, color });
     }
     for (const c of cultures) {
