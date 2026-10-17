@@ -30,7 +30,9 @@ function hash(s) {
   for (const ch of s) h = Math.imul(h ^ ch.codePointAt(0), 16777619);
   return h >>> 0;
 }
-const colorFor = key => PALETTE[hash(key) % PALETTE.length];
+// Neighbours whose hashes happen to give the same colour get one by hand.
+const COLORS = { 'East Germany': '#d4884a' };
+const colorFor = key => COLORS[key] ?? PALETTE[hash(key) % PALETTE.length];
 
 // Area in km² from the spherical excess — good enough to rank labels.
 function ringArea(ring) {
@@ -108,10 +110,10 @@ const RENAMES = {
 };
 const renamed = (name, year) => (RENAMES[name] && year >= RENAMES[name][0] ? RENAMES[name][1] : name);
 
-// ——— Natural Earth countries: the maps from 1991 on ———
+// ——— Natural Earth countries: the maps from 1985 on ———
 // The source has no map between 1960 and 1994 or after 2010, and its later maps miss states
 // (Switzerland is a hole; Kosovo, East Timor, Palestine and the small island states are not there). Natural Earth (1:50m, v5.1.1)
-// has every state of today; the maps of 1991–2010 are made from it by undoing what
+// has every state of today; the maps of 1985–2010 are made from it by undoing what
 // changed since (NE_RULES), so all maps from 1994 on share the same precise borders.
 const neMap = JSON.parse((await ms.applyCommands(
   `-i ${path.join(NE, 'admin0', 'ne_50m_admin_0_countries.shp')} -filter 'ADM0_A3 !== "ATA"' -filter-fields ADMIN,SOVEREIGNT,TYPE,ADM0_A3 -simplify 35% keep-shapes -o out.json precision=0.01 format=geojson`))['out.json']);
@@ -156,6 +158,8 @@ const neName = (admin, year) => {
 };
 // What was one state before (by Natural Earth's codes). The first rule that holds wins.
 const NE_RULES = [
+  { codes: ['NAM'], until: 1990, name: 'South West Africa', sub: 'South Africa' }, // Namibia, independent 1990
+  { codes: ['ABW', 'CUW', 'SXM'], until: 1986, name: 'Netherlands Antilles', sub: 'Netherlands' }, // Aruba left in 1986
   { codes: ['RUS', 'UKR', 'BLR', 'MDA', 'EST', 'LVA', 'LTU', 'GEO', 'ARM', 'AZE', 'KAZ', 'UZB', 'TKM', 'KGZ', 'TJK'],
     until: 1992, name: 'USSR' },                                     // dissolved in December 1991
   { codes: ['SVN', 'HRV', 'BIH', 'MKD', 'SRB', 'MNE', 'KOS'], until: 1992, name: 'Yugoslavia' }, // broke up in 1991–92
@@ -173,10 +177,48 @@ const SUB_UNTIL = {
   HKG: ['United Kingdom', 1997], MAC: ['Portugal', 1999],
   PSX: ['Israel', 1994],         // occupied until the Palestinian Authority, 1994
   PLW: ['United States', 1995],  // a US-administered trust territory until October 1994
+  FSM: ['United States', 1987], MHL: ['United States', 1987], // the same until 1986
 };
+
+// Borders Natural Earth no longer has, drawn by hand along their known course (to a few km).
+// Each polygon is the eastern or southern state; it reaches past the outer borders, which the
+// country's own shape cuts off.
+// East Germany, with West Berlin as a hole: the inner German border from the Baltic at
+// Priwall down the Elbe and over the Harz, the Eichsfeld and the Rhön to the Czech border.
+const EAST_GERMANY = [[
+  [10.95, 54.2], [10.9, 53.96], [10.8, 53.88], [10.79, 53.7], [10.91, 53.58], [10.77, 53.45], [10.6, 53.38],
+  [10.8, 53.3], [11.05, 53.18], [11.25, 53.14], [11.57, 53.04], [11.45, 52.95], [11.05, 52.85], [11.05, 52.73],
+  [10.93, 52.6], [10.95, 52.45], [11.05, 52.33], [11.05, 52.2], [10.95, 52.05], [10.62, 51.88], [10.68, 51.72],
+  [10.62, 51.58], [10.45, 51.55], [10.3, 51.47], [10.05, 51.35], [10.05, 51.25], [10.2, 51.0], [10.0, 50.84],
+  [10.05, 50.65], [10.1, 50.55], [10.4, 50.45], [11.0, 50.35], [11.15, 50.3], [11.4, 50.5], [11.6, 50.42],
+  [11.88, 50.42], [12.02, 50.37], [12.14, 50.32], [12.3, 50.25], [13.5, 50.2], [15.5, 50.9], [15.5, 54.8],
+  [10.95, 54.8], [10.95, 54.2],
+], [
+  [13.11, 52.5], [13.12, 52.58], [13.22, 52.63], [13.3, 52.66], [13.37, 52.6], [13.4, 52.56], [13.38, 52.53],
+  [13.45, 52.49], [13.43, 52.42], [13.37, 52.39], [13.25, 52.38], [13.13, 52.4], [13.11, 52.5],
+]];
+// South Yemen: from the coast east of Bab el-Mandeb, between Ta'izz and Lahij, Qa'tabah and
+// Dhale, al-Bayda and Mukayras, Harib and Bayhan, then into the desert; Socotra is inside.
+const SOUTH_YEMEN = [[
+  [43.55, 12.62], [44.15, 13.25], [44.75, 13.78], [45.55, 14.05], [45.7, 14.95], [46.4, 15.45], [47.2, 16.3],
+  [48.0, 17.5], [50.0, 19.0], [55.0, 19.0], [55.0, 11.5], [44.0, 11.5], [43.55, 12.62],
+]];
+// Splits one country by a polygon into two states.
+async function split(features, code, poly, inside, outside) {
+  const f = features.find(x => x.properties.ADM0_A3 === code);
+  const fc = list => JSON.stringify({ type: 'FeatureCollection', features: list });
+  const files = { 'f.json': fc([f]), 'p.json': fc([{ type: 'Feature', properties: {}, geometry: { type: 'Polygon', coordinates: poly } }]) };
+  const cut = async op => JSON.parse((await ms.applyCommands(
+    `-i f.json name=f -i p.json name=p -${op} p target=f -o out.json precision=0.01 format=geojson geojson-type=FeatureCollection`, files))['out.json']).features;
+  const state = (pieces, [ADMIN, ADM0_A3]) => pieces.map(x => ({ ...x, properties: { ADMIN, SOVEREIGNT: ADMIN, TYPE: 'Sovereign country', ADM0_A3 } }));
+  return [...features.filter(x => x !== f), ...state(await cut('clip'), inside), ...state(await cut('erase'), outside)];
+}
 async function neYear(year) {
-  const byCode = Object.fromEntries(neMap.features.map(f => [f.properties.ADM0_A3, f]));
-  const features = neMap.features.map(f => {
+  let base = neMap.features;
+  if (year < 1991) base = await split(base, 'DEU', EAST_GERMANY, ['East Germany', 'DDR'], ['West Germany', 'BRD']); // reunited October 1990
+  if (year < 1990) base = await split(base, 'YEM', SOUTH_YEMEN, ['South Yemen', 'YDR'], ['North Yemen', 'YAR']);     // united May 1990
+  const byCode = Object.fromEntries(base.map(f => [f.properties.ADM0_A3, f]));
+  const features = base.map(f => {
     const { ADMIN, SOVEREIGNT, TYPE, ADM0_A3: code } = f.properties;
     let G = code, NAME = neName(ADMIN, year);
     let SUBJECTO = SOVEREIGNT !== ADMIN && TYPE !== 'Indeterminate' ? neName(SOVEREIGNT, year) : '';
@@ -192,8 +234,7 @@ async function neYear(year) {
   return JSON.parse(out['out.json']);
 }
 
-// Nothing earlier: Natural Earth has no border between East and West Germany, or the two Yemens.
-const NE_YEARS = [1991, 1993, 1994, 2000, 2010, 2011, 2019];
+const NE_YEARS = [1985, 1991, 1993, 1994, 2000, 2010, 2011, 2019];
 const years = [...index.map(y => y.year).filter(y => !NE_YEARS.includes(y)), ...NE_YEARS];
 for (const year of years) {
   const hb = index.find(y => y.year === year);

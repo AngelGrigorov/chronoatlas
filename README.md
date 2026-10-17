@@ -69,9 +69,11 @@ culture, route, person, city, sea and era (by id), Wikidata titles and polity na
 ## Data and licence
 
 - Borders: [historical-basemaps](https://github.com/aourednik/historical-basemaps) by A. Ourednik — GPL-3.0;
-  from 1991 on, Natural Earth admin-0 countries, with what changed since undone for each
-  year (the USSR, Yugoslavia, Czechoslovakia, Sudan before 2011…). Crimea is drawn as part
-  of Ukraine, as the UN General Assembly recognises it
+  from 1985 on, Natural Earth admin-0 countries, with what changed since undone for each
+  year (the USSR, Yugoslavia, Czechoslovakia, Sudan before 2011…). The borders between the
+  two Germanys and the two Yemens, which Natural Earth no longer has, are drawn by hand
+  along their known course. Crimea is drawn as part of Ukraine, as the UN General Assembly
+  recognises it
 - Relief, land, rivers, countries: [Natural Earth](https://www.naturalearthdata.com/) — public domain
 - Events: [Wikidata](https://www.wikidata.org/) — CC0
 - Map: [MapLibre GL JS](https://maplibre.org/) — BSD-3
