@@ -96,6 +96,8 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     type: 'FeatureCollection',
     features: list.map((e, idx) => ({ type: 'Feature', id: idx, geometry: { type: 'Point', coordinates: [e.lon, e.lat] }, properties: { y: e.y, ye: e.ye ?? e.y, k: e.k, i: e.i || 1, ...extra?.(e) } })),
   });
+  // Capitals and great cities get their label first when names crowd.
+  const citiesByRank = [...cities].sort((a, b) => a.r - b.r);
   const curatedNonBattle = events.filter(e => !isBattle(e.k));
   const curatedBattle = events.filter(e => isBattle(e.k));
   const wdBattle = wd.filter(e => isBattle(e.k));
@@ -157,7 +159,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     layers: [
       { id: 'bg', type: 'background', paint: { 'background-color': '#142132' } },
       { id: 'relief', type: 'raster', source: 'relief', paint: { 'raster-saturation': -0.45, 'raster-brightness-max': 0.74, 'raster-contrast': 0.04, 'raster-fade-duration': 0 } },
-      { id: 'ocean', type: 'fill', source: 'ocean', paint: { 'fill-color': '#142132' } },
+      { id: 'ocean', type: 'fill', source: 'ocean', paint: { 'fill-color': '#142132', 'fill-antialias': false } },
       { id: 'lakes', type: 'fill', source: 'lakes', paint: { 'fill-color': '#1b2c42' } },
       { id: 'coast', type: 'line', source: 'land', paint: { 'line-color': '#0c1522', 'line-width': ['interpolate', ['linear'], ['zoom'], 1, 0.6, 6, 1.4], 'line-opacity': 0.9 } },
       {
@@ -451,13 +453,30 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     // never overlap each other; states and cultures ("soft") only avoid each other and
     // are drawn underneath, so they don't swallow the cities when zoomed in.
     const hard = [], soft = [], later = [];
+    // Fully on screen or not at all — a half-cut label is worse than none.
+    const onScreen = (x0, y0, x1, y1) => x0 >= 2 && y0 >= 2 && x1 <= W - 2 && y1 <= H - 2;
+    // ponytail: O(n²) over placed labels; with hundreds on screen it is under a millisecond.
+    const hits = (placed, x0, y0, x1, y1) => placed.some(r => x0 < r[2] && x1 > r[0] && y0 < r[3] && y1 > r[1]);
     const freeIn = (placed, x0, y0, x1, y1) => {
-      // Fully on screen or not at all — a half-cut label is worse than none.
-      if (x0 < 2 || y0 < 2 || x1 > W - 2 || y1 > H - 2) return false;
-      // ponytail: O(n²) over placed labels; with hundreds on screen it is under a millisecond.
-      for (const r of placed) if (x0 < r[2] && x1 > r[0] && y0 < r[3] && y1 > r[1]) return false;
+      if (!onScreen(x0, y0, x1, y1) || hits(placed, x0, y0, x1, y1)) return false;
       placed.push([x0, y0, x1, y1]);
       return true;
+    };
+    // A soft label centred on (x, y) steps up or down out of the way of cities and events,
+    // and in from the edge of the screen by up to a third of its width (on a phone the
+    // country is often half off screen). With no room around, it stays where it was, under
+    // the cities. Returns the new centre, or null.
+    const softAt = (x0, y, w, h) => {
+      const x = Math.min(W - 2 - w / 2, Math.max(2 + w / 2, x0));
+      if (Math.abs(x - x0) > w / 3) return null;
+      const step = (h / 2 + 9) / 2;
+      for (const k of [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6]) {
+        for (const dx of [0, -w / 4, w / 4]) {
+          const cx = x + dx, cy = y + k * step, b = [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
+          if (onScreen(...b) && !hits(soft, ...b) && !hits(hard, ...b)) { soft.push(b); return [cx, cy]; }
+        }
+      }
+      return freeIn(soft, x - w / 2, y - h / 2, x + w / 2, y + h / 2) ? [x, y] : null;
     };
     const free = (...box) => freeIn(hard, ...box);
     // Space taken by the interface over the map is taken for labels too.
@@ -471,6 +490,12 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       hard.push(box);
       soft.push(box);
     }
+    // The same name is not repeated closer than half a screen — also when an event, a
+    // culture and a state share it ("Great Zimbabwe", "Elam", "Yamnaya culture").
+    const seen = new Map();
+    const near = Math.max(W, H) * 0.5;
+    const repeated = (name, p) => seen.get(name)?.some(q => Math.hypot(q.x - p.x, q.y - p.y) < near);
+    const remember = (name, p) => seen.set(name, [...(seen.get(name) || []), p]);
     const text = (str, x, y, font, fill, spacing = 0, align = 'left', halo = 'rgba(8,10,16,0.82)') => {
       ctx.font = font;
       ctx.letterSpacing = spacing + 'px';
@@ -503,6 +528,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const left = p.x + 11 + w > W - 4;
         const x0 = left ? p.x - 11 - w : p.x + 11, y = p.y;
         if (x0 < 4 || !free(x0 - 2, y - 9, x0 + w + 2, y + 9)) continue;
+        remember(e.t, p);
         const alpha = a;
         later.push(() => { ctx.globalAlpha = alpha; text(e.t, x0, y, font, '#fff3d6'); ctx.globalAlpha = 1; });
       }
@@ -539,14 +565,19 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     // 3. Cities, with their name for the year.
     if (state.layers.cities) {
       const maxRank = z < 2.6 ? 1 : z < 4 ? 2 : 3;
-      for (const c of cities) {
+      for (const c of citiesByRank) {
         if (c.r > maxRank || year < c.s || year > (c.e ?? 9999) || !facing(c.lon, c.lat)) continue;
         const name = cityName(c, year);
         const p = map.project([c.lon, c.lat]);
         const font = `${c.r === 1 ? 700 : 600} ${c.r === 1 ? 14.5 : 13}px ${SERIF}`;
         const w = measure(name, font, 0);
-        const x = p.x + 7 + w > W - 4 ? p.x - 7 - w : p.x + 7;
-        if (free(x, p.y - 8, x + w, p.y + 8)) later.push(() => text(name, x, p.y, font, '#f4ecd8'));
+        // Right of the dot, or left of it when that side is taken.
+        for (const x of [p.x + 7, p.x - 7 - w]) {
+          const left = x < p.x;
+          if (free(left ? x : p.x - 3, p.y - 7, left ? p.x + 3 : x + w, p.y + 7)) { later.push(() => text(name, x, p.y, font, '#f4ecd8')); break; }
+        }
+        // A dot left without a name still keeps state names off it.
+        if (!hits(hard, p.x - 3, p.y - 3, p.x + 3, p.y + 3)) hard.push([p.x - 3, p.y - 3, p.x + 3, p.y + 3]);
       }
     }
 
@@ -574,9 +605,12 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const p = map.project([c.lon, c.lat]);
         const font = `italic 600 ${z < 3 ? 15 : 17}px ${SERIF}`;
         const w = measure(c.n, font, 0.5);
-        if (!freeIn(soft, p.x - w / 2, p.y - 10, p.x + w / 2, p.y + 10)) continue;
+        if (repeated(c.n, p)) continue;
+        const at = softAt(p.x, p.y, w, 20);
+        if (!at) continue;
+        remember(c.n, p);
         ctx.globalAlpha = a;
-        text(c.n, p.x, p.y, font, '#f6d89a', 0.5, 'center');
+        text(c.n, at[0], at[1], font, '#f6d89a', 0.5, 'center');
         ctx.globalAlpha = 1;
       }
     }
@@ -584,9 +618,6 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
     // 5. States and peoples from the snapshot, by area.
     if (state.layers.borders) {
       const kmPerPx0 = 40075 / 512;
-      // The same name is not repeated closer than half a screen.
-      const seen = new Map();
-      const near = Math.max(W, H) * 0.5;
       for (const [lon, lat, area, name, sharp] of labels) {
         if (!facing(lon, lat)) continue;
         const kmPerPx = kmPerPx0 * Math.cos(lat * Math.PI / 180) / 2 ** z;
@@ -605,10 +636,11 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const lh = size * 1.05;
         const w = Math.max(...lines.map(l => measure(l, font, spacing)));
         const h = lh * lines.length;
-        if (seen.get(name)?.some(q => Math.hypot(q.x - p.x, q.y - p.y) < near)) continue;
-        if (!freeIn(soft, p.x - w / 2 - 2, p.y - h / 2, p.x + w / 2 + 2, p.y + h / 2)) continue;
-        seen.set(name, [...(seen.get(name) || []), p]);
-        lines.forEach((l, k) => text(l, p.x, p.y + (k - (lines.length - 1) / 2) * lh, font, sharp ? 'rgba(250,240,220,0.95)' : 'rgba(236,226,206,0.82)', spacing, 'center', 'rgba(8,10,16,0.7)'));
+        if (repeated(name, p)) continue;
+        const at = softAt(p.x, p.y, w + 4, h);
+        if (!at) continue;
+        remember(name, p);
+        lines.forEach((l, k) => text(l, at[0], at[1] + (k - (lines.length - 1) / 2) * lh, font, sharp ? 'rgba(250,240,220,0.95)' : 'rgba(236,226,206,0.82)', spacing, 'center', 'rgba(8,10,16,0.7)'));
       }
     }
 

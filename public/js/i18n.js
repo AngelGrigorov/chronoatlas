@@ -20,9 +20,16 @@ export function t(key, vars) {
   return s;
 }
 export const texts = () => pack;
+// Some source names carry a script the font has no letters for (Canadian syllabics,
+// Cherokee, Osage); the Latin part of the name is kept: "ᏣᎳᎫᏪᏘᏱ Tsalaguwetiyi (Cherokee, East)".
+export const tidyName = n => {
+  const s = n.replace(/[\p{Script=Canadian_Aboriginal}\p{Script=Cherokee}\p{Script=Osage}^]+/gu, ' ')
+    .replace(/\(\s*\)/g, '').replace(/\(\s+/g, '(').replace(/\s+\)/g, ')').replace(/\s{2,}/g, ' ').trim();
+  return s.match(/^\((.*)\)$/)?.[1] ?? s;
+};
 // Some source names start in lower case ("central Asian khanates"); show them capitalised.
 export const polityName = name => {
-  const n = pack?.polities?.[name] ?? name;
+  const n = tidyName(pack?.polities?.[name] ?? name);
   return n.charAt(0).toUpperCase() + n.slice(1);
 };
 

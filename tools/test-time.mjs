@@ -1,6 +1,7 @@
 // node tools/test-time.mjs — checks for the pure helpers in time.js.
 import assert from 'node:assert/strict';
 import { wrapLine, fmtYear, fmtRange, regionOf, setTimeLang, yearsBetween } from '../public/js/time.js';
+import { tidyName } from '../public/js/i18n.js';
 
 // Magellan: from −150° to −215° crosses ±180° once.
 const parts = wrapLine([[-150, -10], [-215.3, 13.4]]);
@@ -41,4 +42,11 @@ assert.equal(yearsBetween(1452, 1519), 67);
 assert.equal(regionOf(23.3, 42.7), 'europe');
 assert.equal(regionOf(44.4, 33.3), 'mena');
 assert.equal(regionOf(116.4, 39.9), 'east');
-console.log('time.js: all checks passed');
+
+// Names in scripts the font lacks keep their Latin part.
+assert.equal(tidyName('ᏣᎳᎫᏪᏘᏱ Tsalaguwetiyi (Cherokee, East)'), 'Tsalaguwetiyi (Cherokee, East)');
+assert.equal(tidyName('𐓏𐒰𐓓𐒰𐓓𐒷  𐒼𐓂𐓊𐒻  𐓆𐒻𐒿𐒷  𐓀𐒰^𐓓𐒰^(Osage)'), 'Osage');
+assert.equal(tidyName('Dakeł Keyoh (ᑕᗸᒡ ᗲᘏᑋ)'), 'Dakeł Keyoh');
+assert.equal(tidyName('Niitsítpiis-stahkoii ᖹᐟᒧᐧᐨᑯᐧ ᓴᐦᖾᐟ (Blackfoot / Niitsítapi ᖹᐟᒧᐧᒣᑯ)'), 'Niitsítpiis-stahkoii (Blackfoot / Niitsítapi)');
+assert.equal(tidyName('Kō Hawaiʻi Paeʻāina (Hawaiian Kingdom)'), 'Kō Hawaiʻi Paeʻāina (Hawaiian Kingdom)');
+console.log('time.js, i18n.js: all checks passed');

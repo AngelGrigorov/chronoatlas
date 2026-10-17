@@ -94,8 +94,11 @@ function extraLabels(poly, mainXY) {
 const entities = {};
 const index = JSON.parse(fs.readFileSync(path.join(HB, 'index.json'), 'utf8')).years;
 
-// The source keeps a few names past the year they changed.
-const RENAMES = { Zaire: [1997, 'Democratic Republic of the Congo'], Byelarus: [1991, 'Belarus'] };
+// The source keeps a few names past the year they changed, and misspells a few.
+const RENAMES = {
+  Zaire: [1997, 'Democratic Republic of the Congo'], Byelarus: [1991, 'Belarus'],
+  Zhoa: [-Infinity, 'Zhou'], Cimerians: [-Infinity, 'Cimmerians'], Irlanda: [-Infinity, 'Ireland'],
+};
 const renamed = (name, year) => (RENAMES[name] && year >= RENAMES[name][0] ? RENAMES[name][1] : name);
 
 for (const { year, filename } of index) {
@@ -153,6 +156,21 @@ async function base(name, pct, fields) {
 }
 await base('ne_50m_land', '60%');
 await base('ne_50m_ocean', '60%');
+// The ocean is one polygon for the whole world, and on the globe MapLibre triangulates it
+// badly: at some zooms a band of ocean ran across South America. Cut into 30° cells, each
+// piece is small enough to draw cleanly.
+{
+  const file = path.join(OUT, 'base', 'ocean.json');
+  const src = fs.readFileSync(file, 'utf8');
+  const features = [];
+  for (let x = -180; x < 180; x += 30) {
+    for (let y = -90; y < 90; y += 30) {
+      const out = await ms.applyCommands(`-i in.json -clip bbox=${x},${y},${x + 30},${y + 30} -o out.json precision=0.01 format=geojson geojson-type=FeatureCollection`, { 'in.json': src });
+      features.push(...JSON.parse(out['out.json']).features);
+    }
+  }
+  fs.writeFileSync(file, JSON.stringify({ type: 'FeatureCollection', features }));
+}
 await base('ne_50m_lakes', '60%', 'name,scalerank');
 await base('ne_50m_rivers_lake_centerlines', '60%', 'name,scalerank,featurecla');
 
