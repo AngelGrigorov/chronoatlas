@@ -179,6 +179,23 @@ console.log('Events of the shown year only');
   await page.close();
 }
 
+console.log('Every state where it should be');
+// One page per year: after a change of year the previous map stays loaded underneath for the crossfade.
+for (const [year, cases] of [[2010, [[8.2, 46.8, 'Switzerland'], [125.7, -8.8, 'East Timor'], [21, 42.6, 'Kosovo']]], [2026, [[21, 42.6, 'Kosovo'], [34.1, 45, 'Ukraine'], [30, 7, 'South Sudan']]]]) {
+  const { page, errors } = await open(`y=${year}&s=40&c=20,30&z=2`);
+  for (const [lon, lat, name] of cases) {
+    await page.evaluate((lon, lat) => window.atlas.map.jumpTo({ center: [lon, lat], zoom: 5 }), lon, lat);
+    await wait(1200);
+    const got = await page.evaluate((lon, lat) => {
+      const m = window.atlas.map, p = m.project([lon, lat]);
+      return m.queryRenderedFeatures([p.x, p.y]).find(f => f.layer.id.endsWith('-fill') && f.properties.e)?.properties.e || '(nothing)';
+    }, lon, lat);
+    check(got === name, `${year}: ${name} (${got})`);
+  }
+  check(errors.length === 0, `no errors (${errors.length})`);
+  await page.close();
+}
+
 console.log('Next and previous event');
 {
   const { page, errors } = await open('y=-490&s=1200&c=24,38&z=4');

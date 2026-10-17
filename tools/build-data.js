@@ -2,6 +2,8 @@
 //   borders/<year>.json  — simplified borders + label points
 //   entities.json        — every polity name: the years and places it appears
 //   base/*.json          — land, ocean, rivers, lakes (Natural Earth)
+// Inputs: .cache/hb (historical-basemaps), .cache/ne/<layer> (Natural Earth 1:50m, with
+// admin0/ne_50m_admin_0_countries for the maps after 2010).
 // Polity names stay in English (they are the keys); translations live in tools/i18n.
 // Run with `npm run data`.
 import fs from 'node:fs';
@@ -94,15 +96,96 @@ function extraLabels(poly, mainXY) {
 const entities = {};
 const index = JSON.parse(fs.readFileSync(path.join(HB, 'index.json'), 'utf8')).years;
 
-// The source keeps a few names past the year they changed, and misspells a few.
+// The source keeps a few names past the year they changed, misspells a few, and writes
+// some the way a database index would ("Korea, Republic of"). One state, one name.
 const RENAMES = {
-  Zaire: [1997, 'Democratic Republic of the Congo'], Byelarus: [1991, 'Belarus'],
+  Zaire: [1997, 'Democratic Republic of the Congo'], Byelarus: [1991, 'Belarus'], Burma: [1989, 'Myanmar'],
+  Trinidad: [1962, 'Trinidad and Tobago'],
   Zhoa: [-Infinity, 'Zhou'], Cimerians: [-Infinity, 'Cimmerians'], Irlanda: [-Infinity, 'Ireland'],
+  'Korea, Republic of': [-Infinity, 'South Korea'], "Korea, Democratic People's Republic of": [-Infinity, 'North Korea'],
+  'Tanzania, United Republic of': [-Infinity, 'Tanzania'], 'Gambia, The': [-Infinity, 'Gambia'],
+  'Wallis and Futuna Islands': [-Infinity, 'Wallis and Futuna'], 'Turkish Cypriot-administered area': [-Infinity, 'Northern Cyprus'],
 };
 const renamed = (name, year) => (RENAMES[name] && year >= RENAMES[name][0] ? RENAMES[name][1] : name);
 
-for (const { year, filename } of index) {
-  const fc = await simplify(path.join(HB, filename), '35%');
+// ——— Natural Earth countries: the map after 2010, and the states the source misses ———
+// The source has no map after 2010, and its 1994–2010 maps miss states: Switzerland is a
+// hole, Kosovo is inside Serbia, East Timor inside Indonesia, the small island states are
+// not there at all. Natural Earth (1:50m, v5.1.1) has every one of them.
+const neMap = JSON.parse((await ms.applyCommands(
+  `-i ${path.join(NE, 'admin0', 'ne_50m_admin_0_countries.shp')} -filter 'ADM0_A3 !== "ATA"' -filter-fields ADMIN,SOVEREIGNT,TYPE,ADM0_A3 -simplify 35% keep-shapes -o out.json precision=0.01 format=geojson`))['out.json']);
+// Natural Earth draws Crimea as Russian, by who holds it. Here it is Ukraine, as the UN
+// General Assembly recognises it (resolution 68/262).
+{
+  const russia = neMap.features.find(f => f.properties.ADM0_A3 === 'RUS');
+  const ukraine = neMap.features.find(f => f.properties.ADM0_A3 === 'UKR');
+  const inRing = ([x, y], ring) => {
+    let c = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const [xi, yi] = ring[i], [xj, yj] = ring[j];
+      if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) c = !c;
+    }
+    return c;
+  };
+  const crimea = russia.geometry.coordinates.findIndex(poly => inRing([34.1, 45.0], poly[0]));
+  if (crimea < 0) throw new Error('Crimea not found in the Natural Earth map of Russia');
+  const [part] = russia.geometry.coordinates.splice(crimea, 1);
+  const parts = ukraine.geometry.type === 'Polygon' ? [ukraine.geometry.coordinates] : ukraine.geometry.coordinates;
+  ukraine.geometry = { type: 'MultiPolygon', coordinates: [...parts, part] };
+  const out = await ms.applyCommands('-i in.json -dissolve ADM0_A3 copy-fields=ADMIN,SOVEREIGNT,TYPE -o out.json precision=0.01 format=geojson',
+    { 'in.json': JSON.stringify(neMap) });
+  neMap.features = JSON.parse(out['out.json']).features;
+}
+// Natural Earth names that differ from the ones used here for the same state.
+const NE_NAMES = {
+  'United States of America': 'United States', 'Republic of Serbia': 'Serbia', 'Republic of the Congo': 'Congo',
+  'United Republic of Tanzania': 'Tanzania', 'The Bahamas': 'Bahamas', 'Hong Kong S.A.R.': 'Hong Kong',
+  'Macao S.A.R': 'Macau', eSwatini: 'Eswatini', Aland: 'Åland',
+};
+// Names that changed after 2011: the 2011 map uses the old ones.
+const NE_BEFORE = { Eswatini: [2018, 'Swaziland'], 'North Macedonia': [2019, 'Macedonia'], Czechia: [2016, 'Czech Republic'], 'Cabo Verde': [2013, 'Cape Verde'] };
+const neName = (admin, year) => {
+  const n = NE_NAMES[admin] ?? admin;
+  return NE_BEFORE[n] && year < NE_BEFORE[n][0] ? NE_BEFORE[n][1] : n;
+};
+// In the shape of the source's features: every border is a precise one.
+const neFeature = (f, year) => {
+  const { ADMIN, SOVEREIGNT, TYPE } = f.properties;
+  const sub = SOVEREIGNT !== ADMIN && TYPE !== 'Indeterminate' ? neName(SOVEREIGNT, year) : '';
+  return { type: 'Feature', properties: { NAME: neName(ADMIN, year), SUBJECTO: sub, BORDERPRECISION: 3 }, geometry: f.geometry };
+};
+// The states the source misses, from the year they exist (by Natural Earth's code).
+const MISSING_FROM = {
+  CHE: -Infinity, MCO: -Infinity, SMR: -Infinity, VAT: -Infinity, SGP: 1965, MDV: 1965, MUS: 1968, NRU: 1968,
+  BHR: 1971, CPV: 1975, COM: 1975, STP: 1975, SYC: 1976, SLB: 1978, TUV: 1978, KIR: 1979, VUT: 1980,
+  MHL: 1986, FSM: 1986, PLW: 1994, PSX: 1994, TLS: 2002, KOS: 2008,
+};
+// Cuts the missing states out of whatever the source drew there, then adds them.
+async function withMissingStates(fc, year) {
+  const have = new Set(fc.features.filter(f => f.geometry).map(f => renamed(f.properties.NAME?.trim(), year)));
+  const add = neMap.features
+    .filter(f => MISSING_FROM[f.properties.ADM0_A3] <= year && !have.has(neName(f.properties.ADMIN, year)))
+    .map(f => neFeature(f, year));
+  if (!add.length) return fc;
+  // The source sometimes has the state as an empty shape (Switzerland): that goes.
+  const added = new Set(add.map(f => f.properties.NAME));
+  fc = { ...fc, features: fc.features.filter(f => !added.has(renamed(f.properties.NAME?.trim(), year))) };
+  const out = await ms.applyCommands('-i hb.json name=hb -i add.json name=add -erase add target=hb -merge-layers target=hb,add force -o out.json precision=0.01 format=geojson',
+    { 'hb.json': JSON.stringify(fc), 'add.json': JSON.stringify({ type: 'FeatureCollection', features: add }) });
+  console.log(`  ${year}: added ${add.map(f => f.properties.NAME).join(', ')}`);
+  return JSON.parse(out['out.json']);
+}
+
+const NE_YEARS = [2011, 2019];
+const years = [...index.map(y => y.year), ...NE_YEARS];
+for (const year of years) {
+  const hb = index.find(y => y.year === year);
+  let fc;
+  if (!hb) fc = { type: 'FeatureCollection', features: neMap.features.map(f => neFeature(f, year)) };
+  else {
+    fc = await simplify(path.join(HB, hb.filename), '35%');
+    if (year >= 1994) fc = await withMissingStates(fc, year);
+  }
   const feats = [], labels = [];
   for (const f of fc.features) {
     const p = f.properties;
@@ -116,17 +199,17 @@ for (const { year, filename } of index) {
       if (a > bestA) { bestA = a; best = poly; }
     }
     if (!best) continue;
-    const sub = p.SUBJECTO && p.SUBJECTO !== p.NAME ? p.SUBJECTO.trim() : null;
+    const sub = p.SUBJECTO && p.SUBJECTO !== p.NAME ? renamed(p.SUBJECTO.trim(), year) : null;
     const id = feats.length;
     feats.push({
       type: 'Feature', id,
-      properties: { e: name, c: colorFor(sub || p.NAME), p: p.BORDERPRECISION >= 2 ? 1 : 0, s: sub || '' },
+      properties: { e: name, c: colorFor(sub || name), p: p.BORDERPRECISION >= 2 ? 1 : 0, s: sub || '' },
       geometry: f.geometry,
     });
     const [lx, ly] = polylabel(best, 0.05);
     // Names like "?" in the source data get no label.
     if (/\p{L}/u.test(name)) {
-      const sharp = p.BORDERPRECISION >= 2 ? 1 : 0, color = colorFor(sub || p.NAME);
+      const sharp = p.BORDERPRECISION >= 2 ? 1 : 0, color = colorFor(sub || name);
       labels.push([r2(lx), r2(ly), Math.round(total), name, sharp, color]);
       // A 7th field of 1 marks an extra label — the side panel skips it.
       if (bestA > 2500000) for (const [ex, ey, ea] of extraLabels(best, [lx, ly])) labels.push([ex, ey, ea, name, sharp, color, 1]);
@@ -144,7 +227,7 @@ for (const { year, filename } of index) {
   console.log(year, feats.length);
 }
 
-fs.writeFileSync(path.join(OUT, 'snapshots.json'), JSON.stringify(index.map(y => y.year)));
+fs.writeFileSync(path.join(OUT, 'snapshots.json'), JSON.stringify(years));
 fs.writeFileSync(path.join(OUT, 'entities.json'), JSON.stringify(entities));
 
 // Base map: Natural Earth 1:50m.

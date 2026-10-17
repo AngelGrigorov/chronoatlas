@@ -143,7 +143,7 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
       land: { type: 'geojson', data: abs('data/base/land.json') },
       lakes: { type: 'geojson', data: abs('data/base/lakes.json') },
       rivers: { type: 'geojson', data: abs('data/base/rivers_lake_centerlines.json') },
-      bA: { type: 'geojson', data: EMPTY, attribution: 'Borders: <a href="https://github.com/aourednik/historical-basemaps">historical-basemaps</a> (GPL-3.0)' },
+      bA: { type: 'geojson', data: EMPTY, attribution: 'Borders: <a href="https://github.com/aourednik/historical-basemaps">historical-basemaps</a> (GPL-3.0), Natural Earth' },
       bB: { type: 'geojson', data: EMPTY },
       cultures: {
         type: 'geojson',

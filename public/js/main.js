@@ -37,6 +37,8 @@ for (const s of seas) s.n = T.seas[s.id];
 for (const tr of eras.tracks) {
   tr.n = T.eras[tr.id].n;
   tr.b.forEach((b, i) => { b[2] = T.eras[tr.id].b[i]; });
+  // The last era of a track runs into the present, whatever year that is.
+  tr.b.at(-1)[1] = Math.max(tr.b.at(-1)[1], MAX_YEAR + 1);
 }
 for (const [name, ent] of Object.entries(entities)) ent.n = polityName(name);
 // Wikidata rows: [year, lon, lat, kind, sitelinks, qid]

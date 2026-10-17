@@ -59,7 +59,7 @@ export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }
       ctx.fillRect(0, ty, W, trackH - 2);
       tr.b.forEach(([s, e, name], bi) => {
         if (e < y0 || s > y1) return;
-        const xa = Math.max(-2, xOf(s)), xb = Math.min(W + 2, xOf(e));
+        const xa = Math.max(-2, xOf(s)), xb = Math.min(W + 2, xOf(Math.min(e, MAX_YEAR)));
         const on = app.year >= s && app.year < e;
         const hue = tr.h ?? 40;
         ctx.fillStyle = `hsla(${hue}, ${on ? 55 : 35}%, ${bi % 2 ? 46 : 38}%, ${on ? 0.75 : 0.42})`;
