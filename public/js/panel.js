@@ -26,6 +26,11 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     const li = e.target.closest('li[data-i]');
     if (li) onFocus(items[+li.dataset.i]);
   });
+  // The list works from the keyboard too: Tab to an item, Enter or Space to show it.
+  root.addEventListener('keydown', e => {
+    const li = e.target.closest('li[data-i]');
+    if (li && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onFocus(items[+li.dataset.i]); }
+  });
 
   // Event kind filter — buttons above the list; all on means no filter.
   const ALL = Object.keys(KIND_GROUPS);
@@ -88,7 +93,7 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     if (alive.length) {
       html += `<section><h3>${esc(t('side.alive'))}</h3><ul>`;
       for (const p of alive) {
-        html += `<li class="person" data-i="${push({ type: 'person', item: p, lon: p.lon, lat: p.lat })}"><span class="sw pe"></span><span class="t">${esc(p.n)}<small>${esc(p.t)}</small></span><span class="y">${esc(t('side.age', { n: yearsBetween(p.b, Math.round(year)) }))}</span></li>`;
+        html += `<li class="person" tabindex="0" role="button" data-i="${push({ type: 'person', item: p, lon: p.lon, lat: p.lat })}"><span class="sw pe"></span><span class="t">${esc(p.n)}<small>${esc(p.t)}</small></span><span class="y">${esc(t('side.age', { n: yearsBetween(p.b, Math.round(year)) }))}</span></li>`;
       }
       html += '</ul></section>';
     }
@@ -103,11 +108,11 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
       html += `<section><h3>${esc(t('region.' + k))}</h3><ul>`;
       for (const it of evs) {
         const e = it.item;
-        html += `<li class="ev" data-i="${push(it)}"><span class="sw ev" style="background:${KINDS[e.k]}"></span><span class="t">${esc(e.t)}</span><span class="y">${esc(fmtYear(e.y, true))}</span></li>`;
+        html += `<li class="ev" tabindex="0" role="button" data-i="${push(it)}"><span class="sw ev" style="background:${KINDS[e.k]}"></span><span class="t">${esc(e.t)}</span><span class="y">${esc(fmtYear(e.y, true))}</span></li>`;
       }
       for (const it of [...states, ...other]) {
         const color = it.type === 'culture' ? '#f0c674' : it.color || 'rgba(236,226,205,0.4)';
-        html += `<li data-i="${push(it)}"><span class="sw" style="background:${color}"></span><span class="t">${esc(it.name)}</span></li>`;
+        html += `<li tabindex="0" role="button" data-i="${push(it)}"><span class="sw" style="background:${color}"></span><span class="t">${esc(it.name)}</span></li>`;
       }
       html += '</ul></section>';
     }

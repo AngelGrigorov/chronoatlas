@@ -211,6 +211,10 @@ console.log('Next and previous event');
   check(back === -490, `, comes back to Marathon: ${back}`);
   const side = await page.$eval('#side-list', el => el.innerText);
   check(/Marathon/.test(side), 'and its event is listed');
+  await page.focus('#side-list li.ev');
+  await page.keyboard.press('Enter');
+  await wait(400);
+  check(await page.$eval('#card', el => !el.hidden && /Marathon/.test(el.innerText)), 'Enter on a listed event opens its card');
   check(errors.length === 0, `no errors (${errors.length})`);
   await page.close();
 }
