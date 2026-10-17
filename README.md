@@ -52,6 +52,7 @@ cards need a connection.
 | drag the timeline | move through time |
 | double-click an era | fit the era |
 | ← → | move through time |
+| `,` `.` | previous / next event |
 | space | play / pause |
 | `/` | search |
 

@@ -179,6 +179,25 @@ console.log('Events of the shown year only');
   await page.close();
 }
 
+console.log('Next and previous event');
+{
+  const { page, errors } = await open('y=-490&s=1200&c=24,38&z=4');
+  const yearAfter = async key => {
+    await page.click('#hud');
+    await page.keyboard.press(key);
+    await wait(1600);
+    return page.evaluate(() => Math.round(window.atlas.app.year));
+  };
+  const next = await yearAfter('.');
+  check(next > -490, `. goes to the next event: ${next}`);
+  const back = await yearAfter(',');
+  check(back === -490, `, comes back to Marathon: ${back}`);
+  const side = await page.$eval('#side-list', el => el.innerText);
+  check(/Marathon/.test(side), 'and its event is listed');
+  check(errors.length === 0, `no errors (${errors.length})`);
+  await page.close();
+}
+
 console.log('Links to a card');
 {
   const { page, errors } = await open('y=-490&s=1200&c=24,38&z=4&o=event%3Abattle-of-marathon');
@@ -187,10 +206,10 @@ console.log('Links to a card');
   await page.click('#card .close');
   await wait(300);
   check(!/[#&]o=/.test(await page.evaluate(() => location.hash)), 'closing it takes it out of the address');
-  await page.goto(BASE + '#y=1600&s=600&c=30,38&z=3.3&o=polity%3AOttoman%20Empire', { waitUntil: 'load' });
-  await page.reload({ waitUntil: 'load' });
-  await ready(page);
-  check(/Ottoman/.test(await title()), `a state opens too: "${await title()}"`);
+  // Pasted into the open tab.
+  await page.evaluate(() => { location.hash = 'y=1600&s=600&c=30,38&z=3.3&o=polity%3AOttoman%20Empire'; });
+  await wait(1500);
+  check(/Ottoman/.test(await title()), `a state opens too, in the open tab: "${await title()}"`);
   check(/o=polity%3AOttoman/.test(await page.evaluate(() => location.hash)), 'and stays in the address');
   check(errors.length === 0, `no errors (${errors.length})`);
   await page.close();

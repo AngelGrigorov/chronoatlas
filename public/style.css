@@ -76,7 +76,7 @@ button, select, input { font: inherit; color: inherit; }
 #kinds button i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.35; }
 #kinds button[aria-pressed="true"] { color: var(--text); border-color: var(--gold-dim); }
 #kinds button[aria-pressed="true"] i { background: var(--dot); opacity: 1; }
-#hint { position: absolute; left: 50%; bottom: calc(var(--time-h) + 14px); transform: translateX(-50%); display: flex; align-items: center; gap: 14px; width: max-content; max-width: calc(100vw - 32px); padding: 10px 12px 10px 16px; border-radius: 12px; background: var(--panel-solid); border: 1px solid var(--gold-dim); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); font-size: 13px; color: var(--muted); z-index: 6; }
+#hint { position: absolute; left: 50%; bottom: calc(var(--time-h) + 14px); transform: translateX(-50%); display: flex; align-items: center; gap: 14px; width: max-content; max-width: max(360px, calc(100vw - 656px)); padding: 10px 12px 10px 16px; border-radius: 12px; background: var(--panel-solid); border: 1px solid var(--gold-dim); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); font-size: 13px; color: var(--muted); z-index: 6; }
 #hint[hidden] { display: none; }
 #hint b { color: var(--text); font-weight: 600; }
 #hint button { flex: none; padding: 5px 12px; border-radius: 14px; border: 1px solid var(--gold-dim); background: rgba(217, 180, 90, 0.12); color: var(--gold); cursor: pointer; }
@@ -150,6 +150,7 @@ button, select, input { font: inherit; color: inherit; }
   #side.closed { pointer-events: none; }
   #side-toggle { position: fixed; right: 16px; top: 128px; }
   #card { left: 16px; right: 16px; width: auto; }
+  #hint { max-width: calc(100vw - 32px); }
   #time .controls { width: 64px; }
   #play { width: 40px; height: 40px; }
 }

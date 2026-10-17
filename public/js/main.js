@@ -1,5 +1,5 @@
 import { loadLanguage, downloadLanguage, setLanguage, applyStatic, texts, polityName, t, lang } from './i18n.js';
-import { createMap } from './map.js';
+import { createMap, isBattle } from './map.js';
 import { createTimeline, MIN_SPAN, MAX_SPAN } from './timeline.js';
 import { clampYear, fmtYear, MAX_YEAR } from './time.js';
 import { createPanel, showCard, hideCard, cardKey } from './panel.js';
@@ -105,7 +105,7 @@ function onGo(g) {
 }
 
 // ——— Timeline, panel, search ———
-const timeline = createTimeline(document.getElementById('timeline'), { eras, events, snapshots, app });
+const timeline = createTimeline(document.getElementById('timeline'), { eras, events, wd, snapshots, app });
 const panel = createPanel(document.getElementById('side-list'), document.getElementById('side-toggle'), {
   data: { events, wd, cultures, cities, people },
   kinds: document.getElementById('kinds'),
@@ -208,6 +208,7 @@ document.addEventListener('keydown', e => {
   if (e.key === ' ') { e.preventDefault(); togglePlay(); }
   else if (e.key === 'Escape') hideCard();
   else if (e.key === '/') { e.preventDefault(); document.getElementById('q').focus(); }
+  else if (e.code === 'Comma' || e.code === 'Period') stepEvent(e.code === 'Period' ? 1 : -1);
   // Arrows move time, unless the map has focus (there they pan the view).
   else if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !e.target.closest('#map, #timeline')) {
     e.preventDefault();
@@ -215,6 +216,21 @@ document.addEventListener('keydown', e => {
     app.setYear(app.year + (e.key === 'ArrowLeft' ? -1 : 1) * app.span / (e.shiftKey ? 10 : 50), { instant: true });
   }
 });
+
+// , and . go to the previous or next year with an event on the map (layers and kinds as set).
+function stepEvent(dir) {
+  const ks = panel.kinds(), now = Math.round(app.tween?.to ?? app.year);
+  let best = null;
+  for (const list of [events, wd]) {
+    for (const e of list) {
+      if (!app.layers[isBattle(e.k) ? 'battles' : 'events'] || (ks && !ks.includes(e.k))) continue;
+      if (dir > 0 ? e.y > now && (best === null || e.y < best) : e.y < now && (best === null || e.y > best)) best = e.y;
+    }
+  }
+  if (best === null) return;
+  app.stopPlay();
+  app.setYear(best);
+}
 
 // ——— One frame: time moves on, everything is redrawn ———
 const yearEl = document.getElementById('year'), eraEl = document.getElementById('era'), snapEl = document.getElementById('snap');
@@ -268,9 +284,12 @@ function cardFromKey(key) {
   const item = list?.find(x => x.id === id);
   return item && { type, item };
 }
+// A link pasted into an open tab: the year and the card follow it.
 window.addEventListener('hashchange', () => {
   const h = new URLSearchParams(location.hash.slice(1));
   if (h.has('y')) app.setYear(num(h.get('y'), app.year));
+  const linked = h.get('o') !== cardKey && cardFromKey(h.get('o'));
+  if (linked) showCard({ ...linked, year: num(h.get('y'), app.year) }, { entities, onGo });
 });
 
 await map.whenReady;

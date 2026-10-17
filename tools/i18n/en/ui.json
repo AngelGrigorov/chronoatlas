@@ -92,11 +92,11 @@
   "speed.title": "Speed",
   "speed.unit": "{n} yr/s",
   "timeline.label": "Timeline: the wheel moves time, Ctrl+wheel zooms",
-  "timeline.help": "Wheel — time · Ctrl+wheel — zoom · click — jump",
+  "timeline.help": "Wheel — time · Ctrl+wheel — zoom · click — jump · , . — previous/next event",
   "timeline.band": "{name} · {range}\nDouble-click — fit the era",
   "timeline.event": "{t} · {year}\nClick — jump there",
   "timeline.zero": "BC | AD",
-  "hint.desktop": "<b>The wheel</b> over the timeline takes you back and forth in time · <b>Ctrl</b> + wheel zooms · <b>space</b> plays history",
+  "hint.desktop": "<b>The wheel</b> over the timeline takes you back and forth in time · <b>Ctrl</b> + wheel zooms · <b>space</b> plays history · <b>,</b> and <b>.</b> jump between events",
   "hint.touch": "<b>Drag</b> the timeline to travel in time · <b>pinch</b> it to zoom · <b>▶</b> plays history",
   "hint.ok": "Got it"
 }

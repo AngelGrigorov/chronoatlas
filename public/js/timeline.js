@@ -10,7 +10,7 @@ const STEPS = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 50
 
 // A timeline with a fixed cursor in the middle: the world slides underneath it.
 // app: { year, span, setYear(y, opts), setSpan(s), stopPlay() }
-export function createTimeline(canvas, { eras, events, snapshots, app }) {
+export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }) {
   const ctx = canvas.getContext('2d');
   let W = 0, H = 0, dpr = 1, queued = false;
   let hoverX = null, momentum = null, hoverEvent = null;
@@ -93,7 +93,9 @@ export function createTimeline(canvas, { eras, events, snapshots, app }) {
       ctx.fillText(tr.n.toUpperCase(), W - 5, ty + (trackH - 2) / 2 + 0.5);
     });
 
-    // Events as ticks — the density of history.
+    // Events as ticks — the density of history. Wikidata ones are short and faint.
+    ctx.fillStyle = 'rgba(236,226,205,0.28)';
+    for (const e of wd) if (e.y >= y0 && e.y <= y1) ctx.fillRect(Math.round(xOf(e.y)), evY + 7, 1, 3);
     for (const e of events) {
       if (e.y < y0 || e.y > y1) continue;
       ctx.fillStyle = KINDS[e.k] || '#ccc';
