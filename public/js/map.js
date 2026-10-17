@@ -592,8 +592,11 @@ export function createMap({ container, canvas, data, initial, onPick, onSnapshot
         const font = `italic 500 ${size}px ${SERIF}`;
         const p = map.project([s.lon, s.lat]);
         const w = measure(name, font, spacing);
-        if (!freeIn(soft, p.x - w / 2, p.y - size / 2, p.x + w / 2, p.y + size / 2)) continue;
-        text(name, p.x, p.y, font, 'rgba(150,186,222,0.82)', spacing, 'center', 'rgba(10,20,34,0.7)');
+        if (repeated(name, p)) continue;
+        const at = softAt(p.x, p.y, w, size);
+        if (!at) continue;
+        remember(name, p);
+        text(name, at[0], at[1], font, 'rgba(150,186,222,0.82)', spacing, 'center', 'rgba(10,20,34,0.7)');
       }
     }
 
