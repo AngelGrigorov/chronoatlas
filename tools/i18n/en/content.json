@@ -2349,6 +2349,211 @@
       "t": "Deng Xiaoping's reforms",
       "d": "China opens its economy — the start of the fastest growth in history.",
       "w": "Chinese economic reform"
+    },
+    "otrar-bukhara": {
+      "t": "The Mongols take Khwarazm",
+      "d": "After his envoys are killed at Otrar, Genghis Khan destroys the Khwarazmian Empire; Bukhara and Samarkand fall.",
+      "w": "Mongol invasion of the Khwarazmian Empire"
+    },
+    "timur-samarkand": {
+      "t": "Timur rules from Samarkand",
+      "d": "Timur makes himself master of Central Asia and fills Samarkand with the craftsmen of the cities he takes.",
+      "w": "Timur"
+    },
+    "timur-delhi": {
+      "t": "Timur sacks Delhi",
+      "d": "Timur's army takes Delhi and plunders it for days; the Delhi Sultanate never recovers its strength.",
+      "w": "Sack of Delhi (1398)"
+    },
+    "ulugh-beg-observatory": {
+      "t": "Ulugh Beg's observatory",
+      "d": "Timur's grandson builds a great observatory at Samarkand; his star catalogue is the best since Ptolemy.",
+      "w": "Ulugh Beg Observatory"
+    },
+    "nader-delhi": {
+      "t": "Nader Shah sacks Delhi",
+      "d": "The Persian ruler defeats the Mughals at Karnal and carries the Peacock Throne off to Iran.",
+      "w": "Nader Shah's invasion of the Mughal Empire"
+    },
+    "sikh-empire": {
+      "t": "Ranjit Singh takes Lahore",
+      "d": "The Sikh leader takes Lahore and builds an empire across the Punjab.",
+      "w": "Sikh Empire"
+    },
+    "amritsar-massacre": {
+      "t": "The Amritsar massacre",
+      "d": "British troops fire on an unarmed crowd in the Jallianwala Bagh; the massacre turns India against British rule.",
+      "w": "Jallianwala Bagh massacre"
+    },
+    "gandhi-killed": {
+      "t": "Gandhi is assassinated",
+      "d": "Five months after independence, Mahatma Gandhi is shot in Delhi on his way to prayer.",
+      "w": "Assassination of Mahatma Gandhi"
+    },
+    "soviet-afghan-war": {
+      "t": "The Soviet war in Afghanistan",
+      "d": "Soviet troops enter Afghanistan to prop up its communist government and leave ten years later, beaten by the mujahideen.",
+      "w": "Soviet–Afghan War"
+    },
+    "bhopal": {
+      "t": "The Bhopal disaster",
+      "d": "A gas leak at a pesticide plant kills thousands in their sleep — the worst industrial disaster in history.",
+      "w": "Bhopal disaster"
+    },
+    "canton-system": {
+      "t": "The Canton System",
+      "d": "The Qing emperor allows Western ships to trade only at Canton, through licensed Chinese merchants.",
+      "w": "Canton System"
+    },
+    "macartney": {
+      "t": "The Macartney embassy",
+      "d": "Britain's envoy asks the Qianlong Emperor for open trade; the emperor answers that China needs nothing from Britain.",
+      "w": "Macartney Embassy"
+    },
+    "treaty-of-nanking": {
+      "t": "The Treaty of Nanking",
+      "d": "Defeated in the Opium War, China cedes Hong Kong and opens five ports — the first of the 'unequal treaties'.",
+      "w": "Treaty of Nanking"
+    },
+    "boxer-rebellion": {
+      "t": "The Boxer Rebellion",
+      "d": "The Boxers rise against foreigners and besiege the legations in Beijing until an eight-nation army takes the city.",
+      "w": "Boxer Rebellion"
+    },
+    "korea-annexed": {
+      "t": "Japan annexes Korea",
+      "d": "Korea becomes a Japanese colony for thirty-five years, until 1945.",
+      "w": "Japan–Korea Treaty of 1910"
+    },
+    "dien-bien-phu": {
+      "t": "Dien Bien Phu",
+      "d": "The Viet Minh besiege and take the French base; France leaves Indochina and Vietnam is split in two.",
+      "w": "Battle of Điện Biên Phủ"
+    },
+    "shinkansen": {
+      "t": "The Shinkansen",
+      "d": "Japan opens the first high-speed railway between Tokyo and Osaka, days before the Tokyo Olympics.",
+      "w": "Shinkansen"
+    },
+    "fall-of-saigon": {
+      "t": "The fall of Saigon",
+      "d": "North Vietnamese tanks enter Saigon; the last Americans leave by helicopter and Vietnam is united.",
+      "w": "Fall of Saigon"
+    },
+    "hong-kong-handover": {
+      "t": "Hong Kong returns to China",
+      "d": "After 156 years as a British colony, Hong Kong passes to China as a special administrative region.",
+      "w": "Handover of Hong Kong"
+    },
+    "sokoto": {
+      "t": "The Sokoto Caliphate",
+      "d": "Usman dan Fodio leads a holy war across Hausaland and founds the largest state in 19th-century West Africa.",
+      "w": "Sokoto Caliphate"
+    },
+    "great-trek": {
+      "t": "The Great Trek",
+      "d": "Boer settlers leave the British Cape in ox-wagons for the interior, where they found their own republics.",
+      "w": "Great Trek"
+    },
+    "victoria-falls": {
+      "t": "Livingstone at Victoria Falls",
+      "d": "David Livingstone is the first European to see the falls the local people call 'the smoke that thunders'.",
+      "w": "Victoria Falls"
+    },
+    "congo-free-state": {
+      "t": "The Congo Free State",
+      "d": "King Leopold II of Belgium takes the Congo as his own property; forced rubber labour costs millions of lives.",
+      "w": "Congo Free State"
+    },
+    "omdurman": {
+      "t": "Omdurman",
+      "d": "Kitchener's machine guns destroy the Mahdist army in a morning; Sudan comes under British and Egyptian rule.",
+      "w": "Battle of Omdurman"
+    },
+    "mau-mau": {
+      "t": "The Mau Mau uprising",
+      "d": "Kikuyu fighters rise against British settlers in Kenya; the brutal war leads to independence in 1963.",
+      "w": "Mau Mau rebellion"
+    },
+    "biafra": {
+      "t": "The Nigerian Civil War",
+      "d": "Biafra breaks away from Nigeria; the blockade and famine kill up to two million people.",
+      "w": "Nigerian Civil War"
+    },
+    "south-sudan-independence": {
+      "t": "South Sudan becomes independent",
+      "d": "After decades of war and a referendum, South Sudan breaks away from Sudan — the world's newest state.",
+      "w": "South Sudan"
+    },
+    "crossing-of-the-andes": {
+      "t": "San Martín crosses the Andes",
+      "d": "José de San Martín takes his army over the Andes and frees Chile at Chacabuco.",
+      "w": "Crossing of the Andes"
+    },
+    "boyaca": {
+      "t": "Boyacá",
+      "d": "Simón Bolívar defeats the Spanish and enters Bogotá; Gran Colombia is born.",
+      "w": "Battle of Boyacá"
+    },
+    "mexican-american-war": {
+      "t": "The Mexican–American War",
+      "d": "The United States takes Mexico City; Mexico loses half its territory, from Texas to California.",
+      "w": "Mexican–American War"
+    },
+    "california-gold-rush": {
+      "t": "The California gold rush",
+      "d": "Gold at Sutter's Mill draws three hundred thousand people west; San Francisco grows from a village into a city.",
+      "w": "California gold rush"
+    },
+    "lincoln-killed": {
+      "t": "Lincoln is assassinated",
+      "d": "Five days after the Confederacy surrenders, Abraham Lincoln is shot at Ford's Theatre in Washington.",
+      "w": "Assassination of Abraham Lincoln"
+    },
+    "lei-aurea": {
+      "t": "Brazil abolishes slavery",
+      "d": "Princess Isabel signs the Golden Law; Brazil is the last country in the Americas to end slavery.",
+      "w": "Lei Áurea"
+    },
+    "chaco-war": {
+      "t": "The Chaco War",
+      "d": "Bolivia and Paraguay fight over the dry Gran Chaco, thought to hold oil; Paraguay wins most of it.",
+      "w": "Chaco War"
+    },
+    "chile-coup": {
+      "t": "The coup in Chile",
+      "d": "The army bombs the presidential palace; Salvador Allende dies and Augusto Pinochet rules for seventeen years.",
+      "w": "1973 Chilean coup d'état"
+    },
+    "falklands-war": {
+      "t": "The Falklands War",
+      "d": "Argentina seizes the Falkland Islands; Britain sends a fleet and retakes them after ten weeks.",
+      "w": "Falklands War"
+    },
+    "kingdom-of-hawaii": {
+      "t": "The Kingdom of Hawaii",
+      "d": "Kamehameha the Great brings all the islands of Hawaii under one crown.",
+      "w": "Hawaiian Kingdom"
+    },
+    "australian-gold-rush": {
+      "t": "The Australian gold rush",
+      "d": "Gold near Bathurst and then at Ballarat brings a flood of migrants; Australia's population triples in ten years.",
+      "w": "Australian gold rushes"
+    },
+    "nz-women-vote": {
+      "t": "Women vote in New Zealand",
+      "d": "New Zealand is the first country where women win the right to vote in national elections.",
+      "w": "Women's suffrage in New Zealand"
+    },
+    "bikini-tests": {
+      "t": "Nuclear tests at Bikini",
+      "d": "The United States explodes atomic bombs over a lagoon in the Marshall Islands; the islanders are moved away for good.",
+      "w": "Operation Crossroads"
+    },
+    "sydney-opera-house": {
+      "t": "The Sydney Opera House",
+      "d": "Jørn Utzon's sails of white tiles open on Sydney Harbour after sixteen years of building.",
+      "w": "Sydney Opera House"
     }
   },
   "cultures": {
