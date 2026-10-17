@@ -288,10 +288,13 @@ function cardFromKey(key) {
   const item = list?.find(x => x.id === id);
   return item && { type, item };
 }
-// A link pasted into an open tab: the year and the card follow it.
+// A link pasted into an open tab: the year, the timeline, the view and the card follow it.
 window.addEventListener('hashchange', () => {
   const h = new URLSearchParams(location.hash.slice(1));
+  if (h.has('s')) app.setSpan(num(h.get('s'), app.span));
   if (h.has('y')) app.setYear(num(h.get('y'), app.year));
+  const [x, y] = (h.get('c') || '').split(',').map(Number);
+  if (Number.isFinite(x) && Number.isFinite(y)) map.flyTo(x, y, num(h.get('z'), map.map.getZoom()));
   const linked = h.get('o') !== cardKey && cardFromKey(h.get('o'));
   if (linked) showCard({ ...linked, year: num(h.get('y'), app.year) }, { entities, onGo });
 });

@@ -268,6 +268,8 @@ console.log('Links to a card');
   await page.evaluate(() => { location.hash = 'y=1600&s=600&c=30,38&z=3.3&o=polity%3AOttoman%20Empire'; });
   await wait(1500);
   check(/Ottoman/.test(await title()), `a state opens too, in the open tab: "${await title()}"`);
+  const view = await page.evaluate(() => ({ span: Math.round(window.atlas.app.span), z: +window.atlas.map.getZoom().toFixed(1), lon: Math.round(window.atlas.map.getCenter().lng) }));
+  check(view.span === 600 && Math.abs(view.z - 3.3) < 0.2 && view.lon === 30, `and the view follows the link: ${JSON.stringify(view)}`);
   check(/o=polity%3AOttoman/.test(await page.evaluate(() => location.hash)), 'and stays in the address');
   check(errors.length === 0, `no errors (${errors.length})`);
   await page.close();
