@@ -2913,6 +2913,46 @@
       "n": "Napoleon in Russia",
       "d": "600,000 go in; fewer than 100,000 come out.",
       "w": "French invasion of Russia"
+    },
+    "royal-road": {
+      "n": "The Persian Royal Road",
+      "d": "From Sardis to Susa: royal couriers changed horses at stations a day's ride apart and covered it in about a week.",
+      "w": "Royal Road"
+    },
+    "grand-trunk-road": {
+      "n": "The Grand Trunk Road",
+      "d": "One of Asia's oldest roads, from Bengal to Kabul; rebuilt by Sher Shah Suri, it is still in use.",
+      "w": "Grand Trunk Road"
+    },
+    "tea-horse-road": {
+      "n": "The Tea Horse Road",
+      "d": "Mule caravans carry bricks of Yunnan tea over the mountains to Tibet and bring back Tibetan horses.",
+      "w": "Tea Horse Road"
+    },
+    "ibn-battuta": {
+      "n": "Ibn Battuta",
+      "d": "A young judge from Tangier sets out for Mecca and comes home twenty-nine years and some 120,000 km later, from Delhi, China and Timbuktu.",
+      "w": "Ibn Battuta"
+    },
+    "cortes": {
+      "n": "Cortés marches on Tenochtitlan",
+      "d": "Some 500 Spaniards land at Veracruz, win over the Tlaxcalans and enter the Aztec capital as Moctezuma's guests.",
+      "w": "Spanish conquest of the Aztec Empire"
+    },
+    "cook-first-voyage": {
+      "n": "Cook's first voyage",
+      "d": "The Endeavour watches the transit of Venus from Tahiti, then charts New Zealand and the east coast of Australia.",
+      "w": "First voyage of James Cook"
+    },
+    "trail-of-tears": {
+      "n": "The Trail of Tears",
+      "d": "The US Army drives the Cherokee from their homeland to Indian Territory; thousands die on the way.",
+      "w": "Trail of Tears"
+    },
+    "long-march": {
+      "n": "The Long March",
+      "d": "Encircled, the Red Army breaks out of Jiangxi and retreats some 10,000 km to Shaanxi; one in ten arrives. Mao becomes its leader on the way.",
+      "w": "Long March"
     }
   },
   "people": {
