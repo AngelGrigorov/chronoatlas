@@ -6,12 +6,12 @@ who was where, what happened and where the armies and ships were heading — fro
 
 ![The ancient world in 330 BC: Alexander's campaign, cultures and the side panel](docs/screenshots/ancient-world.jpg)
 
-- **Borders** of states and peoples for 53 moments in history; approximate borders
-  are drawn blurred, precise ones sharp
+- **Borders** of states and peoples for 58 moments in history, up to today's map with
+  every state; approximate borders are drawn blurred, precise ones sharp
 - **Cultures without clear borders** as glowing areas — Sumer, the Indus Valley,
   the Thracians, the Vikings
-- **Over 2,000 events**: 470 hand-picked ones plus battles, treaties and earthquakes
-  from Wikidata
+- **Over 2,000 events**: 511 hand-picked ones plus battles, treaties, summits and
+  earthquakes from Wikidata — each shown in its own year, wars through theirs
 - **Trade routes and campaigns** that draw themselves as time moves
 - **Cities with their names through the ages** (Byzantium → Constantinople → Istanbul)
   and **seas with their old names** (Pontus Euxinus, Propontis, Mare Nostrum)
