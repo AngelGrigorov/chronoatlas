@@ -302,3 +302,5 @@ if (linked) showCard({ ...linked, year: app.year }, { entities, onGo });
 dirty();
 document.fonts.load("600 16px 'Cormorant Garamond'").finally(() => dirty());
 document.getElementById('loading').classList.add('done');
+// Keeps what has been seen for use without a network (public/sw.js).
+navigator.serviceWorker?.register('sw.js').catch(() => {});

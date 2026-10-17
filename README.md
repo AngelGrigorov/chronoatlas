@@ -40,8 +40,9 @@ npm run serve
 ```
 
 Open http://localhost:8642. The `public/` folder is the whole site and can be served
-by any static web server. It works offline; only the Wikipedia summaries in the
-cards need a connection.
+by any static web server. It needs nothing from the internet, and once opened it
+also works with no network (a service worker keeps what has been seen); only the
+Wikipedia summaries in the cards need a connection.
 
 ## Controls
 

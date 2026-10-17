@@ -273,6 +273,27 @@ console.log('Links to a card');
   await page.close();
 }
 
+console.log('Offline');
+{
+  const { page, errors } = await open('y=1453&s=600&c=29,41&z=4');
+  await page.waitForFunction(() => navigator.serviceWorker.controller, { timeout: 10000 }).catch(() => {});
+  // The first load happened before the worker took over; one more fills its cache.
+  await page.reload({ waitUntil: 'load' });
+  await ready(page);
+  await wait(1500);
+  await page.setOfflineMode(true);
+  const offlineErrors = [];
+  page.on('pageerror', e => offlineErrors.push(e.message));
+  await page.reload({ waitUntil: 'load' }).catch(e => offlineErrors.push(e.message));
+  const ok = await page.waitForSelector('#loading.done', { timeout: 15000 }).then(() => true, () => false);
+  check(ok, 'opens again with no network');
+  check(/1453/.test(await page.$eval('#year', el => el.textContent).catch(() => '')), 'and shows the year');
+  check(offlineErrors.length === 0, `no script errors offline (${offlineErrors.join('; ').slice(0, 120)})`);
+  await page.setOfflineMode(false);
+  check(errors.filter(e => !/ERR_INTERNET_DISCONNECTED|Failed to fetch|AJAXError/.test(e)).length === 0, 'no errors while online');
+  await page.close();
+}
+
 console.log('Phone');
 {
   const { page, errors } = await open('y=681&s=600&c=26,43&z=3.5', { width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
