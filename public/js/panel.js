@@ -5,7 +5,7 @@ import { t, lang, polityName } from './i18n.js';
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // ——— "Around the world": what exists in the chosen year ———
-export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKinds, onOpen }) {
+export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKinds, onOpen, onStep }) {
   const { events, wd, cultures, people } = data;
   const side = root.closest('#side');
   let last = '';
@@ -23,6 +23,8 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     try { localStorage.setItem('side', closed ? 'closed' : 'open'); } catch {}
   });
   root.addEventListener('click', e => {
+    const step = e.target.closest('[data-step]');
+    if (step) return onStep?.(+step.dataset.step);
     const li = e.target.closest('li[data-i]');
     if (li) onFocus(items[+li.dataset.i]);
   });
@@ -49,8 +51,10 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
     const b = e.target.closest('button[data-g]');
     if (!b) return;
     const g = b.dataset.g;
-    // Clicking the only one left switches all back on; otherwise it toggles.
-    groups = groups.includes(g) ? (groups.length === 1 ? ALL : groups.filter(x => x !== g)) : [...groups, g];
+    // With all on, a click picks that one alone ("Faith" means: show me faith). After that
+    // clicks add and remove; taking away the only one left switches all back on.
+    if (groups.length === ALL.length) groups = [g];
+    else groups = groups.includes(g) ? (groups.length === 1 ? ALL : groups.filter(x => x !== g)) : [...groups, g];
     try { localStorage.setItem('kinds', JSON.stringify(groups)); } catch {}
     renderKinds();
     last = '';
@@ -129,6 +133,11 @@ export function createPanel(root, toggle, { data, onFocus, kinds: kindsEl, onKin
         html += `<li tabindex="0" role="button" data-i="${push(it)}"><span class="sw" style="background:${color}"></span><span class="t">${esc(it.name)}</span></li>`;
       }
       html += '</ul></section>';
+    }
+    // A filter on and nothing of its kind this year: say so, and offer the nearest ones.
+    if (kinds() && !Object.values(by).some(r => r.events.length)) {
+      html = html.replace('</div>', `</div><div class="none">${esc(t('side.noKinds', { year: fmtYear(year) }))}
+        <span><button data-step="-1">${esc(t('side.prev'))}</button><button data-step="1">${esc(t('side.next'))}</button></span></div>`);
     }
     root.innerHTML = html;
   }

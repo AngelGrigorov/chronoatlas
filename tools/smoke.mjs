@@ -219,6 +219,30 @@ console.log('Next and previous event');
   await page.close();
 }
 
+console.log('Event kind filter');
+{
+  const { page, errors } = await open('y=1000&s=600&c=20,40&z=2.5');
+  await page.click('#kinds button[data-g="religion"]');
+  await wait(500);
+  const pressed = await page.$$eval('#kinds button[aria-pressed="true"]', bs => bs.map(b => b.dataset.g));
+  check(pressed.join() === 'religion', `a click on Faith picks Faith alone: ${pressed.join(', ')}`);
+  const none = await page.$eval('#side-list', el => !!el.querySelector('.none'));
+  const next = async () => { await page.click('#side-list .none [data-step="1"]'); await wait(1800); };
+  if (none) await next();
+  const year = await page.evaluate(() => Math.round(window.atlas.app.year));
+  const side = await page.$eval('#side-list', el => el.innerText);
+  const kinds = await page.$$eval('#side-list li.ev .sw', s => s.map(x => x.style.background));
+  check(kinds.length > 0 && !side.includes('No events of the chosen'), `a faith event is listed (${year}${none ? ', after "next"' : ''}): ${kinds.length}`);
+  const onMap = await page.evaluate(() => window.atlas.map.queryRenderedFeatures({ layers: ['ev', 'bt', 'wdo-2', 'wdo-3', 'wdo-4', 'wdo-5', 'wdb-2', 'wdb-3', 'wdb-4', 'wdb-5'] }).map(f => f.properties.k));
+  check(onMap.length > 0 && onMap.every(k => k === 'religion'), `the map shows only faith events: ${[...new Set(onMap)].join(', ') || 'none'}`);
+  // Back to all, for the checks after this one (the choice is kept in the browser).
+  await page.click('#kinds button[data-g="religion"]');
+  await wait(300);
+  check(await page.$$eval('#kinds button[aria-pressed="true"]', bs => bs.length) === 6, 'clicking it again switches all back on');
+  check(errors.length === 0, `no errors (${errors.length})`);
+  await page.close();
+}
+
 console.log('Search for an era');
 {
   const { page, errors } = await open('y=1600&s=2400&c=20,45&z=3');

@@ -118,8 +118,9 @@ const timeline = createTimeline(document.getElementById('timeline'), { eras, eve
 const panel = createPanel(document.getElementById('side-list'), document.getElementById('side-toggle'), {
   data: { events, wd, cultures, cities, people },
   kinds: document.getElementById('kinds'),
-  onKinds(ks) { map.setKinds(ks); dirty(); },
+  onKinds(ks) { map.setKinds(ks); app.kinds = ks; timeline.draw(); dirty(); },
   onOpen: () => dirty(),
+  onStep: dir => stepEvent(dir),
   onFocus(it) {
     if (it.type === 'event' || it.type === 'wd') { map.flyTo(it.item.lon, it.item.lat); showCard({ type: it.type, item: it.item, year: app.year }, { entities, onGo }); }
     else if (it.type === 'culture' || it.type === 'person') { map.flyTo(it.lon, it.lat); showCard({ type: it.type, item: it.item, year: app.year }, { entities, onGo }); }
@@ -136,6 +137,7 @@ createSearch(document.getElementById('q'), document.getElementById('results'), {
 });
 
 map.setKinds(panel.kinds());
+app.kinds = panel.kinds();
 
 // First-visit hint; it goes away the first time time is turned.
 const hint = document.getElementById('hint');

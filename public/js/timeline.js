@@ -95,9 +95,11 @@ export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }
 
     // Events as ticks — the density of history. Wikidata ones are short and faint.
     ctx.fillStyle = 'rgba(236,226,205,0.28)';
-    for (const e of wd) if (e.y >= y0 && e.y <= y1) ctx.fillRect(Math.round(xOf(e.y)), evY + 7, 1, 3);
+    // With a kind filter on, only those kinds: the ticks show where to find them.
+    const ok = k => !app.kinds || app.kinds.includes(k);
+    for (const e of wd) if (e.y >= y0 && e.y <= y1 && ok(e.k)) ctx.fillRect(Math.round(xOf(e.y)), evY + 7, 1, 3);
     for (const e of events) {
-      if (e.y < y0 || e.y > y1) continue;
+      if (e.y < y0 || e.y > y1 || !ok(e.k)) continue;
       ctx.fillStyle = KINDS[e.k] || '#ccc';
       ctx.globalAlpha = e.i === 3 ? 0.95 : e.i === 2 ? 0.7 : 0.45;
       ctx.fillRect(Math.round(xOf(e.y)) - 1, evY + (3 - e.i) * 2, 2, 2 + e.i * 2);
@@ -274,6 +276,7 @@ export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }
     if (e.offsetY >= evY - 2 && e.offsetY <= evY + evH + 2) {
       let best = 5;
       for (const x of events) {
+        if (app.kinds && !app.kinds.includes(x.k)) continue;
         const d = Math.abs(xOf(x.y) - e.offsetX) - x.i;
         if (d < best) { best = d; ev = x; }
       }
