@@ -93,6 +93,7 @@
   "speed.unit": "{n} yr/s",
   "timeline.label": "Timeline: the wheel moves time, Ctrl+wheel zooms",
   "timeline.help": "Wheel — time · Ctrl+wheel — zoom · click — jump · , . — previous/next event",
+  "timeline.snap": "Border map of {year} — click to go there",
   "timeline.band": "{name} · {range}\nDouble-click — fit the era",
   "timeline.event": "{t} · {year}\nClick — jump there",
   "timeline.zero": "BC | AD",

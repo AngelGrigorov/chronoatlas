@@ -13,7 +13,7 @@ const STEPS = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 50
 export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }) {
   const ctx = canvas.getContext('2d');
   let W = 0, H = 0, dpr = 1, queued = false;
-  let hoverX = null, momentum = null, hoverEvent = null;
+  let hoverX = null, momentum = null, hoverEvent = null, hoverSnap = null;
 
   function resize() {
     const r = canvas.getBoundingClientRect();
@@ -135,9 +135,9 @@ export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }
     // Border snapshots — gold diamonds on the axis.
     for (const s of snapshots) {
       if (s < y0 || s > y1) continue;
-      const x = xOf(s);
-      ctx.fillStyle = '#d9b45a';
-      ctx.beginPath(); ctx.moveTo(x, ay - 4); ctx.lineTo(x + 3.5, ay); ctx.lineTo(x, ay + 4); ctx.lineTo(x - 3.5, ay); ctx.closePath(); ctx.fill();
+      const x = xOf(s), r = s === hoverSnap ? 6 : 4;
+      ctx.fillStyle = s === hoverSnap ? '#f3d488' : '#d9b45a';
+      ctx.beginPath(); ctx.moveTo(x, ay - r); ctx.lineTo(x + r * 0.9, ay); ctx.lineTo(x, ay + r); ctx.lineTo(x - r * 0.9, ay); ctx.closePath(); ctx.fill();
     }
 
     // The cursor.
@@ -229,7 +229,8 @@ export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }
     if (!d.moved && e.type === 'pointerup') {
       const r = canvas.getBoundingClientRect();
       // A click on an event tick goes to that event's year exactly.
-      app.setYear(hoverEvent ? hoverEvent.y : yearAt(e.clientX - r.left));
+      // …and on a border map's diamond, to the year of that map.
+      app.setYear(hoverEvent ? hoverEvent.y : hoverSnap ?? yearAt(e.clientX - r.left));
       return;
     }
     // Inertia: the last moves give a velocity, which then dies down.
@@ -250,7 +251,7 @@ export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }
   };
   canvas.addEventListener('pointerup', end);
   canvas.addEventListener('pointercancel', end);
-  canvas.addEventListener('pointerleave', () => { hoverX = null; hoverEvent = null; draw(); });
+  canvas.addEventListener('pointerleave', () => { hoverX = null; hoverEvent = null; hoverSnap = null; draw(); });
 
   // Double-click an era to fit it into the timeline.
   canvas.addEventListener('dblclick', e => {
@@ -265,7 +266,7 @@ export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }
 
   // Tooltip: the full name of the era or event under the cursor.
   canvas.addEventListener('mousemove', e => {
-    const { tracks, top, trackH, evY, evH } = layout();
+    const { tracks, top, trackH, evY, evH, axisH } = layout();
     const ti = Math.floor((e.offsetY - top) / trackH);
     const y = yearAt(e.offsetX);
     const band = ti >= 0 && tracks[ti]?.b.find(([s, en]) => y >= s && y < en);
@@ -278,7 +279,10 @@ export function createTimeline(canvas, { eras, events, wd = [], snapshots, app }
       }
     }
     hoverEvent = ev;
-    canvas.title = ev ? t('timeline.event', { t: ev.t, year: fmtYear(ev.y) })
+    const snap = Math.abs(e.offsetY - (H - axisH)) <= 7 ? snapshots.find(s => Math.abs(xOf(s) - e.offsetX) <= 6) ?? null : null;
+    if (snap !== hoverSnap) { hoverSnap = snap; draw(); }
+    canvas.title = snap != null ? t('timeline.snap', { year: fmtYear(snap) })
+      : ev ? t('timeline.event', { t: ev.t, year: fmtYear(ev.y) })
       : band ? t('timeline.band', { name: band[2], range: fmtRange(band[0], band[1]) })
       : t('timeline.help');
   });

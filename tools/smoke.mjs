@@ -219,6 +219,24 @@ console.log('Next and previous event');
   await page.close();
 }
 
+console.log('Border map diamonds');
+{
+  const { page, errors } = await open('y=1905&s=100&c=20,45&z=3');
+  const r = await page.$eval('#timeline', el => { const b = el.getBoundingClientRect(); return { x: b.left, y: b.top, w: b.width, h: b.height }; });
+  // 1914 is 9 years right of the cursor; the diamonds sit on the axis, 28 px above the bottom.
+  const x = r.x + r.w / 2 + 9 * r.w / 100, y = r.y + r.h - 28;
+  await page.mouse.move(x, y);
+  await wait(200);
+  const title = await page.$eval('#timeline', el => el.title);
+  check(/1914/.test(title), `hovering a diamond names its map: "${title}"`);
+  await page.mouse.down(); await page.mouse.up();
+  await wait(1600);
+  const year = await page.evaluate(() => Math.round(window.atlas.app.year));
+  check(year === 1914, `a click goes to its year: ${year}`);
+  check(errors.length === 0, `no errors (${errors.length})`);
+  await page.close();
+}
+
 console.log('Links to a card');
 {
   const { page, errors } = await open('y=-490&s=1200&c=24,38&z=4&o=event%3Abattle-of-marathon');
