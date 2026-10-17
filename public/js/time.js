@@ -54,7 +54,7 @@ export function regionOf(lon, lat) {
   if (lon < -25) return 'americas';
   if (lon > 150 || (lon > 112 && lat < -10)) return 'oceania';
   if (lat > 36 && lon < 45 && !(lon > 26 && lat < 42)) return 'europe';
-  if (lat > 50 && lon < 66) return 'europe';
+  if (lat > 50 && lon < 60) return 'europe'; // west of the Urals
   if (lon < 63 && lat > 12 && !(lon < 42 && lat < 17)) return 'mena';
   if (lon < 52) return 'africa';
   if (lon > 92 && (lat < 50 || lon > 120)) return 'east';

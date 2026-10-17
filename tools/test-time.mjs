@@ -42,6 +42,9 @@ assert.equal(yearsBetween(1452, 1519), 67);
 assert.equal(regionOf(23.3, 42.7), 'europe');
 assert.equal(regionOf(44.4, 33.3), 'mena');
 assert.equal(regionOf(116.4, 39.9), 'east');
+// Moscow is Europe; Siberia beyond the Urals is not.
+assert.equal(regionOf(37.6, 55.75), 'europe');
+assert.equal(regionOf(65, 58), 'asia');
 
 // Names in scripts the font lacks keep their Latin part.
 assert.equal(tidyName('ᏣᎳᎫᏪᏘᏱ Tsalaguwetiyi (Cherokee, East)'), 'Tsalaguwetiyi (Cherokee, East)');
